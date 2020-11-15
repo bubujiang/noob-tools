@@ -8,7 +8,7 @@ module.exports = {
   mode: "development",
   entry: {
     app: "./src/index.js",
-    print: "./src/print.js",
+    //print: "./src/print.js",
   },
   devtool: "inline-source-map",
   output: {
@@ -18,10 +18,20 @@ module.exports = {
   },
   module: {
     rules: [
-
       {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
