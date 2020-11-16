@@ -1,0 +1,29 @@
+.navi {
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    background-color: #1C1C1C;
+    box-sizing: border-box;
+}
+
+.navi-ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.navi-item {
+    height: 30px;
+    display: flex;
+    padding-left: 20px;
+}
+
+.navi-title {
+    font-weight: 900;
+    color: #9EA3A8;
+    margin: auto 0;
+}
+
+.activity{
+    background-color: #292929;
+}

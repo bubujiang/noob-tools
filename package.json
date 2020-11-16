@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "集成数据管理工具",
   "private": true,
-  "main":"src/electron/main.js",
+  "main": "src/electron/main.js",
   "scripts": {
     "build": "webpack",
     "server": "node server.js",
@@ -33,7 +33,9 @@
     "webpack-dev-middleware": "^4.0.2"
   },
   "dependencies": {
+    "es6-promise": "^4.2.8",
     "lodash": "^4.17.20",
-    "vue": "^2.6.12"
+    "vue": "^2.6.12",
+    "vuex": "^3.5.1"
   }
 }
