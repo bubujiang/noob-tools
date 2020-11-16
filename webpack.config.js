@@ -1,6 +1,8 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 
@@ -17,8 +19,7 @@ module.exports = {
     publicPath: '/',
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
@@ -63,6 +64,13 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      inject: false,
+      title: "noob-tools",
+      filename: "electron.html", //生成后的文件名
+      template: "src/electron/electron.tpl",
+      publicPath: "./",
+    }),
     new HtmlWebpackPlugin({
       title: "Output Management",
       filename: "index.html", //生成后的文件名
