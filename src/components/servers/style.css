@@ -1,0 +1,28 @@
+.servers{
+    width: 15%;
+}
+
+.servers-ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.server{
+    height: 25px;
+    display: flex;
+}
+
+.server-name{
+    margin: auto;
+    color: #9EA3A8;
+    font-size: 16px;
+}
+
+.add-server{
+    display: flex;
+}
+
+.add-server-button{
+    margin: auto;
+}

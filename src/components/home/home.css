@@ -1,4 +1,5 @@
 .content{
     background-color: #292929;
     width: 80%;
+    display: flex;
 }

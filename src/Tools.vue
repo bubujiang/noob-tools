@@ -7,19 +7,11 @@
 </template>
 
 <script>
-	import {
-		Header,
-		Navi,
-		Home,
-		Mysql,
-		Redis
-	} from './components/Components.js'
-
-	//import {
-	//	mapState
-	//} from 'vuex'
-
-	//let nextItemId = 1;
+import Header from './components/header/Header.vue'
+import Navi from './components/navi/Navi.vue'
+import Home from './components/home/Home.vue'
+import Mysql from './components/mysql/Mysql.vue'
+import Redis from './components/redis/Redis.vue'
 
 	export default {
 		components: {
