@@ -4,6 +4,7 @@
     width: 20%;
     background-color: #1C1C1C;
     box-sizing: border-box;
+    height: 100%;
 }
 
 .navi-ol {
@@ -16,6 +17,7 @@
     height: 30px;
     display: flex;
     padding-left: 20px;
+    cursor: pointer;
 }
 
 .navi-title {

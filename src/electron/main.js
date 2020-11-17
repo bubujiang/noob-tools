@@ -10,8 +10,8 @@ function createWindow() {
     //const Menu = electron.Menu
     Menu.setApplicationMenu(null)
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1080,
+        height: 800,
         frame: false,
         webPreferences: {
             nodeIntegration: true,

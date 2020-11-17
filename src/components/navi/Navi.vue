@@ -1,7 +1,8 @@
 <template>
     <div class="navi">
         <ol class="navi-ol">
-            <NaviItem v-for="item in navis" v-bind:item="item" v-bind:key="item.id"></NaviItem>
+            <NaviItem v-for="item in navis" v-bind:item="item" v-bind:key="item.id"  v-bind:currentNavi="currentNavi"
+                v-on:selected="$emit('change-navi', $event)"></NaviItem>
         </ol>
     </div>
 </template>
@@ -9,29 +10,26 @@
 <script>
     import NaviItem from './NaviItem.vue'
 
-    let nextItemId = 1;
-
     export default {
         components: {
             NaviItem
         },
+        props: {
+            navis: {
+                type: Array,
+                required: true
+            },
+            currentNavi: {
+                type: String,
+                required: true
+            }
+        },
         data() {
-            return {
-                navis: [{
-                    id: nextItemId++,
-                    name: "欢迎页"
-                },{
-                    id: nextItemId++,
-                    name: "mysql"
-                }, {
-                    id: nextItemId++,
-                    name: "redis"
-                }]
-            };
+            return {};
         }
     }
 </script>
 
 <style lang="css">
-@import './navi.css';
+    @import './navi.css';
 </style>
