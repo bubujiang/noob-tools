@@ -4,16 +4,18 @@
             <Button />
             <Server v-for="server in servers" v-bind:server="server" v-bind:key="server.id"></Server>
         </ol>
+        <Prompt />
     </div>
 </template>
 
 <script>
 import Server from './Server.vue'
 import Button from './AddServerButton.vue'
+import Prompt from './AddServer.vue'
     
     export default {
         components: {
-            Server,Button
+            Server,Button,Prompt
         },
         props: {
             servers: {
@@ -21,7 +23,6 @@ import Button from './AddServerButton.vue'
                 required: true
             }
         },
-
     }
 </script>
 

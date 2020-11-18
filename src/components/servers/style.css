@@ -1,28 +1,122 @@
-.servers{
+.servers {
     width: 15%;
 }
 
-.servers-ol{
+.servers-ol {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.server{
+.server {
     height: 25px;
     display: flex;
 }
 
-.server-name{
+.server-name {
     margin: auto;
     color: #9EA3A8;
     font-size: 16px;
 }
 
-.add-server{
+.add-server-button {
     display: flex;
 }
 
-.add-server-button{
+.add-server-button-button {
     margin: auto;
+}
+
+.add-server {
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    background-color: #2e4272;
+    box-shadow: 0px 0px 10px black;
+    border-radius: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 300px;
+}
+
+.add-server-title {
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.add-server-title-txt {
+    font-size: 18px;
+    color: #9EA3A8;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.add-server-content {
+    width: 100%;
+}
+
+.add-server-host,
+.add-server-auth,
+.add-server-port,
+.add-server-name {
+    margin-top: 10px;
+}
+
+.add-server-host-txt,
+.add-server-auth-txt,
+.add-server-port-txt,
+.add-server-name-txt {
+    font-size: 16px;
+    color: #9EA3A8;
+    width: 50px;
+    display: inline-block;
+}
+
+.add-server-host-input,
+.add-server-auth-input,
+.add-server-port-input,
+.add-server-name-input {
+    display: inline-block;
+}
+
+.add-server-host-input-input,
+.add-server-auth-input-input,
+.add-server-port-input-input,
+.add-server-name-input-input {
+    width: 210px;
+}
+
+.add-server-footer {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.add-server-footer-add-button {
+    font-family: "'微软雅黑','Helvetica Neue',Helvetica,Arial,sans-serif";
+    font-size: 13px !important;
+    height: 30px;
+    line-height: 18px !important;
+    padding: 3px 18px;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    border-radius: 3px;
+    margin: 0 8px 0 3px;
+    border: 1px solid #3383da;
+    color: #ffffff;
+    background-color: #3383da;
+    cursor: pointer;
+    outline: none;
+}
+
+.add-server-footer-add-button:active {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
 }
