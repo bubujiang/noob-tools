@@ -32,8 +32,8 @@ import Redis from './components/redis/Redis.vue'
 		data() {
 			return {
 				currentNavi: "Home",
-				//navis:this.$store.state.OStore.navis
-				...this.$store.state.OStore
+				navis:this.$store.state.OStore.navis
+				//...this.$store.state.OStore
 			};
 		}
 	}

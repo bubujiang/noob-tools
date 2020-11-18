@@ -1,6 +1,6 @@
 <template>
     <div class="add-server">
-        <div class="add-server-title"><span class="add-server-title-txt">Add New Connect</span></div>
+        <div class="add-server-title"><span class="add-server-title-txt">Add New Connect</span><span class="add-server-close" v-on:click="$emit('add-server-window-close')">×</span></div>
         <div class="add-server-content">
             <div class="add-server-host"><span class="add-server-host-txt">Host:</span><span class="add-server-host-input"><input class="add-server-host-input-input" type="text" /></span></div>
             <div class="add-server-port"><span class="add-server-port-txt">Port:</span><span class="add-server-port-input"><input class="add-server-port-input-input" type="text" /></span></div>

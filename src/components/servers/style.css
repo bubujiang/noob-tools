@@ -37,9 +37,9 @@
     position: fixed;
     display: flex;
     flex-wrap: wrap;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0%);
     justify-content: center;
     background-color: #2e4272;
     box-shadow: 0px 0px 10px black;
@@ -53,6 +53,9 @@
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .add-server-title-txt {
@@ -99,7 +102,7 @@
 
 .add-server-footer {
     padding-top: 15px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     display: flex;
     width: 60%;
     justify-content: space-between;
@@ -128,4 +131,24 @@
 .add-server-footer-clear-button:active,
 .add-server-button-button:active {
     background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+}
+
+.server-slide-enter-active {
+    transition: all .3s ease;
+}
+
+.server-slide-leave-active {
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.server-slide-enter,
+.server-slide-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.add-server-close{
+    font-size: 20px;
+    font-weight: 900;
+    cursor: default;
 }
