@@ -1,10 +1,7 @@
 <template>
     <div class="header">
-        <span>我是一个标题栏</span>
-        <span class="float-right btn-opt text-white">
-            <a class="el-icon-minus mr-10" @click="toMin()">最小化</a>
-            <a class="el-icon-close" @click="toClose()">关闭</a>
-        </span>
+        <span class="min" v-on:click="min()">最小化</span>
+        <span class="close" v-on:click="close()">关闭</span>
     </div>
 </template>
 
@@ -12,21 +9,16 @@
     let ipcRenderer = window['require']('electron').ipcRenderer;
     export default {
         methods: {
-            toMin() {
+            min() {
                 ipcRenderer.send('min-app')
             },
-            toClose() {
+            close() {
                 ipcRenderer.send('close-app')
             }
         }
     }
 </script>
 
-<style lang="scss">
-    .header {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        -webkit-app-region: drag;
-    }
+<style lang="css">
+    @import './style.css'
 </style>

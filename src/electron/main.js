@@ -5,11 +5,12 @@ const {
     ipcMain
 } = require('electron')
 var path = require("path")
+let mainWindow;
 
 function createWindow() {
     //const Menu = electron.Menu
     Menu.setApplicationMenu(null)
-    const win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1080,
         height: 800,
         frame: false,
@@ -21,9 +22,9 @@ function createWindow() {
 
     //console.log(path.dirname(path.dirname(path.dirname(__filename)))+'/dist/electron.html');
     //win.loadURL(`file://${path.dirname(path.dirname(path.dirname(__filename)))}/dist/electron.html`);
-    win.loadURL(`file://${path.dirname(path.dirname(path.dirname(__filename)))}/dist/index.html`);
+    mainWindow.loadURL(`file://${path.dirname(path.dirname(path.dirname(__filename)))}/dist/index.html`);
     //win.loadFile('index.html')
-    win.webContents.openDevTools()
+    mainWindow.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
@@ -41,10 +42,9 @@ app.on('activate', () => {
 })
 
 ipcMain.on('close-app', () => {
-    if (mainWindow) {
-        mainWindow.close()
+    if (process.platform !== 'darwin') {
+        app.quit()
     }
 })
-ipcMain.on('min-app', () => {
-    mainWindow.minimize()
-})
+
+ipcMain.on('min-app', e => mainWindow.minimize())

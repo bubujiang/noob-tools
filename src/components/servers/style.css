@@ -1,11 +1,17 @@
 .servers {
-    width: 15%;
+    width: 20%;
 }
 
 .servers-ol {
     list-style: none;
-    margin: 0;
     padding: 0;
+    width: 90%;
+    margin: 30px auto auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: 400px;
+    background-color: #2e4272;
+    border-radius: 15px;
 }
 
 .server {
@@ -95,28 +101,31 @@
     padding-top: 15px;
     padding-bottom: 5px;
     display: flex;
-    width: 50%;
+    width: 60%;
     justify-content: space-between;
 }
 
-.add-server-footer-add-button {
-    font-family: "'微软雅黑','Helvetica Neue',Helvetica,Arial,sans-serif";
+.add-server-footer-add-button,
+.add-server-footer-test-button,
+.add-server-footer-clear-button,
+.add-server-button-button {
     font-size: 13px !important;
-    height: 30px;
     line-height: 18px !important;
-    padding: 3px 18px;
+    padding: 3px 10px;
     display: inline-block;
     vertical-align: middle;
     font-weight: normal;
     border-radius: 3px;
-    margin: 0 8px 0 3px;
-    border: 1px solid #3383da;
-    color: #ffffff;
-    background-color: #3383da;
+    border: 1px solid #061539;
+    color: #9EA3A8;
+    background-color: #061539;
     cursor: pointer;
     outline: none;
 }
 
-.add-server-footer-add-button:active {
+.add-server-footer-add-button:active,
+.add-server-footer-test-button:active,
+.add-server-footer-clear-button:active,
+.add-server-button-button:active {
     background-image: linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
 }
