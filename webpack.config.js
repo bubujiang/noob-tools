@@ -9,7 +9,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 module.exports = {
   mode: "development",
   entry: {
-    app: "./src/index.js",
+    app: "./src/vue.main.js",
     //print: "./src/print.js",
   },
   devtool: "inline-source-map",
@@ -65,16 +65,9 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      inject: false,
-      title: "noob-tools",
-      filename: "electron.html", //生成后的文件名
-      template: "src/electron/electron.tpl",
-      publicPath: "./",
-    }),
-    new HtmlWebpackPlugin({
       title: "Output Management",
       filename: "index.html", //生成后的文件名
-      template: "src/index.tpl",
+      template: "src/iframe.tpl",
       publicPath: "./",
     }),
     new VueLoaderPlugin()

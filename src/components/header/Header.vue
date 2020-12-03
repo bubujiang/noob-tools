@@ -1,12 +1,12 @@
 <template>
     <div class="header">
-        <span class="min" v-on:click="min()">最小化</span>
-        <span class="close" v-on:click="close()">关闭</span>
+        <span class="min" v-on:click="min()"></span>
+        <span class="close" v-on:click="close()"></span>
     </div>
 </template>
 
 <script>
-    let ipcRenderer = window['require']('electron').ipcRenderer;
+    const ipcRenderer = window['require']('electron').ipcRenderer;
     export default {
         methods: {
             min() {
@@ -19,6 +19,6 @@
     }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
     @import './style.css'
 </style>

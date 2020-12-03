@@ -1,0 +1,14 @@
+.navi {
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    background-color: #061539;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.navi-ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}

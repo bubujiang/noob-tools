@@ -7,8 +7,23 @@
     box-shadow: 0 0 10px #000;
     position: relative;
     height: 25px;
+    justify-content: flex-end;
 }
 
 .min,.close{
     -webkit-app-region: no-drag;
+    border-radius: 10px;
+    display: block;
+    height: 15px;
+    width: 15px;
+}
+
+.min{
+    background-color: green;
+    margin-right: 10px;
+}
+
+.close{
+    background-color: red;
+    margin-right: 5px;
 }
