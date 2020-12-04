@@ -4,11 +4,16 @@ const {
     Menu,
     ipcMain
 } = require('electron')
-var path = require("path")
+const {
+    Worker
+} = require('worker_threads');
+const _ = require('lodash');
+
 let mainWindow;
+const max_worker_num = 5;
+const worker_queue = [];
 
 function createWindow() {
-    //const Menu = electron.Menu
     Menu.setApplicationMenu(null)
     mainWindow = new BrowserWindow({
         width: 1080,
@@ -20,10 +25,7 @@ function createWindow() {
         }
     })
 
-    //console.log(path.dirname(path.dirname(path.dirname(__filename)))+'/dist/electron.html');
-    //win.loadURL(`file://${path.dirname(path.dirname(path.dirname(__filename)))}/dist/electron.html`);
-    mainWindow.loadURL(`file://${path.dirname(path.dirname(__filename))}/dist/index.html`);
-    //win.loadFile('index.html')
+    mainWindow.loadFile('./dist/index.html')
     mainWindow.webContents.openDevTools()
 }
 
@@ -48,3 +50,16 @@ ipcMain.on('close-app', () => {
 })
 
 ipcMain.on('min-app', e => mainWindow.minimize())
+
+ipcMain.on('mkredth', (e) => {
+    
+    const file_path = './src/worker/redis.worker.js';
+    const worker = new Worker(file_path);
+    worker_queue.unshift(worker);
+    console.log(worker)
+
+    if(worker_queue.length > max_worker_num){
+        worker_queue.pop();
+    }
+    
+})

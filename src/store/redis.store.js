@@ -5,7 +5,8 @@ export default {
             host: '',
             port: '',
             auth: '',
-            name: 'server1'
+            name: 'server1',
+            db:['0','1','1','1','1','1','1','1']
         }],
         add_server_popup_show: false
     },

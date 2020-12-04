@@ -24,7 +24,10 @@
         methods: {
             ...mapMutations('RStore', [
                 'popupSwitch'
-            ])
+            ]),
+            addServer(){
+                
+            }
         }
     }
 </script>

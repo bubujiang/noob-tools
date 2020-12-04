@@ -17,12 +17,17 @@
 .server {
     height: 25px;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .server-name {
     margin: auto;
     color: #9EA3A8;
     font-size: 16px;
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 .add-server-button {
@@ -151,4 +156,9 @@
     font-size: 20px;
     font-weight: 900;
     cursor: default;
+}
+
+.server-db{
+    margin-top: 2px;
+    outline: none;
 }

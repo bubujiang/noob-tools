@@ -73,6 +73,10 @@ module.exports = {
     new VueLoaderPlugin()
   ],
   resolve: {
+    fallback: {
+      path: require.resolve("path-browserify"),
+      worker_threads: require.resolve("worker_threads"),
+    },
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     }
