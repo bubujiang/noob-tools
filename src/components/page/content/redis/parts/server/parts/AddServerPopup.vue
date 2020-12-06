@@ -20,6 +20,8 @@
         mapMutations,mapState
     } from 'vuex'
 
+    const ipcRenderer = window['require']('electron').ipcRenderer;
+
     export default {
         computed:{
             ...mapState('RStore',[
@@ -31,7 +33,13 @@
                 'popupSwitch',
                 'resetAddServerParams',
                 'addServer'
-            ])
+            ]),
+            testcConn(){
+                if(this.add_server_params.host && this.add_server_params.port){
+                    ipcRenderer.send('tsconn',this.add_server_params);
+                }
+                
+            }
         }
     }
 </script>

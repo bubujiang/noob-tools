@@ -56,6 +56,7 @@ ipcMain.on('min-app', e => mainWindow.minimize())
 /**
  * mkredth 创建线程并连接/进重连
  * clsredth 退出线程并关闭连接
+ * tsconn 测试连接
  * command 各种redis操作指令
  */
 ipcMain.on('mkredth', (e,conn) => {
@@ -80,4 +81,10 @@ ipcMain.on('mkredth', (e,conn) => {
     }
 
     delete keys;
+})
+
+ipcMain.on('tsconn', (e,conn) => {
+    console.log('tsconn start');
+    console.log('params',conn);
+    
 })
