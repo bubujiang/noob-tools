@@ -23,7 +23,7 @@
         },
         methods:{
             mkRedTh(e){
-                ipcRenderer.send('mkredth');
+                ipcRenderer.send('mkredth',this.server);
             }
         }
     }

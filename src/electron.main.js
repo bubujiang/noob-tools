@@ -53,23 +53,29 @@ ipcMain.on('close-app', () => {
 
 ipcMain.on('min-app', e => mainWindow.minimize())
 
-ipcMain.on('mkredth', (e) => {
+/**
+ * mkredth 创建线程并连接/进重连
+ * clsredth 退出线程并关闭连接
+ * command 各种redis操作指令
+ */
+ipcMain.on('mkredth', (e,conn) => {
     console.log('//////////////');
-    //const file_path = './src/worker/redis.worker.js';
-    const worker = new Worker('./src/worker/redis.worker.js');
-    //++current_worker_no;
-    workers[++current_worker_no] = worker
-
-    //worker_queue.unshift(worker);
-    //const subChannel = new MessageChannel();
-    worker.postMessage({init:'test message'+current_worker_no});
+    const key = conn.host + ':' + conn.port;
+    let cworker;
+    if(_.hasIn(workers, key)){
+        cworker = workers[key];
+    }
+    else{
+        cworker = new Worker('./src/worker/redis.worker.js');
+        workers[key] = cworker;
+    }
+    cworker.postMessage({type:'connect','conn':conn});
     console.log('main proc')
 
     let keys = _.keys(workers);
-
     if(keys.length > allow_max_worker_len){
         console.log('more then 5');
-        workers[keys[0]].postMessage('exit'+keys[0]);
+        workers[keys[0]].postMessage('exit');
         delete workers[keys[0]];
     }
 
