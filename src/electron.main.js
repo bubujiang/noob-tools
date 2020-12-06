@@ -5,13 +5,15 @@ const {
     ipcMain
 } = require('electron')
 const {
-    Worker
+    Worker,MessageChannel
 } = require('worker_threads');
 const _ = require('lodash');
+//const { delete, delete } = require('vue/types/umd');
 
 let mainWindow;
-const max_worker_num = 5;
-const worker_queue = [];
+const allow_max_worker_len = 5;
+let current_worker_no = 0;
+const workers = {};
 
 function createWindow() {
     Menu.setApplicationMenu(null)
@@ -52,14 +54,24 @@ ipcMain.on('close-app', () => {
 ipcMain.on('min-app', e => mainWindow.minimize())
 
 ipcMain.on('mkredth', (e) => {
-    
-    const file_path = './src/worker/redis.worker.js';
-    const worker = new Worker(file_path);
-    worker_queue.unshift(worker);
-    console.log(worker)
+    console.log('//////////////');
+    //const file_path = './src/worker/redis.worker.js';
+    const worker = new Worker('./src/worker/redis.worker.js');
+    //++current_worker_no;
+    workers[++current_worker_no] = worker
 
-    if(worker_queue.length > max_worker_num){
-        worker_queue.pop();
+    //worker_queue.unshift(worker);
+    //const subChannel = new MessageChannel();
+    worker.postMessage({init:'test message'+current_worker_no});
+    console.log('main proc')
+
+    let keys = _.keys(workers);
+
+    if(keys.length > allow_max_worker_len){
+        console.log('more then 5');
+        workers[keys[0]].postMessage('exit'+keys[0]);
+        delete workers[keys[0]];
     }
-    
+
+    delete keys;
 })

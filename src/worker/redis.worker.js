@@ -1,3 +1,6 @@
-const { Worker, isMainThread } = require('worker_threads');
+const { parentPort } = require('worker_threads');
 
-console.log(redis);
+parentPort.on('message', (message) => {
+    console.log(message);
+    //parentPort.postMessage(message);
+});
