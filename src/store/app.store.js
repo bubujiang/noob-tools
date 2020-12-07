@@ -15,7 +15,10 @@ export default {
             name: "mysql",
             component: "Mysql"
         }],
-        current_navigation_item: "Home"
+        current_navigation_item: "Home",
+        warning: {
+            msg: null
+        }
     },
     mutations: {
         changeCurrentItem(state, item) {

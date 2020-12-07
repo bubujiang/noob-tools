@@ -78,7 +78,8 @@ module.exports = {
       //worker_threads: require.resolve("worker_threads"),
     },
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      common: path.resolve(__dirname, 'src/components/page/common')
     }
   }
 };

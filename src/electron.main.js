@@ -5,9 +5,12 @@ const {
     ipcMain
 } = require('electron')
 const {
-    Worker,MessageChannel
+    Worker,
+    MessageChannel
 } = require('worker_threads');
 const _ = require('lodash');
+const redis = require("redis");
+
 //const { delete, delete } = require('vue/types/umd');
 
 let mainWindow;
@@ -59,32 +62,64 @@ ipcMain.on('min-app', e => mainWindow.minimize())
  * tsconn 测试连接
  * command 各种redis操作指令
  */
-ipcMain.on('mkredth', (e,conn) => {
+ipcMain.on('mkredth', (e, conn) => {
     console.log('//////////////');
     const key = conn.host + ':' + conn.port;
     let cworker;
-    if(_.hasIn(workers, key)){
+    if (_.hasIn(workers, key)) {
         cworker = workers[key];
-    }
-    else{
+    } else {
         cworker = new Worker('./src/worker/redis.worker.js');
         workers[key] = cworker;
     }
-    cworker.postMessage({type:'connect','conn':conn});
+    cworker.postMessage({
+        type: 'connect',
+        'conn': conn
+    });
     console.log('main proc')
 
     let keys = _.keys(workers);
-    if(keys.length > allow_max_worker_len){
+    if (keys.length > allow_max_worker_len) {
         console.log('more then 5');
-        workers[keys[0]].postMessage('exit');
+        workers[keys[0]].postMessage({
+            type: 'exit'
+        });
         delete workers[keys[0]];
     }
 
     delete keys;
 })
 
-ipcMain.on('tsconn', (e,conn) => {
+ipcMain.handle('tsconn', async (e, conn) => {
     console.log('tsconn start');
-    console.log('params',conn);
-    
+    console.log('params', conn);
+
+    delete conn.name;
+
+    console.log('c params',conn);
+
+    let prom = new Promise((resolve, reject) => {
+        const client = redis.createClient(conn);
+
+        client.on("ready", function () {
+            client.quit();
+            resolve();
+        });
+
+        client.on("error", function (error) {
+            reject(error);
+        });
+    });
+
+    return await prom.then(()=>{
+        return {
+            type: 'success'
+        };
+    }).catch((error)=>{
+        return {
+            type: 'error',
+            info: error
+        };
+    });
+
 })

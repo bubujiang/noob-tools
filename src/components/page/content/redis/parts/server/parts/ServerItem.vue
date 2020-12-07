@@ -1,7 +1,7 @@
 <template>
     <li class="server">
         <span class="server-name" v-on:click="mkRedTh">{{ server.name }}</span>
-        <select class="server-db">
+        <select class="server-db" v-if="server.db">
             <Db v-for="(db,i) in server.db" v-bind:db="db" v-bind:key="i" />
         </select>
     </li>

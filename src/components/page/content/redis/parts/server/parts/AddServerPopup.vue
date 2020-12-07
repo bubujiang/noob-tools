@@ -9,7 +9,7 @@
         </div>
         <div class="add-server-footer">
             <span class="add-server-footer-clear"><input class="add-server-footer-clear-button" type="button" v-on:click="resetAddServerParams" value="清空"/></span>
-            <span class="add-server-footer-test"><input class="add-server-footer-test-button" type="button" value="测试"/></span>
+            <span class="add-server-footer-test"><input class="add-server-footer-test-button" type="button" v-on:click="testcConn" value="测试"/></span>
             <span class="add-server-footer-add"><input class="add-server-footer-add-button" type="button" v-on:click="addServer" value="添加"/></span>
         </div>
     </div>
@@ -19,6 +19,8 @@
     import {
         mapMutations,mapState
     } from 'vuex'
+
+    
 
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
@@ -36,7 +38,10 @@
             ]),
             testcConn(){
                 if(this.add_server_params.host && this.add_server_params.port){
-                    ipcRenderer.send('tsconn',this.add_server_params);
+                    ipcRenderer.invoke('tsconn', this.add_server_params).then((result) => {
+                        //console.log('rander',result);
+                        if(result.type === 'success'){}
+                    })
                 }
                 
             }

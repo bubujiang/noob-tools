@@ -1,19 +1,13 @@
 export default {
     namespaced: true,
     state: {
-        servers: [{
-            host: '',
-            port: '',
-            auth: '',
-            name: 'server1',
-            db:['0','1','1','1','1','1','1','1']
-        }],
+        servers: [],
         add_server_popup_show: false,
         add_server_params:{
-            host: '',
-            port: '',
-            auth: '',
-            name: ''
+            host: null,
+            port: null,
+            auth: null,
+            name: null
         }
     },
     mutations: {
@@ -22,19 +16,19 @@ export default {
         },
         resetAddServerParams(state){
             state.add_server_params = {
-                host: '',
-                port: '',
-                auth: '',
-                name: ''
+                host: null,
+                port: null,
+                auth: null,
+                name: null
             }
         },
         addServer(state){
             state.servers.push(state.add_server_params);
             state.add_server_params = {
-                host: '',
-                port: '',
-                auth: '',
-                name: ''
+                host: null,
+                port: null,
+                auth: null,
+                name: null
             };
             state.add_server_popup_show = false;
         }

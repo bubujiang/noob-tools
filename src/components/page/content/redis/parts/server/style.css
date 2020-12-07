@@ -9,13 +9,11 @@
     margin: 30px auto auto;
     padding-top: 20px;
     padding-bottom: 20px;
-    height: 400px;
     background-color: #2e4272;
     border-radius: 15px;
 }
 
 .server {
-    height: 25px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
