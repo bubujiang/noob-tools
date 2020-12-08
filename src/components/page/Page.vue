@@ -4,6 +4,9 @@
         <keep-alive>
             <component v-bind:is="current_navigation_item"></component>
         </keep-alive>
+        <Error />
+        <Notice />
+        <Success />
     </div>
 </template>
 
@@ -11,6 +14,9 @@
     import Navigation from './navigation/Navigation.vue'
     import Home from './content/home/Home.vue'
     import Redis from './content/redis/Redis.vue'
+    import Error from 'common/error/Error.vue'
+    import Notice from 'common/notice/Notice.vue'
+    import Success from 'common/success/Success.vue'
 
     import {
         mapState
@@ -20,7 +26,10 @@
         components: {
             Navigation,
             Home,
-            Redis
+            Redis,
+            Error,
+            Notice,
+            Success
         },
         computed:{
             ...mapState('AStore',[

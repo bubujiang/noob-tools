@@ -16,7 +16,7 @@ module.exports = {
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: '/',
+    //publicPath: '/',
   },
   module: {
     rules: [{
@@ -79,7 +79,8 @@ module.exports = {
     },
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      common: path.resolve(__dirname, 'src/components/page/common')
+      common: path.resolve(__dirname, 'src/components/page/common'),
+      assets: path.resolve(__dirname, 'src/assets')
     }
   }
 };

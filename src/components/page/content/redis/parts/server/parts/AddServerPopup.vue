@@ -36,12 +36,23 @@
                 'resetAddServerParams',
                 'addServer'
             ]),
+            ...mapMutations('AStore', [
+                'addNotice',
+                'addError',
+                'addSuccess'
+            ]),
             testcConn(){
                 if(this.add_server_params.host && this.add_server_params.port){
                     ipcRenderer.invoke('tsconn', this.add_server_params).then((result) => {
-                        //console.log('rander',result);
-                        if(result.type === 'success'){}
+                        console.log('rander',result);
+                        if(result.type === 'success'){
+                            this.addSuccess('success');
+                        }else{
+                            this.addError(result.info.message);
+                        }
                     })
+                }else{
+                    this.addNotice('主机和端口必传');
                 }
                 
             }
