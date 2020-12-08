@@ -6,7 +6,7 @@
     export default {}
 </script>
 
-<style lang="css" scoped>
-@import './../style.css';
-@import './style.css';
+<style lang="css" src="./../style.css" scoped>
+</style>
+<style lang="css" src="./style.css" scoped>
 </style>

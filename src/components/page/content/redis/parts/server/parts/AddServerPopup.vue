@@ -9,8 +9,8 @@
         </div>
         <div class="add-server-footer">
             <span class="add-server-footer-clear"><input class="add-server-footer-clear-button" type="button" v-on:click="resetAddServerParams" value="清空"/></span>
-            <span class="add-server-footer-test"><input class="add-server-footer-test-button" type="button" v-on:click="testcConn" value="测试"/></span>
-            <span class="add-server-footer-add"><input class="add-server-footer-add-button" type="button" v-on:click="addServer" value="添加"/></span>
+            <span class="add-server-footer-test"><input class="add-server-footer-test-button" type="button" v-on:click="testConn" value="测试"/></span>
+            <span class="add-server-footer-add"><input class="add-server-footer-add-button" type="button" v-on:click="addConn" value="添加"/></span>
         </div>
     </div>
 </template>
@@ -41,7 +41,7 @@
                 'addError',
                 'addSuccess'
             ]),
-            testcConn(){
+            testConn(){
                 if(this.add_server_params.host && this.add_server_params.port){
                     ipcRenderer.invoke('tsconn', this.add_server_params).then((result) => {
                         console.log('rander',result);
@@ -54,7 +54,13 @@
                 }else{
                     this.addNotice('主机和端口必传');
                 }
-                
+            },
+            addConn(){
+                if(this.add_server_params.host && this.add_server_params.port && this.add_server_params.name){
+                    this.addServer();
+                }else{
+                    this.addNotice('主机、端口和名称必传');
+                }
             }
         }
     }

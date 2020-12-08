@@ -1,24 +1,25 @@
 <template>
     <li class="server">
         <span class="server-name" v-on:click="mkRedTh">{{ server.name }}</span>
-        <select class="server-db" v-if="server.db">
-            <Db v-for="(db,i) in server.db" v-bind:db="db" v-bind:key="i" />
-        </select>
+        <span class="img-span" v-if="img"><img class="img" :src="img" /></span>
     </li>
 </template>
 
 <script>
-    import Db from './ServerItemDb.vue'
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
     export default {
-        components: {
-            Db
-        },
         props: {
             server: {
                 type: Object,
                 required: true
+            }
+        },
+        data(){
+            return {
+                //img:require("assets/loading.gif")
+                //img:require("assets/conned.png")
+                img:''
             }
         },
         methods:{

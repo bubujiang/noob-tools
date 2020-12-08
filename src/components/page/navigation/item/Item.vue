@@ -30,6 +30,5 @@
     }
 </script>
 
-<style lang="css" scoped>
-    @import './style.css';
+<style lang="css" src="./style.css" scoped>
 </style>

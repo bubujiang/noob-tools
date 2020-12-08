@@ -30,7 +30,7 @@
     }
 </script>
 
-<style lang="css" scoped>
-@import url('./../style.css');
-    @import url('./style.css');
+<style lang="css" src="./../style.css" scoped>
+</style>
+<style lang="css" src="./style.css" scoped>
 </style>

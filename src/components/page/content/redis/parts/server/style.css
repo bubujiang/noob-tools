@@ -15,17 +15,28 @@
 
 .server {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-left: 20px;
+    padding-right: 5px;
+    margin-top: 10px;
 }
 
 .server-name {
-    margin: auto;
     color: #9EA3A8;
-    font-size: 16px;
-    display: block;
-    width: 100%;
+    font-size: 14px;
     text-align: center;
+    cursor: default;
+    word-break: break-all;
+}
+
+.img{
+    width: 15px;
+}
+
+.img-span{
+    width: 15px;
 }
 
 .add-server-button {
