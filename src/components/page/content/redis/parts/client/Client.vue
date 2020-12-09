@@ -1,12 +1,6 @@
 <template>
-    <div class="client">
-        <div class="header">
-            <ol class="hol">
-                <li class="active">server1</li>
-                <li>db0</li>
-                <li>db1</li>
-            </ol>
-        </div>
+    <div class="client" v-if="server_tabs">
+        <Header v-bind:tabs="server_tabs" v-bind:selected_tab="current_server_tab" v-on:selected-tab="changeServerTab($event)" />
         <div class="body">
             <div class="db">
                 <ol class="dbol">
@@ -27,8 +21,29 @@
 </template>
 
 <script>
-    export default {
+import {
+        mapState,
+        mapMutations
+    } from 'vuex'
 
+import Header from 'common/client/header/Header.vue';
+
+
+    export default {
+        components:{
+            Header
+        },
+        computed:{
+            ...mapState('RStore',[
+                'server_tabs',
+                'current_server_tab'
+            ])
+        },
+        methods:{
+            ...mapMutations('RStore',[
+                'changeServerTab'
+            ])
+        }
     }
 </script>
 

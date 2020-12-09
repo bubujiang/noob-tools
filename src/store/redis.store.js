@@ -11,11 +11,17 @@ export default {
         },
         server_tabs: {
             '127.0.0.1:99': {
+                name:'server1',
+                info: {redis_version:'3.0.5',redis_git_sha1:'000',redis_build_id:'470780e9c85f8d8b'},
+                db: {db0:{keys:11},db1:{keys:12}}
+            },
+            '127.0.0.2:99': {
+                name:'server2',
                 info: {redis_version:'3.0.5',redis_git_sha1:'000',redis_build_id:'470780e9c85f8d8b'},
                 db: {db0:{keys:11},db1:{keys:12}}
             }
         }, //操作区
-        current_server_tab:{sever:'127.0.0.1:99',db:2}//当前操作区
+        current_server_tab:{server:'127.0.0.1:99',db:'db1'}//当前操作区
     },
     mutations: {
         //显示\隐藏连接添加框
@@ -41,6 +47,10 @@ export default {
                 name: null
             };
             state.add_server_popup_show = false;
+        },
+        //切换操作区
+        changeServerTab(state,server_tab){
+            state.current_server_tab = server_tab;
         }
     }
 }

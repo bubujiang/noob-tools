@@ -14,9 +14,9 @@
     import Navigation from './navigation/Navigation.vue'
     import Home from './content/home/Home.vue'
     import Redis from './content/redis/Redis.vue'
-    import Error from 'common/error/Error.vue'
-    import Notice from 'common/notice/Notice.vue'
-    import Success from 'common/success/Success.vue'
+    import Error from 'common/alert/error/Error.vue'
+    import Notice from 'common/alert/notice/Notice.vue'
+    import Success from 'common/alert/success/Success.vue'
 
     import {
         mapState

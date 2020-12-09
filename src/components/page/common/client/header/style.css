@@ -1,0 +1,32 @@
+.header{
+    height: 30px;
+    border-radius: 10px 0px 0px 0px;
+    margin-top: 30px;
+    background-color: #061539;
+}
+
+.hol{
+    list-style: none;
+    padding: 0;
+    display: inline-flex;;
+    height: 100%;
+    margin: 0;
+}
+
+.hol li{
+    color: #9EA3A8;
+    font-size: 16px;
+    display: flex;
+    align-items: flex-end;
+    width: 80px;
+    justify-content: center;
+    cursor: default;
+}
+
+.header :first-child :first-child{
+    border-radius: 10px 0px 0px;
+}
+
+.hol li.active{
+    background-color: #2e4272;
+}
