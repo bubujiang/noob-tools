@@ -2,54 +2,5 @@
     width: 80%;
 }
 
-.body{
-    background-color: #2e4272;
-    padding: 20px;
-}
 
-.db{
-    background-color: #142653;
-    padding-top: 20px;
-    padding-bottom: 10px;
-}
-
-.info{
-    background-color: #142653;
-    margin-top: 50px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-}
-
-.dbol,.inol{
-    padding: 0;
-    list-style: none;
-    margin: 0;
-}
-
-.dbol li,.inol li{
-    display: flex;
-    margin-bottom: 10px;
-    align-items: center;
-}
-
-.dbol li span,.inol li span{
-    text-align: center;
-    width: 30%;
-    color: #9EA3A8;
-}
-
-.dbol li input{
-    font-size: 13px !important;
-    line-height: 18px !important;
-    padding: 3px 10px;
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: normal;
-    border-radius: 3px;
-    border: 1px solid #061539;
-    color: #9EA3A8;
-    background-color: #061539;
-    cursor: pointer;
-    outline: none;
-}
 
