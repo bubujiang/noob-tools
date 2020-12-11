@@ -1,18 +1,24 @@
-.db{
+.db {
     background-color: #2e4272;
     padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
-.left{
+
+.left {
     width: 20%;
-    /* box-shadow: 0px 0px 5px #000; */
+}
+
+.list{
     border-radius: 5px;
-    /* border: 1px dashed black; */
     padding: 5px;
     box-sizing: border-box;
     background-color: #192955;
 }
-.keys{}
-.keys_ol{
+
+.keys {}
+
+.keys_ol {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -20,20 +26,25 @@
     overflow: auto;
 }
 
-.keys_ol::-webkit-scrollbar{
+.keys_ol::-webkit-scrollbar {
     width: 0;
 }
 
-.keys_ol li{
+.keys_ol li {
     text-align: center;
     color: #9EA3A8;
     word-break: break-all;
 }
-.btn{}
-.btn input{
+
+.btn {}
+
+.btn input,
+.reload button,
+.copy button,
+.del button,
+.save button {
     font-size: 13px !important;
-    line-height: 18px !important;
-    padding: 3px 10px;
+    padding: 8px;
     display: inline-block;
     vertical-align: middle;
     font-weight: normal;
@@ -47,6 +58,53 @@
     box-sizing: border-box;
     text-align: center;
 }
-.right{
-    width: 80%;
+
+/************************************/
+.right {
+    width: 77%;
 }
+
+.top {}
+
+.attr {
+    display: flex;
+}
+
+.type,.ttl {
+    padding: 8px;
+    background-color: #192955;
+    margin-right: 20px;
+}
+
+.type span,.ttl span{
+    color: #9EA3A8;
+}
+
+.ttl {}
+
+.op {
+    display: flex;
+    margin-top: 10px;
+}
+
+.vas,.reload,.copy,.del,.save {
+    margin-right: 8px;
+}
+
+.vas select{
+    background-color: #061539;
+    line-height: 18px;
+    color: #9EA3A8;
+    outline: none;
+    border: none;
+    padding: 8px;
+    border-radius: 3px;
+}
+
+.reload {}
+
+.copy {}
+
+.del {}
+
+.save {}
