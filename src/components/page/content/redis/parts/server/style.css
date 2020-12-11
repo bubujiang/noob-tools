@@ -1,5 +1,6 @@
 .servers {
-    width: 20%;
+    width: 180px;
+    position: absolute;
 }
 
 .servers-ol {

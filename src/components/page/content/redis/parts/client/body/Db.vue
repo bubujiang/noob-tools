@@ -25,11 +25,13 @@
         </div>
         <div class="right">
             <div class="top">
-                <div class="attr">
+                <!--<div class="attr">
                     <div class="type"><span>string</span></div>
                     <div class="ttl"><span>ttl:99</span></div>
-                </div>
+                </div>-->
                 <div class="op">
+                    <div class="type"><span>string</span></div>
+                    <div class="ttl"><span>ttl:99</span></div>
                     <div class="vas"><select>
                             <option value="volvo">Volvo</option>
                             <option value="saab">Saab</option>
@@ -40,7 +42,9 @@
                     <div class="save"><button>save</button></div>
                 </div>
             </div>
-            <div class="view"></div>
+            <div class="view">
+                araerggggggggaergaergardvraergegaegagasvaer4gaevaerhaerarvraerjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+            </div>
         </div>
     </div>
 </template>
