@@ -56,6 +56,16 @@ ipcMain.on('close-app', () => {
 
 ipcMain.on('min-app', e => mainWindow.minimize())
 
+ipcMain.on('toggle-app', e => {
+    if(mainWindow.isFullScreen()){
+        mainWindow.setFullScreen(false)
+    }
+    else{
+        mainWindow.setFullScreen(true)
+    }
+    }
+)
+
 /**
  * mkredth 创建线程并连接/进重连
  * clsredth 退出线程并关闭连接

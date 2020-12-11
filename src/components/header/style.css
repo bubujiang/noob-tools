@@ -8,9 +8,10 @@
     position: relative;
     height: 25px;
     justify-content: flex-end;
+    z-index: 2;
 }
 
-.min,.close{
+.min,.max,.close{
     -webkit-app-region: no-drag;
     border-radius: 10px;
     display: block;
@@ -19,6 +20,11 @@
 }
 
 .min{
+    background-color: yellow;
+    margin-right: 10px;
+}
+
+.max{
     background-color: green;
     margin-right: 10px;
 }

@@ -1,5 +1,6 @@
 .content{
     background-color: #162955;
-    width: 80%;
     display: flex;
+    margin-left: 180px;
+    width: 100%;
 }

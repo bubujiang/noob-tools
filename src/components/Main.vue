@@ -21,6 +21,6 @@
 	#app {
 		display: flex;
 		flex-wrap: wrap;
-		height: 800px;
+		height: 100%;
 	}
 </style>

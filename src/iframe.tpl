@@ -5,7 +5,7 @@
 <title></title>
 </head>
 
-<body style="margin: 0; overflow: hidden;">
+<body style="margin: 0; overflow: hidden;heigth:100vh;background-color:#162955">
     <div id="app"></div>
 </body>
 
