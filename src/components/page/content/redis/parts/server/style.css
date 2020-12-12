@@ -12,22 +12,20 @@
     padding-bottom: 20px;
     background-color: #2e4272;
     border-radius: 15px;
+    overflow: auto;
 }
 
 .server {
     display: flex;
-    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    padding-left: 20px;
-    padding-right: 5px;
-    margin-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 5px;
 }
 
 .server-name {
     color: #9EA3A8;
     font-size: 14px;
-    text-align: center;
     cursor: default;
     word-break: break-all;
 }
@@ -172,4 +170,16 @@
 .server-db{
     margin-top: 2px;
     outline: none;
+}
+
+.list{
+    max-height: 500px;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.list::-webkit-scrollbar {
+    width: 0;
 }

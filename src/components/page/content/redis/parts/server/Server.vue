@@ -2,7 +2,10 @@
     <div class="servers">
         <ol class="servers-ol">
             <Button />
-            <Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>
+            <li><ol class="list">
+                <Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>
+            </ol></li>
+            <!--<Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>-->
         </ol>
         <transition name="server-slide">
             <Popup v-if="add_server_popup_show" />

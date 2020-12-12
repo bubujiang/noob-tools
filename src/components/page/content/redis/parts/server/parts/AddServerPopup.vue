@@ -27,7 +27,8 @@
     export default {
         computed:{
             ...mapState('RStore',[
-                'add_server_params'
+                'add_server_params',
+                'server_menus'
             ])
         },
         methods: {
@@ -56,10 +57,17 @@
                 }
             },
             addConn(){
-                if(this.add_server_params.host && this.add_server_params.port && this.add_server_params.name){
-                    this.addServer();
-                }else{
+                if(!(this.add_server_params.host && this.add_server_params.port && this.add_server_params.name)){
                     this.addNotice('主机、端口和名称必传');
+                }else{
+                    for(const k in this.server_menus){
+                        const server_menu = this.server_menus[k];
+                        if(this.add_server_params.host === server_menu.host && this.add_server_params.port === server_menu.port){
+                            this.addNotice('服务已经存在!');
+                            return;
+                        }
+                    }
+                    this.addServer();
                 }
             }
         }

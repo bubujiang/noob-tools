@@ -18,8 +18,8 @@
         data(){
             return {
                 //img:require("assets/loading.gif")
-                //img:require("assets/conned.png")
-                img:''
+                img:require("assets/conned.png")
+                //img:''
             }
         },
         methods:{
