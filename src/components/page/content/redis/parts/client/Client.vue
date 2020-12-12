@@ -1,6 +1,6 @@
 <template>
     <div class="client" v-if="Object.keys(server_tabs).length">
-        <Header v-bind:tabs="server_tabs" v-bind:selected_tab="current_server_tab" v-on:selected-tab="changeServerTab($event)" />
+        <Header v-bind:tabs="server_tabs" v-bind:selected_tab="current_selected_tab" v-on:selected-tab="changeSelectedTab($event)" />
         
         <div v-for="(server, key) in server_tabs" v-bind:key="key">
             <InfoBody v-bind:info="server" v-if="isShow(key)"></InfoBody>
@@ -34,7 +34,7 @@
         computed: {
             ...mapState('RStore', [
                 'server_tabs',
-                'current_server_tab'
+                'current_selected_tab'
             ])
         },
         data(){
@@ -51,12 +51,12 @@
         },
         methods: {
             ...mapMutations('RStore', [
-                'changeServerTab'
+                'changeSelectedTab'
             ]),
             isShow(key){
-                if(this.current_server_tab.server === key && this.current_server_tab.db === null){
+                if(this.current_selected_tab.server === key && this.current_selected_tab.db === null){
                     return true;
-                }else if(this.current_server_tab.server + this.current_server_tab.db === key){
+                }else if(this.current_selected_tab.server + this.current_selected_tab.db === key){
                     return true;
                 }
                 return false;

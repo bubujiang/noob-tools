@@ -49,9 +49,9 @@ app.on('activate', () => {
 })
 
 ipcMain.on('close-app', () => {
-    if (process.platform !== 'darwin') {
+    //if (process.platform !== 'darwin') {
         app.quit()
-    }
+    //}
 })
 
 ipcMain.on('min-app', e => mainWindow.minimize())

@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        servers: [], //连接列表
+        server_menus: [], //连接列表
         add_server_popup_show: false, //显示\隐藏连接添加框
         add_server_params: { //正添加连接的参数
             host: null,
@@ -21,7 +21,7 @@ export default {
                 db: {db0:{keys:11},db1:{keys:12}}
             }*/
         }, //操作区
-        current_server_tab:{/*server:'127.0.0.1:99',db:'db1'*/}//当前操作区
+        current_selected_tab:{/*server:'127.0.0.1:99',db:'db1'*/}//当前操作区
     },
     mutations: {
         //显示\隐藏连接添加框
@@ -39,7 +39,7 @@ export default {
         },
         //添加连接
         addServer(state) {
-            state.servers.push(state.add_server_params);
+            state.server_menus.push(state.add_server_params);
             state.add_server_params = {
                 host: null,
                 port: null,
@@ -49,8 +49,8 @@ export default {
             state.add_server_popup_show = false;
         },
         //切换操作区
-        changeServerTab(state,server_tab){
-            state.current_server_tab = server_tab;
+        changeSelectedTab(state,selected_tab){
+            state.current_selected_tab = selected_tab;
         }
     }
 }

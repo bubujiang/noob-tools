@@ -2,7 +2,7 @@
     <div class="servers">
         <ol class="servers-ol">
             <Button />
-            <Item v-for="server in servers" v-bind:server="server" v-bind:key="server.id"></Item>
+            <Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>
         </ol>
         <transition name="server-slide">
             <Popup v-if="add_server_popup_show" />
@@ -27,7 +27,7 @@
         },
         computed:{
             ...mapState('RStore',[
-                'servers',
+                'server_menus',
                 'add_server_popup_show'
             ])
         }
