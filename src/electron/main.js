@@ -4,21 +4,14 @@ const {
     Menu,
     ipcMain
 } = require('electron')
-const {
-    Worker,
-    MessageChannel
-} = require('worker_threads');
 const _ = require('lodash');
 
-
-const {redisTestConn} = require('./redis.ipc.js')
-
-//const { delete, delete } = require('vue/types/umd');
+const {redisTestConn,redisMakeThread} = require('./redis.ipc.js')
 
 let mainWindow;
-const allow_max_worker_len = 5;
-let current_worker_no = 0;
-const workers = {};
+const allow_max_worker_len = 5;//允许的最大连接数
+const sort_worers = [];//线程活跃排序,最后使用的放最前面
+const workers = {};//线程集合
 
 function createWindow() {
     Menu.setApplicationMenu(null)
@@ -39,9 +32,10 @@ function createWindow() {
 app.whenReady().then(createWindow)
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
+    //if (process.platform !== 'darwin') {
         app.quit()
-    }
+        //process.exit();
+    //}
 })
 
 app.on('activate', () => {
@@ -53,6 +47,7 @@ app.on('activate', () => {
 ipcMain.on('close-app', () => {
     //if (process.platform !== 'darwin') {
         app.quit()
+        //process.exit();
     //}
 })
 
@@ -69,37 +64,18 @@ ipcMain.on('toggle-app', e => {
 )
 
 /**
- * mkredth 创建线程并连接/进重连
+ * redis-make-thread 创建线程并连接/进重连
  * clsredth 退出线程并关闭连接
  * redis-test-conn 测试连接
  * command 各种redis操作指令
  */
-ipcMain.on('mkredth', (e, conn) => {
-    console.log('//////////////');
-    const key = conn.host + ':' + conn.port;
-    let cworker;
-    if (_.hasIn(workers, key)) {
-        cworker = workers[key];
-    } else {
-        cworker = new Worker('./src/worker/redis.worker.js');
-        workers[key] = cworker;
-    }
-    cworker.postMessage({
-        type: 'connect',
-        'conn': conn
-    });
-    console.log('main proc')
-
-    let keys = _.keys(workers);
-    if (keys.length > allow_max_worker_len) {
-        console.log('more then 5');
-        workers[keys[0]].postMessage({
-            type: 'exit'
-        });
-        delete workers[keys[0]];
-    }
-
-    delete keys;
+ipcMain.on('redis-make-thread', (e, conn)=>{
+    redisMakeThread.call(this,e,conn,workers,sort_worers,allow_max_worker_len);
+    console.log('sort_worers',sort_worers);
+    //
+    //切换标签
+    //mainWindow.webContents.send('redis-change-selected-tab', 'whoooooooh!')
+    //
 })
 
 ipcMain.handle('redis-test-conn', async (e, conn) => {
