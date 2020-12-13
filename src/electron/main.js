@@ -9,7 +9,9 @@ const {
     MessageChannel
 } = require('worker_threads');
 const _ = require('lodash');
-const redis = require("redis");
+
+
+const {redisTestConn} = require('./redis.ipc.js')
 
 //const { delete, delete } = require('vue/types/umd');
 
@@ -69,7 +71,7 @@ ipcMain.on('toggle-app', e => {
 /**
  * mkredth 创建线程并连接/进重连
  * clsredth 退出线程并关闭连接
- * tsconn 测试连接
+ * redis-test-conn 测试连接
  * command 各种redis操作指令
  */
 ipcMain.on('mkredth', (e, conn) => {
@@ -100,36 +102,6 @@ ipcMain.on('mkredth', (e, conn) => {
     delete keys;
 })
 
-ipcMain.handle('tsconn', async (e, conn) => {
-    console.log('tsconn start');
-    console.log('params', conn);
-
-    delete conn.name;
-
-    console.log('c params',conn);
-
-    let prom = new Promise((resolve, reject) => {
-        const client = redis.createClient(conn);
-
-        client.on("ready", function () {
-            client.quit();
-            resolve();
-        });
-
-        client.on("error", function (error) {
-            reject(error);
-        });
-    });
-
-    return await prom.then(()=>{
-        return {
-            type: 'success'
-        };
-    }).catch((error)=>{
-        return {
-            type: 'error',
-            info: error
-        };
-    });
-
+ipcMain.handle('redis-test-conn', async (e, conn) => {
+    return await redisTestConn.call(this,e,conn);
 })

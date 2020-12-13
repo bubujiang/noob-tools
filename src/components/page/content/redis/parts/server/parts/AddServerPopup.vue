@@ -44,7 +44,7 @@
             ]),
             testConn(){
                 if(this.add_server_params.host && this.add_server_params.port){
-                    rTsConn.call(this,ipcRenderer,add_server_params,this.addSuccess,this.addError)
+                    rTsConn.call(this,ipcRenderer,this.add_server_params,this.addSuccess,this.addError)
                 }else{
                     this.addNotice('主机和端口必传');
                 }

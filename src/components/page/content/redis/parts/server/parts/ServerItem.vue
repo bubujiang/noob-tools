@@ -35,8 +35,8 @@
         data(){
             return {
                 //img:require("assets/loading.gif")
-                img:require("assets/conned.png")
-                //img:''
+                //img:require("assets/conned.png")
+                img:''
             }
         },
         methods:{
@@ -44,6 +44,7 @@
                 'changeSelectedTab','setError'
             ]),
             mkRedTh(){
+                //存在就切换
                 for(const k in this.server_tabs){
                     const server = this.server_tabs[k];
                     if(this.menu.host === server.host
@@ -53,12 +54,11 @@
                     }
                 }
                 ////
-                //console.log('ssss',this.menu);
-                rTsConn.call(this,ipcRenderer,this.menu,(sucess)=>{},(error)=>{
+                rTsConn.call(this,ipcRenderer,this.menu,(sucess)=>{
+                    ipcRenderer.send('mkredth',this.server);
+                },(error)=>{
                     this.setError({k:'conn',v:error});
                 });
-                //if(this.server.host){}
-                //ipcRenderer.send('mkredth',this.server);
             }
         }
     }
