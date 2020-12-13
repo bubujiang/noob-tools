@@ -3,7 +3,7 @@
         <ol class="servers-ol">
             <Button />
             <li><ol class="list">
-                <Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>
+                <Item v-for="(menu,i) in server_menus" v-bind:menu="menu" v-bind:key="i" v-bind:menu_k="i"></Item>
             </ol></li>
             <!--<Item v-for="menu in server_menus" v-bind:server="menu" v-bind:key="menu.id"></Item>-->
         </ol>

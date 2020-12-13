@@ -1,10 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const {
-  CleanWebpackPlugin
-} = require("clean-webpack-plugin");
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 module.exports = {
   mode: "development",
@@ -19,7 +16,8 @@ module.exports = {
     //publicPath: '/',
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
@@ -44,7 +42,7 @@ module.exports = {
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: "vue-loader",
       },
       {
         test: /\.html$/i,
@@ -56,10 +54,10 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
-      }
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
     ],
   },
   plugins: [
@@ -70,7 +68,7 @@ module.exports = {
       template: "src/iframe.tpl",
       publicPath: "./",
     }),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
   ],
   resolve: {
     fallback: {
@@ -78,9 +76,10 @@ module.exports = {
       //worker_threads: require.resolve("worker_threads"),
     },
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      common: path.resolve(__dirname, 'src/components/page/common'),
-      assets: path.resolve(__dirname, 'src/assets')
-    }
-  }
+      vue$: "vue/dist/vue.esm.js",
+      common: path.resolve(__dirname, "src/components/page/common"),
+      assets: path.resolve(__dirname, "src/assets"),
+      pbm: path.resolve(__dirname, "src/method"),
+    },
+  },
 };

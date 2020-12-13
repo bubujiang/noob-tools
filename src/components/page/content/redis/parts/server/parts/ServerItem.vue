@@ -1,19 +1,36 @@
 <template>
     <li class="server">
-        <span class="server-name" v-on:click="mkRedTh">{{ server.name }}</span>
+        <span class="server-name" v-on:click="mkRedTh">{{ menu.name }}</span>
         <span class="img-span" v-if="img"><img class="img" :src="img" /></span>
+        <AlertConnError v-if="error.conn" v-bind:menu_k="menu_k" v-bind:menu="menu" />
     </li>
 </template>
 
 <script>
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
+    import {mapState,mapMutations} from 'vuex'
+    import {rTsConn} from 'pbm/redis.m.js'
+    import AlertConnError from './AlertConnErrorOp.vue'
+
     export default {
         props: {
-            server: {
+            menu_k:{
+                type:Number,
+                required:true
+            },
+            menu: {
                 type: Object,
                 required: true
             }
+        },
+        components:{
+            AlertConnError
+        },
+        computed:{
+            ...mapState('RStore',[
+                'server_tabs','error'
+            ])
         },
         data(){
             return {
@@ -23,8 +40,25 @@
             }
         },
         methods:{
-            mkRedTh(e){
-                ipcRenderer.send('mkredth',this.server);
+            ...mapMutations('RStore',[
+                'changeSelectedTab','setError'
+            ]),
+            mkRedTh(){
+                for(const k in this.server_tabs){
+                    const server = this.server_tabs[k];
+                    if(this.menu.host === server.host
+                    && this.menu.port === server.port){
+                        this.changeSelectedTab(this.server);
+                        return;
+                    }
+                }
+                ////
+                //console.log('ssss',this.menu);
+                rTsConn.call(this,ipcRenderer,this.menu,(sucess)=>{},(error)=>{
+                    this.setError({k:'conn',v:error});
+                });
+                //if(this.server.host){}
+                //ipcRenderer.send('mkredth',this.server);
             }
         }
     }
