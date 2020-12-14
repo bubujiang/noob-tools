@@ -1,5 +1,5 @@
 function testConn(ipcRenderer,add_server_params,success,error){
-    ipcRenderer.invoke('redis-test-conn', add_server_params).then((result) => {
+    ipcRenderer.invoke('redis-render-test-conn', add_server_params).then((result) => {
         if(result.type === 'success'){
             success('success')
         }else{
