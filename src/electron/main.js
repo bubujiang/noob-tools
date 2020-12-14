@@ -7,8 +7,10 @@ const {
 
 //const {redisTestConn,redisMakeThread} = require('./redis.ipc.js')
 const {
-    redisSelectedServerMenu,
-    redisTestConn
+    redisSelectServerMenu,
+    redisSelectConnectedServerMenu,
+    redisTestConn,
+    redisIsConnected
 } = require('./redis.ipc.js')
 
 let mainWindow;
@@ -66,12 +68,36 @@ ipcMain.on('toggle-app', e => {
 })
 
 /**
+ * 判断一个服务是否已经存在
+ * @param {Object} conn {host:"",port:"",auth:"",name:""} 
+ */
+//ipcMain.handle('redis-render-is-connected', (event, conn) => {
+//    return redisIsConnected.call(this,conn,workers);
+//});
+
+/**
  * 渲染进程选择一个服务连接
  * @param {Object} conn {host:"",port:"",auth:"",name:""} 
  */
-ipcMain.on('redis-render-selected-server-menu', (event, conn) => {
-    redisSelectedServerMenu.call(this, conn);
+ipcMain.handle('redis-render-select-server-menu', (event, conn) => {
+    return redisSelectServerMenu.call(this,conn,workers);
 });
+
+/**
+ * 渲染进程选择一个已经存在的服务连接
+ * @param {Object} conn {host:"",port:"",auth:"",name:""} 
+ */
+//ipcMain.handle('redis-render-select-connected-server-menu', (event, conn) => {
+//    return redisSelectConnectedServerMenu.call(this,conn,workers);
+//});
+
+/**
+ * 渲染进程选择一个服务连接
+ * @param {Object} conn {host:"",port:"",auth:"",name:""} 
+ */
+//ipcMain.on('redis-render-selected-server-menu', (event, conn) => {
+//    redisSelectedServerMenu.call(this, conn);
+//});
 
 /**
  * 渲染进程测试一个服务连接
