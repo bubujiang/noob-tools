@@ -65,7 +65,7 @@
                         if(this.edit_server_params.host === server_menu.host 
                         && this.edit_server_params.port === server_menu.port
                         && k != this.menu_k){
-                            console.log('key',k, this.menu_k);
+                            //console.log('key',k, this.menu_k);
                             this.addNotice('服务已经存在!');
                             return;
                         }

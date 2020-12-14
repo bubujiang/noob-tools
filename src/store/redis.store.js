@@ -99,7 +99,7 @@ export default {
       };
       state.edit_server_popup_show = false;
 
-      console.log('edit',state,key);
+      //console.log('edit',state,key);
     },
     ///////////////////////////////////////////////////////////////////////
     //切换操作区

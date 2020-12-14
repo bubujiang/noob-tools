@@ -12,6 +12,7 @@ let mainWindow;
 const allow_max_worker_len = 5;//允许的最大连接数
 const sort_worers = [];//线程活跃排序,最后使用的放最前面
 const workers = {};//线程集合
+const redis_clients = {};//redis连接对象集合
 
 function createWindow() {
     Menu.setApplicationMenu(null)
@@ -65,15 +66,15 @@ ipcMain.on('toggle-app', e => {
 
 /**
  * redis-make-thread 创建线程并连接/进重连
- * clsredth 退出线程并关闭连接
  * redis-test-conn 测试连接
- * command 各种redis操作指令
  */
 ipcMain.on('redis-make-thread', (e, conn)=>{
-    redisMakeThread.call(this,e,conn,workers,sort_worers,allow_max_worker_len);
-    console.log('sort_worers',sort_worers);
+    redisMakeThread.call(this,e,conn,workers,redis_clients,sort_worers,allow_max_worker_len);
+    //console.log('sort_worers',sort_worers,key);
+    //添加空的servers_tab并切换标签
+    //mainWindow.webContents.send('redis-add-server-tabs-and-change-selected-tab', conn)
+    //取得数据返回给渲染进程并修改servers_menu标绿
     //
-    //切换标签
     //mainWindow.webContents.send('redis-change-selected-tab', 'whoooooooh!')
     //
 })
