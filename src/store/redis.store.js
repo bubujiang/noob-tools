@@ -1,7 +1,13 @@
 export default {
   namespaced: true,
   state: {
-    server_menus: [], //连接列表
+    server_menus: [/*{
+      host: null,
+      port: null,
+      auth: null,
+      name: null,
+      state: 0//-1连接出错，0未连接，1,正在连接, 2已连接 
+    }*/], //连接列表
     add_server_popup_show: false, //显示\隐藏连接添加框
     add_server_params: {
       //正添加连接的参数
@@ -27,18 +33,24 @@ export default {
           redis_build_id: "470780e9c85f8d8b",
         },
         db: {
-          db0: { key_num: 11, keys: ["aa", "bb", "ccc"] },
-          db1: { key_num: 12 },
+          db0: {
+            key_num: 11,
+            keys: ["aa", "bb", "ccc"]
+          },
+          db1: {
+            key_num: 12
+          },
         },
+        state:2//-1连接出错，2已连接
       },
-      /*'127.0.0.2:99': {
-                name:'server2',
-                info: {redis_version:'3.0.5',redis_git_sha1:'000',redis_build_id:'470780e9c85f8d8b'},
-                db: {db0:{keys:11},db1:{keys:12}}
-            }*/
     }, //操作区
-    current_selected_tab: { server: "127.0.0.1:99", db: "db1" }, //当前操作区
-    error: { conn: '' },
+    current_selected_tab: {
+      server: "127.0.0.1:99",
+      db: "db1"
+    }, //当前操作区
+    error: {
+      conn: ''
+    },
   },
   mutations: {
     //显示\隐藏连接添加框
@@ -67,8 +79,10 @@ export default {
     },
     /////////////////////////////////////////////////////////////////////
     //初始连接编辑框
-    initEditPopup(state,menu){
-      state.edit_server_params = {...menu};
+    initEditPopup(state, menu) {
+      state.edit_server_params = {
+        ...menu
+      };
     },
     //显示\隐藏连接编辑框
     popupEditSwitch(state) {
@@ -84,7 +98,7 @@ export default {
       };
     },
     //确认编辑
-    editServer(state,key){
+    editServer(state, key) {
       //state.server_menus[0].name = 'ddddddff';
       state.server_menus[Number(key)].host = state.edit_server_params.host;
       state.server_menus[Number(key)].port = state.edit_server_params.port;
@@ -107,14 +121,14 @@ export default {
       state.current_selected_tab = selected_tab;
     },
     //设置错误
-    setError(state,error){
-        //console.log('error1',state.error,error);
-        state.error[error.k] = error.v;
-        //console.log('error',state.error);
+    setError(state, error) {
+      //console.log('error1',state.error,error);
+      state.error[error.k] = error.v;
+      //console.log('error',state.error);
     },
     //删除一个menu
-    delMenuByK(state,i){
-        state.server_menus.splice(i,1);
+    delMenuByK(state, i) {
+      state.server_menus.splice(i, 1);
     }
   },
 };

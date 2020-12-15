@@ -8,10 +8,11 @@ const {
 //const {redisTestConn,redisMakeThread} = require('./redis.ipc.js')
 const {
     redisSelectServerMenu,
-    redisSelectConnectedServerMenu,
+    //redisSelectConnectedServerMenu,
     redisTestConn,
-    redisIsConnected
-} = require('./redis.ipc.js')
+    //redisIsConnected
+} = require('./redis.ipc.js');
+const { promises } = require('fs');
 
 let mainWindow;
 const allow_max_worker_len = 5; //允许的最大连接数
@@ -107,8 +108,8 @@ ipcMain.handle('redis-render-test-conn', async (event, conn) => {
     return await redisTestConn.call(this, conn);
 })
 
-ipcMain.on('redis-make-thread', (e, conn) => {
-    redisMakeThread.call(this, e, conn, workers, redis_clients, sort_worers, allow_max_worker_len);
+//ipcMain.on('redis-make-thread', (e, conn) => {
+//    redisMakeThread.call(this, e, conn, workers, redis_clients, sort_worers, allow_max_worker_len);
     //console.log('sort_worers',sort_worers,key);
     //添加空的servers_tab并切换标签
     //mainWindow.webContents.send('redis-add-server-tabs-and-change-selected-tab', conn)
@@ -116,4 +117,33 @@ ipcMain.on('redis-make-thread', (e, conn) => {
     //
     //mainWindow.webContents.send('redis-change-selected-tab', 'whoooooooh!')
     //
+//})
+
+/*ipcMain.on('test1',(event) => {
+    for (let i=0;i<1000000;i++)
+        {
+            if(!(i%1000)){
+                console.log('a',i);
+            }
+        }
+})
+
+ipcMain.on('test2',(event) => {
+    for (let i=0;i<1000000;i++)
+        {
+            if(!(i%1000)){
+                console.log('b',i);
+            }
+        }
+})*/
+
+ipcMain.handle('test3',async (event) => {
+    for (let i=0;i<100000000;i++)
+        {
+            if(!(i%1000)){
+                console.log('b',i);
+            }
+        }
+    return await Promise.resolve(1);
+    
 })

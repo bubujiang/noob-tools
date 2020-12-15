@@ -8,4 +8,14 @@ function testConn(ipcRenderer,add_server_params,success,error){
     })
 }
 
-export {testConn as rTsConn}
+function testipc(ipcRenderer){
+    /*ipcRenderer.send('test1');
+    console.log('ddddddddddddddd');
+    ipcRenderer.send('test2');
+    console.log('ffffffffffffffffffffffff');*/
+    ipcRenderer.invoke('test3').then((result) => {
+        console.log(result);
+    });
+}
+
+export {testConn as rTsConn,testipc}
