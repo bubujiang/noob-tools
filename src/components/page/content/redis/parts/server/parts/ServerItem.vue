@@ -10,7 +10,7 @@
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
     import {mapState,mapMutations} from 'vuex'
-    import {rTsConn} from 'pbm/redis.m.js'
+    import {rTsConn} from 'pbm/redis.renderer.js'
     import AlertConnError from './AlertConnErrorOp.vue'
 
     export default {

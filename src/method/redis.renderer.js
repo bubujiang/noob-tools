@@ -3,7 +3,7 @@ function testConn(ipcRenderer,add_server_params,success,error){
         if(result.type === 'success'){
             success('success')
         }else{
-            error(result.info.message)
+            error(result.msg)
         }
     })
 }

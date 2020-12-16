@@ -20,7 +20,7 @@
         mapMutations,mapState
     } from 'vuex'
 
-    import {rTsConn} from 'pbm/redis.m.js'
+    import {rTsConn} from 'pbm/redis.renderer.js'
     
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
