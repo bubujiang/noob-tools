@@ -7,27 +7,44 @@ const {
 
 /**
  * 渲染进程选择一个服务连接
- * @param {Object} conn {host:"",port:"",auth:"",name:""}
+ * @param {Object} conn {host:"",port:"",auth:""}
  */
-function selectServerMenu(conn, workers, sort_worers, redis_clients, max_len) {
+async function selectServerMenu(conn, workers, sort_worers, redis_clients, max_len) {
     const key = conn.host + ':' + conn.port;
+    ////////////////////////////////////////////////////////redis相关操作
+    //获得redis client
+    //出错返回
+    let redis_client;
+    if (_.hasIn(redis_clients, key)) {
+        redis_client = redis_clients[key];
+    } else {
 
+        const prom = ((params) => {
+            return new Promise((resolve, reject) => {
+                _createRedisClient(params, resolve, reject);
+            });
+        })(conn);
 
+        let result = await prom.then((client) => {
+            return {
+                type: 'success',
+                client
+            }
+        }).catch((error) => {
+            return {
+                type: 'error',
+                info: error
+            };
+        });
 
+        if (result.type === 'error') {
+            return result;
+        } else {
+            redis_client = result.client;
+        }
 
-
-    //增加redis clients
-    _createRedisClient(conn).then((client) => {
-        redis_clients[key] = client;
-    }).catch((error) => {
-        return {
-            type: 'error',
-            info: error
-        };
-    });
-
-
-    //const key = conn.host + ':' + conn.port;
+    }
+    /////////////////////////////////////////////////////////////线程相关操作
     let cworker;
     if (_.hasIn(workers, key)) {
         //存在重排
@@ -39,7 +56,26 @@ function selectServerMenu(conn, workers, sort_worers, redis_clients, max_len) {
         }
     } else {
         //新建放入
-        cworker = new Worker('./src/worker/redis.worker.js');
+        cworker = new Worker('./src/worker/redis.worker.js', {
+            workerData: workers,
+            sort_worers,
+            redis_clients
+        });
+
+        cworker.on('message', (message) => {
+            switch (message.type) {
+                case 'select-server-menu'://用户选择一个服务连接
+                    selectServerMenu.call(this,message.conn);
+                    break;
+                case 'command':
+                    command.call(this,message.comm);
+                    break;
+                default:
+                    console.log('exit');
+                    exit;
+                    break;
+            }
+        })
         workers[key] = cworker;
     }
     //放入排序最上
@@ -52,6 +88,11 @@ function selectServerMenu(conn, workers, sort_worers, redis_clients, max_len) {
         });
         delete workers[rkey];
     }
+    /////////////////////////////////////////////////////////////////转到线程内操作
+    cworker.postMessage({
+        type: 'select-server-menu',
+        conn
+    });
 }
 
 /**
@@ -68,12 +109,15 @@ async function testConn(conn) {
     return await prom.then((client) => {
         client.quit();
         return {
-            type: 'success'
+            module: 'redis',
+            type: 'success',
+            msg: '连接成功!'
         };
     }).catch((error) => {
         return {
+            module: 'redis',
             type: 'error',
-            info: error
+            msg: error.message
         };
     });
 }
