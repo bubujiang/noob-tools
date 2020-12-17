@@ -1,5 +1,11 @@
 const Redis = require("ioredis");
 
+/**
+ * 
+ * @param @param {Object} conn {host:"",port:"",auth:""}
+ * @param {Function} success 
+ * @param {Function} fail 
+ */
 function createRedisClient(conn, success, fail) {
     const client = new Redis({
         port: conn.port,
@@ -30,4 +36,11 @@ function createRedisClient(conn, success, fail) {
     return client;
 }
 
+function makeRendererResponseMsg(module,type,msg,ext={}) {
+    return {
+        module,type,msg,...ext
+    }
+}
+
 exports.createRedisClient = createRedisClient;
+exports.makeRendererResponseMsg = makeRendererResponseMsg;

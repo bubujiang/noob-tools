@@ -1,15 +1,19 @@
 const _ = require('lodash');
 const {
-    Worker
+    Worker,
+    ipcMain
 } = require('worker_threads');
-const { createRedisClient } = require('./../method/redis.main.js');
+const {
+    createRedisClient,
+    makeRendererResponseMsg
+} = require('./../method/redis.main.js');
 
 
 /**
  * 渲染进程选择一个服务连接
  * @param {Object} conn {host:"",port:"",auth:""}
  */
-async function selectServerMenu(conn, workers, sort_worers, redis_clients, max_len) {
+async function selectServerMenu(conn, win, workers, sort_worers, redis_clients, max_len) {
     const key = conn.host + ':' + conn.port;
     /////////////////////////////////////////////////////////////线程相关操作
     let redis_client;
@@ -35,17 +39,22 @@ async function selectServerMenu(conn, workers, sort_worers, redis_clients, max_l
         });
 
         cworker.on('message', (message) => {
-            switch (message.type) {
-                case 'select-server-menu': //用户选择一个服务连接
-                    //selectServerMenu.call(this,message.conn);
+            switch (message.th_msg_type) {
+                case 'th-select-server-menu-return': //用户选择一个服务连接
+                    if (message.th_rtn_type === 'error') {
+                        win.webContents.send('redis-render-select-server-menu-return', message.renderer)
+                        //删除
+                        for (const k in sort_worers) {
+                            if (sort_worers[k] === key) {
+                                sort_worers.splice(k, 1);
+                            }
+                        }
+                        delete workers[key];
+                    } else {
+                        //win.webContents.send('redis-render-select-server-menu-return', message)
+                    }
+                    //win.webContents.send('redis-render-select-server-menu-return', message)
                     break;
-                    //case 'command':
-                    //    command.call(this,message.comm);
-                    //    break;
-                    //default:
-                    //    console.log('exit');
-                    //    exit;
-                    //    break;
             }
         })
         workers[key] = cworker;
@@ -62,7 +71,7 @@ async function selectServerMenu(conn, workers, sort_worers, redis_clients, max_l
     }
     /////////////////////////////////////////////////////////////////转到线程内操作
     cworker.postMessage({
-        type: 'select-server-menu',
+        type: 'th-select-server-menu', //用户选择一个服务连接
         conn
     });
 }
@@ -80,17 +89,9 @@ async function testConn(conn) {
 
     return await prom.then((client) => {
         client.quit();
-        return {
-            module: 'redis',
-            type: 'success',
-            msg: '连接成功!'
-        };
+        return makeRendererResponseMsg('redis', 'success', '连接成功!');
     }).catch((error) => {
-        return {
-            module: 'redis',
-            type: 'error',
-            msg: error.message
-        };
+        return makeRendererResponseMsg('redis', 'error', error.message);
     });
 }
 

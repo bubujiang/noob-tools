@@ -5,7 +5,7 @@ const {
     parentPort,
     workerData
 } = require('worker_threads');
-const { createRedisClient } = require('./../method/redis.main.js');
+const { createRedisClient,makeRendererResponseMsg } = require('./../method/redis.main.js');
 
 function selectServerMenu(conn) {
     console.log('select-server-menu', conn);
@@ -25,16 +25,11 @@ function selectServerMenu(conn) {
                 client
             }
         }).catch((error) => {
-            return {
-                module: 'redis',
-                type: 'error',
-                msg: error.message
-            };
+            return makeRendererResponseMsg('redis','error',error.message);
         });
 
         if (result.type === 'error') {
-            parentPort.postMessage(result);
-            //return result;
+            parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:result});
         } else {
             redis_client = result.client;
         }
@@ -44,19 +39,9 @@ function selectServerMenu(conn) {
     redis_client.info("server", function (error, result) {
         if (error) {
             redis_client.quit();
-            parentPort.postMessage({
-                module: 'redis',
-                type: 'error',
-                msg: error
-            });
+            parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:makeRendererResponseMsg('redis','error',error)});
         } else {
-            parentPort.postMessage({
-                module: 'redis',
-                type: 'success',
-                msg: 'success',
-                data: result,
-                client: redis_client
-            });
+            parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'success',server_info:result,redis_client});
         }
     });
 }
@@ -67,7 +52,7 @@ function command(comm) {
 
 parentPort.on('message', (message) => {
     switch (message.type) {
-        case 'select-server-menu': //用户选择一个服务连接
+        case 'th-select-server-menu': //用户选择一个服务连接
             selectServerMenu.call(this, message.conn);
             break;
         case 'command':

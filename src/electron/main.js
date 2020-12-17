@@ -4,17 +4,10 @@ const {
     Menu,
     ipcMain
 } = require('electron')
-
-//const {redisTestConn,redisMakeThread} = require('./redis.ipc.js')
 const {
     redisSelectServerMenu,
-    //redisSelectConnectedServerMenu,
     redisTestConn,
-    //redisIsConnected
 } = require('./redis.ipc.js');
-const {
-    promises
-} = require('fs');
 
 let mainWindow;
 const allow_max_worker_len = 5; //允许的最大连接数
@@ -74,7 +67,7 @@ ipcMain.on('toggle-app', e => {
  * 渲染进程选择一个服务连接
  * @param {Object} conn {host:"",port:"",auth:"",name:""} 
  */
-ipcMain.handle('redis-render-select-server-menu', (event, conn) => {
+ipcMain.on('redis-render-select-server-menu', (event, conn) => {
     return redisSelectServerMenu.call(this, conn, workers);
 });
 
