@@ -54,10 +54,10 @@
                     }
                 }
                 ////
-                ipcRenderer.send('redis-make-thread',this.menu);
-                return;
+                //ipcRenderer.send('redis-make-thread',this.menu);
+                //return;
                 rTsConn.call(this,ipcRenderer,this.menu,(sucess)=>{
-                    ipcRenderer.send('redis-make-thread',this.menu);
+                    ipcRenderer.send('redis-render-select-server-menu',this.menu);
                 },(error)=>{
                     this.setError({k:'conn',v:error});
                 });

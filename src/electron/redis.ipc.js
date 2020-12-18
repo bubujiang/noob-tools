@@ -42,6 +42,10 @@ async function selectServerMenu(conn, win, workers, sort_worers, redis_clients, 
             switch (message.th_msg_type) {
                 case 'th-select-server-menu-return': //用户选择一个服务连接
                     if (message.th_rtn_type === 'error') {
+                        //错误删除线程并返回错误
+                        cworker.postMessage({
+                            type: 'exit', //退出
+                        });
                         win.webContents.send('redis-render-select-server-menu-return', message.renderer)
                         //删除
                         for (const k in sort_worers) {
@@ -51,9 +55,10 @@ async function selectServerMenu(conn, win, workers, sort_worers, redis_clients, 
                         }
                         delete workers[key];
                     } else {
-                        //win.webContents.send('redis-render-select-server-menu-return', message)
+                        //返回成功消息并添加到redis集合
+                        win.webContents.send('redis-render-select-server-menu-return', message.renderer)
+                        redis_clients[key] = message.redis_client
                     }
-                    //win.webContents.send('redis-render-select-server-menu-return', message)
                     break;
             }
         })

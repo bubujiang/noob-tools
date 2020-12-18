@@ -8,4 +8,6 @@ function testConn(ipcRenderer,add_server_params,success,error){
     })
 }
 
+function selectServerMenu(){}
+
 export {testConn as rTsConn}

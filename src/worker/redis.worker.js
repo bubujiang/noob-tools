@@ -41,7 +41,7 @@ function selectServerMenu(conn) {
             redis_client.quit();
             parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:makeRendererResponseMsg('redis','error',error)});
         } else {
-            parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'success',server_info:result,redis_client});
+            parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'success',redis_client,renderer:makeRendererResponseMsg('redis','success','',{info:result})});
         }
     });
 }
