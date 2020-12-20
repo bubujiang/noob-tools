@@ -80,6 +80,7 @@ module.exports = {
       common: path.resolve(__dirname, "src/components/page/common"),
       assets: path.resolve(__dirname, "src/assets"),
       pbm: path.resolve(__dirname, "src/method"),
+      msg: path.resolve(__dirname, "src/message"),
     },
   },
 };

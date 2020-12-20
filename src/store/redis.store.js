@@ -68,7 +68,7 @@ export default {
     },
     //添加连接
     addServer(state) {
-      state.server_menus.push(state.add_server_params);
+      state.server_menus.push({...state.add_server_params,state:0});
       state.add_server_params = {
         host: null,
         port: null,
@@ -104,6 +104,7 @@ export default {
       state.server_menus[Number(key)].port = state.edit_server_params.port;
       state.server_menus[Number(key)].auth = state.edit_server_params.auth;
       state.server_menus[Number(key)].name = state.edit_server_params.name;
+      state.server_menus[Number(key)].state = 0;
       //state.server_menus[Number(key)] = {...state.edit_server_params};
       state.edit_server_params = {
         host: null,
@@ -112,8 +113,11 @@ export default {
         name: null,
       };
       state.edit_server_popup_show = false;
-
-      //console.log('edit',state,key);
+    },
+    //修改连接状态正在连接
+    updateServerState(state,key_state){
+      state.server_menus[Number(key_state.k)].state = Number(key_state.s);
+      console.log('menussssss',state.server_menus);
     },
     ///////////////////////////////////////////////////////////////////////
     //切换操作区

@@ -20,7 +20,8 @@
         mapMutations,mapState
     } from 'vuex'
 
-    import {rTsConn} from 'pbm/redis.renderer.js'
+    //import {rTsConn} from 'pbm/redis.renderer.js'
+    import {Message} from 'msg/renderer.process.msg.js'
     
     const ipcRenderer = window['require']('electron').ipcRenderer;
 
@@ -44,7 +45,8 @@
             ]),
             testConn(){
                 if(this.add_server_params.host && this.add_server_params.port){
-                    rTsConn.call(this,ipcRenderer,this.add_server_params,this.addSuccess,this.addError)
+                    Message.send.renderer.redis_test_server.call(this,this.add_server_params,this.addSuccess,this.addError);
+                    //rTsConn.call(this,ipcRenderer,this.add_server_params,this.addSuccess,this.addError)
                 }else{
                     this.addNotice('主机和端口必传');
                 }

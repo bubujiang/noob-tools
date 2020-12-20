@@ -9,6 +9,10 @@ const {
     redisTestConn,
 } = require('./redis.ipc.js');
 
+const {
+    Message
+} = require('./../message/main.process.msg');
+
 let mainWindow;
 const allow_max_worker_len = 5; //允许的最大连接数
 const sort_worers = []; //线程活跃排序,最后使用的放最前面
@@ -65,16 +69,19 @@ ipcMain.on('toggle-app', e => {
 
 /**
  * 渲染进程选择一个服务连接
- * @param {Object} conn {host:"",port:"",auth:"",name:""} 
+ * @param {Object} conn {host:"",port:"",auth:""} 
  */
-ipcMain.on('redis-render-select-server-menu', (event, conn) => {
-    return redisSelectServerMenu.call(this, conn, workers);
+ipcMain.on('renderer-redis-select-server', (event, conn) => {
+    console.log('renderer-redis-select-server',conn);
+    return Message.get.renderer.redis_select_server(conn, workers, sort_worers, redis_clients);
+    //return redisSelectServerMenu.call(this, conn, workers);
 });
 
 /**
  * 渲染进程测试一个服务连接
- * @param {Object} conn {host:"",port:"",auth:"",name:""} 
+ * @param {Object} conn {host:"",port:"",auth:""} 
  */
-ipcMain.handle('redis-render-test-conn', async (event, conn) => {
-    return await redisTestConn.call(this, conn);
+ipcMain.handle('renderer-redis-test-conn', async (event, conn) => {
+    return await Message.get.renderer.redis_test_server(conn);
+    //return await redisTestConn.call(this, conn);
 })

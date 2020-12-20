@@ -1,13 +1,15 @@
-const {
+/*const {
     exit
 } = require('process');
 const {
     parentPort,
     workerData
 } = require('worker_threads');
-const { createRedisClient,makeRendererResponseMsg } = require('./../method/redis.main.js');
+const { createRedisClient,makeRendererResponseMsg } = require('./../method/redis.main.js');*/
 
-function selectServerMenu(conn) {
+const {Message} = require('./../message/worker.thread.msg.js');
+
+/*function selectServerMenu(conn) {
     console.log('select-server-menu', conn);
     const redis_client = workerData.redis_client;
     
@@ -63,4 +65,6 @@ parentPort.on('message', (message) => {
             exit;
             break;
     }
-});
+});*/
+
+Message.onMessage();
