@@ -60,6 +60,7 @@ exports.Message = {
                     if (result.type === 'error') {
                         //console.log('sssssssssggggggggggg',this,this.Message.send);
                         this.Message.send.main_th.redis_select_server('error',null,null,result.error);
+                        exit();
                         return;
                         //parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:result});
                     } else {
@@ -71,6 +72,7 @@ exports.Message = {
                     if (error) {
                         redis.quit();
                         this.send.main_th.redis_select_server('error',null,null,error);
+                        exit();
                         //parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:makeRendererResponseMsg('redis','error',error)});
                     } else {
                         this.send.main_th.redis_select_server('success',redis,result,null);

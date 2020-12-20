@@ -72,7 +72,7 @@ ipcMain.on('toggle-app', e => {
  * @param {Object} conn {host:"",port:"",auth:""} 
  */
 ipcMain.on('renderer-redis-select-server', (event, conn) => {
-    console.log('renderer-redis-select-server',conn);
+    console.log('start',conn);
     return Message.get.renderer.redis_select_server(conn, workers, sort_worers, redis_clients);
     //return redisSelectServerMenu.call(this, conn, workers);
 });
