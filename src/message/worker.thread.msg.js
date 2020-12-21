@@ -70,7 +70,7 @@ exports.Message = {
                     }
                 }
                 ////获得info
-                this.Message.redis.info("server", (error, result)=>{
+                this.Message.redis.info("all", (error, result)=>{
                     console.log('worker process get info', error, result, '////////////////////////');
                     if (error) {
                         this.Message.redis.quit();

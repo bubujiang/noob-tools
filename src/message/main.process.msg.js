@@ -8,8 +8,7 @@ const {
 } = require("./../method/redis.main.js");
 const _ = require("lodash");
 const {
-  Worker,
-  ipcMain
+  Worker
 } = require('worker_threads');
 
 exports.Message = {
@@ -63,7 +62,7 @@ exports.Message = {
           workers[key] = worker;
           console.log('worker not after', conn, important, '/////////////////////////');
           /////////////////////////监听线程消息
-          this.Message.get.worker.onMessage(worker,win,important,key);
+          this.Message.get.worker.onMessage(worker,win,important,conn);
         }
         //线程排序
         sort_worers.unshift(key);
@@ -85,16 +84,17 @@ exports.Message = {
       },
     },
     worker:{
-      onMessage:(worker,win,important,key)=>{
+      onMessage:(worker,win,important,conn)=>{
         worker.on('message', (message) => {
           switch (message.msg_type) {
               case 'renderer-redis-select-server':
-                  this.Message.get.worker.redis_select_server(message,win,important,key);
+                  this.Message.get.worker.redis_select_server(message,win,important,conn);
                   break;
           }
         })
       },
-      redis_select_server:function(message,win,important,key){
+      redis_select_server:function(message,win,important,conn){
+        const key = conn.host + ":" + conn.port;
         const workers = important.workers;
         const sort_worers = important.sort;
         //const redises = important.redises;
@@ -113,7 +113,7 @@ exports.Message = {
             delete workers[key];
         } else {
             //返回成功消息并添加到redis集合
-            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','sucess','',{info:message.info}))
+            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','sucess','',{info:message.info,menu:conn}))
             //redises[key] = message.redis
         }
         console.log('worker rtn after',message,important,'///////////////////');

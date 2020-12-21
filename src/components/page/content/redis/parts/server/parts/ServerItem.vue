@@ -49,12 +49,7 @@
             ]),
             selectServer(){
                 //改变图标
-                if(this.menu.state === 0 || this.menu.state === -1){
-                    //未连接或者连接失败,变成正在连接
-                    this.updateServerState({k:this.menu_k,s:1});
-                    this.img = require("assets/loading.gif");
-                    //this.menu.state = 
-                }
+                this.updateServerState({k:this.menu_k,s:1});
                 //存在就切换
                 for(const k in this.server_tabs){
                     const server = this.server_tabs[k];
@@ -67,13 +62,6 @@
                 ////
                 //发送切换连接的消息
                 Message.send.renderer.redis_select_server.call(this,this.menu);
-                //ipcRenderer.send('redis-make-thread',this.menu);
-                //return;
-                //rTsConn.call(this,ipcRenderer,this.menu,(sucess)=>{
-                //    ipcRenderer.send('redis-render-select-server-menu',this.menu);
-                //},(error)=>{
-                //    this.setError({k:'conn',v:error});
-                //});
             }
         }
     }

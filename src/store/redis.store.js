@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export default {
   namespaced: true,
   state: {
@@ -68,7 +70,7 @@ export default {
     },
     //添加连接
     addServer(state) {
-      state.server_menus.push({...state.add_server_params,state:0});
+      state.server_menus.push({...state.add_server_params,state:0,img:''});
       state.add_server_params = {
         host: null,
         port: null,
@@ -116,13 +118,41 @@ export default {
     },
     //修改连接状态正在连接
     updateServerState(state,key_state){
-      state.server_menus[Number(key_state.k)].state = Number(key_state.s);
-      console.log('menussssss',state.server_menus);
+      const key = Number(key_state.k);
+      const new_state = Number(key_state.s);
+      const old_state = state.server_menus[key].state;
+
+      if(new_state === 1){
+        if(old_state === 0 || old_state === -1){
+          state.server_menus[key].state = new_state;
+          state.server_menus[key].img = require("assets/loading.gif");
+        }
+      }else if(new_state === -1){
+        if(old_state === 1 || old_state === 2){
+          state.server_menus[key].state = new_state;
+          state.server_menus[key].img = require("assets/error.png");
+        }
+      }else if(new_state === 2){
+        if(old_state === 1){
+          state.server_menus[key].state = new_state;
+          state.server_menus[key].img = require("assets/conned.png");
+        }
+      }
     },
     ///////////////////////////////////////////////////////////////////////
     //切换操作区
     changeSelectedTab(state, selected_tab) {
       state.current_selected_tab = selected_tab;
+    },
+    //修改操作区
+    editServerTab(state,server_tab){
+      const key = server_tab.k;
+      const val = server_tab.v;
+      if (_.hasIn(state.server_tabs, key)) {
+        state.server_tabs[key] = {...state.server_tabs[key], ...val};
+      }else{
+        state.server_tabs[key] = val;
+      }
     },
     //设置错误
     setError(state, error) {
@@ -134,5 +164,6 @@ export default {
     delMenuByK(state, i) {
       state.server_menus.splice(i, 1);
     }
+    //
   },
 };
