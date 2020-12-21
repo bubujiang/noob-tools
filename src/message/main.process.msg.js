@@ -103,7 +103,7 @@ exports.Message = {
         //执行出错
         if (message.rtn_type === 'error') {
             //返回错误
-            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','error',message.error.message))
+            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','error',message.error.message,{menu:conn}))
             //删除
             for (const k in sort_worers) {
                 if (sort_worers[k] === key) {

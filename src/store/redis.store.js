@@ -3,13 +3,13 @@ import _ from "lodash";
 export default {
   namespaced: true,
   state: {
-    server_menus: [/*{
-      host: null,
-      port: null,
+    server_menus: [{
+      host: '39.108.245.131',
+      port: 6379,
       auth: null,
-      name: null,
+      name: 'asddvaerb',
       state: 0//-1连接出错，0未连接，1,正在连接, 2已连接 
-    }*/], //连接列表
+    }], //连接列表
     add_server_popup_show: false, //显示\隐藏连接添加框
     add_server_params: {
       //正添加连接的参数
@@ -122,6 +122,8 @@ export default {
       const new_state = Number(key_state.s);
       const old_state = state.server_menus[key].state;
 
+      console.log('state',old_state,new_state);
+
       if(new_state === 1){
         if(old_state === 0 || old_state === -1){
           state.server_menus[key].state = new_state;
@@ -138,6 +140,8 @@ export default {
           state.server_menus[key].img = require("assets/conned.png");
         }
       }
+
+      console.log('state after',state.server_menus);
     },
     ///////////////////////////////////////////////////////////////////////
     //切换操作区

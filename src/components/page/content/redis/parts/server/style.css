@@ -25,7 +25,7 @@
 
 .server-name {
     color: #9EA3A8;
-    font-size: 14px;
+    font-size: 15px;
     cursor: default;
     word-break: break-all;
 }
@@ -36,6 +36,7 @@
 
 .img-span{
     width: 15px;
+    display: flex;
 }
 
 .add-server-button {
