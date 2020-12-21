@@ -2,6 +2,13 @@ const ipcRenderer = window['require']('electron').ipcRenderer;
 //import Vue from 'vue'
 
 export const Message = {
+    onMessage(){
+        ipcRenderer.on('renderer-redis-select-server', (event, message) => {
+            console.log('end', message);
+            //return Message.get.renderer.redis_select_server(conn, important);
+            //return redisSelectServerMenu.call(this, conn, workers);
+        });
+    },
     get:{},
     send:{
         renderer:{

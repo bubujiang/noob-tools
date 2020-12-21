@@ -7,9 +7,6 @@ const {
   makeRendererResponseMsg,
 } = require("./../method/redis.main.js");
 const _ = require("lodash");
-//const {
-//  Message
-//} = require('./../message/main.thread.msg.js');
 const {
   Worker,
   ipcMain
@@ -36,13 +33,19 @@ exports.Message = {
             return makeRendererResponseMsg("redis", "error", error.message);
           });
       },
-      redis_select_server:(conn, workers, sort_worers, redis_clients)=>{
-        console.log('main process start',conn, workers, sort_worers, redis_clients);
+      redis_select_server:(conn, win, important)=>{
+        console.log('main process start', conn, important, '/////////////////////////');
+
+        const workers = important.workers;
+        const sort_worers = important.sort;
+        //const redises = important.redises;
+        const max_len = important.max_len;
         const key = conn.host + ":" + conn.port;
         //////////////////////////新建线程
         let worker;
-        let redis;
+        //let redis;
         if (_.hasIn(workers, key)) {
+          console.log('worker exsit', conn, '/////////////////////////');
           //存在重排
           worker = workers[key];
           for (const k in sort_worers) {
@@ -51,42 +54,56 @@ exports.Message = {
             }
           }
           //存在此线程就必然有redis连接
-          redis = redis_clients[key];
+          //redis = redises[key];
+          console.log('worker exsit after', conn, important, '/////////////////////////');
         } else {
+          console.log('worker not', conn, '/////////////////////////');
           //不存在新建
-          worker = new Worker("./src/worker/redis.worker.js",{workerData:{redis}});
+          worker = new Worker("./src/worker/redis.worker.js");
           workers[key] = worker;
+          console.log('worker not after', conn, important, '/////////////////////////');
           /////////////////////////监听线程消息
-          //console.log('kjbklugliubvuvuyvuyv',this);
-          this.Message.get.worker.onMessage(worker);
+          this.Message.get.worker.onMessage(worker,win,important,key);
         }
         //线程排序
         sort_worers.unshift(key);
-        console.log('main process end', workers, sort_worers, redis_clients);
+
+        console.log('worker sort', conn, important, '/////////////////////////');
+        //超过就弹出最后一个
+        if(sort_worers.length > max_len){
+          console.log('worker more', conn, '/////////////////////////');
+          const rkey = sort_worers.pop();
+          this.Message.send.worker.quit();
+          //redises[rkey].quit();
+          delete workers[rkey];
+          //delete redises[rkey];
+          console.log('worker more after', conn, important, '/////////////////////////');
+        }
+        console.log('main process end', conn, important, '/////////////////////////');
         //线程内相关操作
         this.Message.send.worker.redis_select_server(conn,worker);
-        //发送消息给渲染进程
       },
     },
     worker:{
-      onMessage:(worker)=>{
+      onMessage:(worker,win,important,key)=>{
         worker.on('message', (message) => {
           switch (message.msg_type) {
               case 'renderer-redis-select-server':
-                //console.log('WEFQWF4QE5GRW46H357J',this);
-                  this.Message.get.worker.redis_select_server(message);
+                  this.Message.get.worker.redis_select_server(message,win,important,key);
                   break;
           }
         })
       },
-      redis_select_server:function(message){
+      redis_select_server:function(message,win,important,key){
+        const workers = important.workers;
+        const sort_worers = important.sort;
+        //const redises = important.redises;
+
+        console.log('worker rtn',message,'///////////////////');
         //执行出错
         if (message.rtn_type === 'error') {
-            //错误删除线程并返回错误
-            //cworker.postMessage({
-            //    type: 'exit', //退出
-            //});
-            win.webContents.send('redis-render-select-server', message.renderer)
+            //返回错误
+            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','error',message.error.message))
             //删除
             for (const k in sort_worers) {
                 if (sort_worers[k] === key) {
@@ -96,10 +113,10 @@ exports.Message = {
             delete workers[key];
         } else {
             //返回成功消息并添加到redis集合
-            win.webContents.send('redis-render-select-server-menu-return', message.renderer)
-            redis_clients[key] = message.redis_client
+            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','sucess','',{info:message.info}))
+            //redises[key] = message.redis
         }
-        //console.log('worker rtn',message);
+        console.log('worker rtn after',message,important,'///////////////////');
       }
     }
   },
@@ -109,6 +126,11 @@ exports.Message = {
         worker.postMessage({
             type: 'renderer-redis-select-server',
             conn
+        });
+      },
+      quit:function(worker){
+        worker.postMessage({
+            type: 'quit'
         });
       }
     }

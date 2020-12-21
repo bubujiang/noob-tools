@@ -4,20 +4,19 @@ const {
     Menu,
     ipcMain
 } = require('electron')
-const {
-    redisSelectServerMenu,
-    redisTestConn,
-} = require('./redis.ipc.js');
 
 const {
     Message
 } = require('./../message/main.process.msg');
 
 let mainWindow;
-const allow_max_worker_len = 5; //允许的最大连接数
-const sort_worers = []; //线程活跃排序,最后使用的放最前面
-const workers = {}; //线程集合
-const redis_clients = {}; //redis连接对象集合
+
+const important = {
+    max_len: 5,//允许的最大连接数
+    sort: [],//线程活跃排序,最后使用的放最前面
+    workers: {},//线程集合
+    //redises: {}//redis连接对象集合
+}
 
 function createWindow() {
     Menu.setApplicationMenu(null)
@@ -72,9 +71,8 @@ ipcMain.on('toggle-app', e => {
  * @param {Object} conn {host:"",port:"",auth:""} 
  */
 ipcMain.on('renderer-redis-select-server', (event, conn) => {
-    console.log('start',conn);
-    return Message.get.renderer.redis_select_server(conn, workers, sort_worers, redis_clients);
-    //return redisSelectServerMenu.call(this, conn, workers);
+    console.log('start', conn, '/////////////////////////');
+    return Message.get.renderer.redis_select_server(conn, mainWindow, important);
 });
 
 /**
@@ -83,5 +81,4 @@ ipcMain.on('renderer-redis-select-server', (event, conn) => {
  */
 ipcMain.handle('renderer-redis-test-conn', async (event, conn) => {
     return await Message.get.renderer.redis_test_server(conn);
-    //return await redisTestConn.call(this, conn);
 })

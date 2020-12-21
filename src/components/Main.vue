@@ -9,13 +9,19 @@
 	import Header from './header/Header.vue'
 	import Page from './page/Page.vue'
 
-	const ipcRenderer = window['require']('electron').ipcRenderer;
+	import {Message} from 'msg/renderer.process.msg.js'
 
 	export default {
 		components: {
 			Header,
 			Page
 		},
+		created(){
+			Message.onMessage.call(this);
+		},
+		mounted: function () {
+			
+		}
 	}
 </script>
 

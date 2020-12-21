@@ -1,15 +1,14 @@
-//const exports = require("webpack");
-const { createRedisClient,makeRendererResponseMsg } = require('./../method/redis.main.js');
+const { createRedisClient } = require('./../method/redis.main.js');
 
 const {
     exit
 } = require('process');
 const {
-    parentPort,
-    workerData
+    parentPort
 } = require('worker_threads');
 
 exports.Message = {
+    redis:null,
     onMessage(){
         parentPort.on('message', (message) => {
             switch (message.type) {
@@ -25,17 +24,19 @@ exports.Message = {
     },
     send:{
         main_th:{
-            redis_select_server:function(type,redis,info,error){
-                parentPort.postMessage({msg_type:'renderer-redis-select-server',rtn_type:type,redis,info,error});
+            redis_select_server:function(type,info,error){
+                parentPort.postMessage({msg_type:'renderer-redis-select-server',rtn_type:type,info,error});
             }
         }
     },
     get:{
         main_th:{
              redis_select_server: async (conn)=>{
-                const redis = workerData.redis;
-                console.log('worker process start',conn,workerData);
-                if (!redis) {
+                // console.log('svaerge5gw5hw4hwthw4thtw4thw45hw45h',this)
+                //const redis = workerData.redis;
+                //let redis = this.Message.redis;
+                console.log('worker process start', conn, this.Message.redis, '////////////////////////');
+                if (!this.Message.redis) {
                     const prom = ((params) => {
                         return new Promise((resolve, reject) => {
                             createRedisClient(params, resolve, reject);
@@ -52,30 +53,35 @@ exports.Message = {
                             type: 'error',
                             error
                         }
-                        //return makeRendererResponseMsg('redis','error',error.message);
                     });
         
-                    console.log('worker process mid',result);
+                    console.log('worker process get redis', result, '////////////////////////');
 
                     if (result.type === 'error') {
+                        console.log('worker process get redis error', '////////////////////////');
                         //console.log('sssssssssggggggggggg',this,this.Message.send);
-                        this.Message.send.main_th.redis_select_server('error',null,null,result.error);
+                        this.Message.send.main_th.redis_select_server('error',null,result.error);
                         exit();
                         return;
                         //parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:result});
                     } else {
-                        redis = result.client;
+                        this.Message.redis = result.client;
+                        console.log('worker process get redis sucess', this.Message.redis, '////////////////////////');
                     }
                 }
                 ////获得info
-                redis.info("server", function (error, result) {
+                this.Message.redis.info("server", (error, result)=>{
+                    console.log('worker process get info', error, result, '////////////////////////');
                     if (error) {
-                        redis.quit();
-                        this.send.main_th.redis_select_server('error',null,null,error);
+                        this.Message.redis.quit();
+                        this.Message.redis = null;
+                        //delete redis;
+                        this.Message.send.main_th.redis_select_server('error',null,error);
                         exit();
                         //parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'error',renderer:makeRendererResponseMsg('redis','error',error)});
                     } else {
-                        this.send.main_th.redis_select_server('success',redis,result,null);
+                        this.Message.send.main_th.redis_select_server('success',result,null);
+                        //delete redis;
                         //parentPort.postMessage({th_msg_type:'th-select-server-menu-return',th_rtn_type:'success',redis_client,renderer:makeRendererResponseMsg('redis','success','',{info:result})});
                     }
                 });
