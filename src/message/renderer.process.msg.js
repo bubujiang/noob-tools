@@ -55,76 +55,54 @@ export const Message = {
                  */
                 //console.log(_.split(message.info,"\n",99));
 
-                let info;
+                let info = {};
                 const parts = _.split(message.info,"#",99);
-                console.log('parts',parts);
+                //console.log('parts',parts);
 
                 for(const p in parts){
                     if(!parts[p]){
                         continue;
                     }
-                    console.log('parts[p]',parts[p]);
+                    //console.log('parts[p]',parts[p]);
                     const rows = _.split(parts[p],"\n",99);
 
+                    let first = true;
+                    let first_n = 0;
                     for(const n in rows){
                         rows[n] = _.trim(rows[n]);
                         if(!rows[n]){
                             continue;
                         }
 
-                        if(!n){
-                            console.log('0',rows[n]);
-                        }
-
-                        console.log('rows[n]',rows[n]);
-
-                        const row = _.split(rows[n],":",2);
-                        console.log('row',row);
-
-
-                    }
-
-
-                }
-return;
-
-
-
-
-                for(const p in parts){
-                    if(!parts[p]){
-                        continue;
-                    }
-                    console.log('parts[p]',parts[p]);
-                    const rows = _.split(parts[p],"\n",99);
-                    
-                    for(const n in rows){
-                        if(!rows[n]){
+                        if(first){
+                            first_n = n;
+                            info[rows[n]] = {};
+                            first = false;
                             continue;
                         }
-                        console.log('rows',rows[n]);
-                        const row = _.split(rows[n],":",2);
-                        if(!row){
-                            continue;
-                        }
-                        console.log('row',row);
-                        continue;
-                        if(!rows){
-                            continue;
-                        }
-                        if(n === 0){
-                            info[rows] = {};
-                            continue;
-                        }
-                        //const row = _.split(rows[n],":",2);
-                        //info[rows[0]][row[0]] = row[1];
+
                         
+
+                        const row = _.split(rows[n],":",2);
+
+                        if(rows[first_n] === 'Keyspace'){
+                            //console.log('kkkk',_.split(row[1],",",3));
+                            const dvs = _.split(row[1],",",3);
+                            info[rows[first_n]][_.trim(row[0])] = [];
+                            for(const i in dvs){
+                                const dv = _.split(dvs[i],"=",2);
+                                info[rows[first_n]][_.trim(row[0])][i] = dv[1];
+                            }
+                            //info[rows[first_n]][_.trim(row[0])] = _.split(row[1],",",3);
+                        }else if(row.length > 1){
+                            info[rows[first_n]][_.trim(row[0])] = _.trim(row[1]);
+                        }
                     }
                 }
                 console.log('info',info);
                 const server_tab = {k:message.menu.host+':'+message.menu.port,v:{
                     name:message.menu.name,
-                    info:message.info
+                    info
                 }};
                 this.$store.commit('RStore/editServerTab',server_tab)
                 //修改current_selected_tab
