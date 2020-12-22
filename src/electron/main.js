@@ -31,6 +31,7 @@ function createWindow() {
     })
 
     mainWindow.loadFile('./dist/index.html')
+
     mainWindow.webContents.openDevTools()
 }
 
@@ -73,6 +74,14 @@ ipcMain.on('toggle-app', e => {
 ipcMain.on('renderer-redis-select-server', (event, conn) => {
     console.log('start', conn, '/////////////////////////');
     return Message.get.renderer.redis_select_server(conn, mainWindow, important);
+});
+
+/**
+ * 渲染进程打开一个数据库db
+ * @param {Object} params {host:"",port:"",db:""} l
+ */
+ipcMain.on('renderer-redis-open-db',(event,params)=>{
+    return Message.get.renderer.redis_open_db(params, mainWindow, important);
 });
 
 /**

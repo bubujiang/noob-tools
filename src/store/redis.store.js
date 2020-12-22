@@ -8,6 +8,7 @@ export default {
       port: 6379,
       auth: null,
       name: 'asddvaerb',
+      img:'',
       state: 0//-1连接出错，0未连接，1,正在连接, 2已连接 
     }], //连接列表
     add_server_popup_show: false, //显示\隐藏连接添加框
@@ -27,7 +28,7 @@ export default {
       name: null,
     },
     server_tabs: {
-      /*"127.0.0.1:99": {
+      "127.0.0.1:999": {
         name: "server1",
         info: {
           redis_version: "3.0.5",
@@ -44,7 +45,7 @@ export default {
           },
         },
         state:2//-1连接出错，2已连接
-      },*/
+      },
     }, //操作区
     current_selected_tab: {
       /*server: "127.0.0.1:99",
@@ -147,16 +148,21 @@ export default {
     //切换操作区
     changeSelectedTab(state, selected_tab) {
       state.current_selected_tab = selected_tab;
+      console.log('changeSelectedTab',state.current_selected_tab);
     },
     //修改操作区
     editServerTab(state,server_tab){
+      console.log('editServerTab22',state.server_tabs);
       const key = server_tab.k;
       const val = server_tab.v;
       if (_.hasIn(state.server_tabs, key)) {
         state.server_tabs[key] = {...state.server_tabs[key], ...val};
       }else{
         state.server_tabs[key] = val;
+        console.log('editServerTab2233',state.server_tabs);
+        //state.server_tabs[key] = {...val};
       }
+      console.log('editServerTab',state.server_tabs);
     },
     //设置错误
     setError(state, error) {

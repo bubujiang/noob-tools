@@ -5,7 +5,7 @@ import AllStroe from './store/all.store.js'
 import App from './components/Main.vue'
 
 Vue.config.productionTip = false
-
+Vue.config.devtools = true
 Vue.use(Vuex)
 
 const store = new Vuex.Store(AllStroe)

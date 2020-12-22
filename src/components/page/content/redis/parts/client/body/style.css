@@ -7,6 +7,7 @@
     background-color: #142653;
     padding-top: 20px;
     padding-bottom: 10px;
+    height: 30vh;
 }
 
 .info{
@@ -14,17 +15,22 @@
     margin-top: 50px;
     padding-top: 20px;
     padding-bottom: 10px;
+    height: 45vh;
 }
 
 .dbol,.inol{
     padding: 0;
     list-style: none;
     margin: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 .inol{
-    overflow: auto;
-    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 .inol::-webkit-scrollbar{}

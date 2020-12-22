@@ -1,5 +1,5 @@
 <template>
-    <div class="client" v-if="Object.keys(server_tabs).length">
+    <div class="client" v-show="Object.keys(server_tabs).length">
         <Header v-bind:tabs="server_tabs" v-bind:selected_tab="current_selected_tab" v-on:selected-tab="changeSelectedTab($event)" />
         
         <div v-for="(server, key) in server_tabs" v-bind:key="key">
@@ -49,11 +49,18 @@
                     }
                 }
         },
+        mounted: function () {
+        //this.$nextTick(function () {
+        //    this.$store.commit('RStore/editServerTab',{k:'127.0.0.1:99',v:{name:'sveargeg',info:{}}})
+        //    this.$store.commit('RStore/changeSelectedTab',{server:'127.0.0.1:99',db:null})
+        //})
+        },
         methods: {
             ...mapMutations('RStore', [
                 'changeSelectedTab'
             ]),
             isShow(key){
+                console.log('key',key);
                 if(this.current_selected_tab.server === key && this.current_selected_tab.db === null){
                     return true;
                 }else if(this.current_selected_tab.server + this.current_selected_tab.db === key){

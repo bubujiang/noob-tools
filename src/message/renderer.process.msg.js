@@ -104,6 +104,7 @@ export const Message = {
                     name:message.menu.name,
                     info
                 }};
+
                 this.$store.commit('RStore/editServerTab',server_tab)
                 //修改current_selected_tab
                 this.$store.commit('RStore/changeSelectedTab',{server:message.menu.host+':'+message.menu.port,db:null})
