@@ -27,7 +27,7 @@ export default {
       name: null,
     },
     server_tabs: {
-      "127.0.0.1:99": {
+      /*"127.0.0.1:99": {
         name: "server1",
         info: {
           redis_version: "3.0.5",
@@ -44,11 +44,11 @@ export default {
           },
         },
         state:2//-1连接出错，2已连接
-      },
+      },*/
     }, //操作区
     current_selected_tab: {
-      server: "127.0.0.1:99",
-      db: "db1"
+      /*server: "127.0.0.1:99",
+      db: "db1"*/
     }, //当前操作区
     error: {
       conn: ''
