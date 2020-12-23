@@ -5,19 +5,7 @@
             <div class="list">
                 <div class="keys">
                     <ol class="keys_ol">
-                        <li>ddddfffffffffffffffffffffdd</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
-                        <li>aaaaaaa</li>
+                        <li v-for="(key, i) in db.keys" v-bind:key="i" v-on:click="selectKey(key)">{{key}}</li>
                     </ol>
                 </div>
                 <div class="btn"><input type="button" value="Add" /></div>
@@ -50,8 +38,31 @@
 </template>
 
 <script>
-    export default {
+import _ from 'lodash'
 
+import {Message} from 'msg/renderer.process.msg.js'
+
+    export default {
+        props:{
+            server_k:{
+                type:String,
+                required:true
+            },
+            db_k:{
+                type:String,
+                required:true
+            },
+            db:{
+                type:Object,
+                required:true
+            }
+        },
+        methods:{
+            selectKey(key){
+                //发送消息给主进程处理获得keys
+                Message.send.renderer.redis_select_key.call(this,..._.split(this.server_k,':'),db_k,key);
+            }
+        }
     }
 </script>
 

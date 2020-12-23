@@ -86,6 +86,15 @@ ipcMain.on('renderer-redis-open-db',(event,params)=>{
 });
 
 /**
+ * 渲染进程选择一个redis key
+ * @param {Object} params {host:"",port:"",db_k:"",key:""}
+ */
+ipcMain.on('renderer-redis-select-key',(event,params)=>{
+    console.log('主进程收到 选择redis key 消息', params, '///////////////');
+    return Message.get.renderer.redis_select_key(params, mainWindow, important);
+});
+
+/**
  * 渲染进程测试一个服务连接
  * @param {Object} conn {host:"",port:"",auth:""} 
  */

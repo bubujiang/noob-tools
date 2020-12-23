@@ -32,9 +32,15 @@
 }
 
 .keys_ol li {
-    text-align: center;
+    text-align: left;
     color: #9EA3A8;
     word-break: break-all;
+    cursor: default;
+    margin-top: 5px;
+}
+
+.keys_ol li:hover {
+    background-color: #061539;
 }
 
 .btn {}

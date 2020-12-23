@@ -20,7 +20,11 @@ exports.Message = {
                     console.log('工作进程接收到 打开redis数据库 消息', message, '////////////////');
                     this.get.main_th.redis_open_db(message.db);
                     break;
-                    default:
+                case 'renderer-redis-select-key':
+                    console.log('工作线程接收到 选择redis key 消息', message, '////////////////');
+                    this.get.main_th.redis_select_key(message.db_key,message.key);
+                    break;
+                default:
                     console.log('exit');
                     exit;
                     break;
@@ -35,6 +39,10 @@ exports.Message = {
             redis_open_db:function(type,info,error){
                 console.log('工作线程返回 打开redis数据库 消息 处理结果', type,info,error, '////////////////');
                 parentPort.postMessage({msg_type:'renderer-redis-open-db',rtn_type:type,info,error});
+            },
+            redis_select_key:function(type,info,error){
+                console.log('工作线程返回 选择redis key 消息 处理结果', type,info,error, '////////////////');
+                parentPort.postMessage({msg_type:'renderer-redis-select-key',rtn_type:type,info,error});
             }
         }
     },
@@ -136,6 +144,50 @@ exports.Message = {
                     exit();
                 });
                 
+
+            },
+            redis_select_key:function(db_key,key){
+                console.log('工作线程接开始处理 选择redis key 消息', db_key,key, '////////////////');
+
+                const redis = this.Message.redis;
+                if(!redis){
+                    this.Message.send.main_th.redis_select_key('error',null,'redis gone');
+                    exit;
+                }
+
+                const dbn = _.replace(db, 'db', '');
+
+                (new Promise((resolve,reject)=>{
+                    redis.select(dbn, (error, result)=>{
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                }))
+                .then((result)=>{
+                    console.log('select',result);
+                    return (new Promise((resolve,reject)=>{
+                        redis.scan('0', (error, result)=>{
+                            if (error) {
+                                reject(error);
+                            } else {
+                                resolve(result);
+                            }
+                        });
+                    }));
+                })
+                .then((result)=>{
+                    this.Message.send.main_th.redis_select_key('success',{db,result},null);
+                })
+                .catch((error)=>{
+                    this.Message.redis.quit();
+                    this.Message.redis = null;
+                    this.Message.send.main_th.redis_select_key('error',null,error);
+                    exit();
+                });
+
 
             }
         }

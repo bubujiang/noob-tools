@@ -7,7 +7,7 @@
                 <InfoBody v-bind:server="server" v-bind:server_k="key" v-if="isShow(key)"></InfoBody>
             </div>
             <div v-for="(db, dkey) in server.db" v-bind:key="dkey">
-                <DbBody v-bind:db="db" v-if="isShow(key+dkey)"></DbBody>
+                <DbBody v-bind:db="db" v-bind:db_k="dkey" v-bind:server_k="key" v-if="isShow(key+dkey)"></DbBody>
             </div>
         </div>
         

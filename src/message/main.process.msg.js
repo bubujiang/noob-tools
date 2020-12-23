@@ -89,6 +89,16 @@ exports.Message = {
         const key = params.host + ":" + params.port;
         const worker = workers[key];
         this.Message.send.worker.redis_open_db(params.db,worker);
+      },
+      redis_select_key:(params, win, important)=>{
+        console.log('主进程开始处理 选择redis key 消息', params, '//////////////////');
+        //向对应worker发消息
+        const workers = important.workers;
+        const server_key = params.host + ":" + params.port;
+        const db_key = params.db_k;
+        const key = params.key;
+        const worker = workers[key];
+        this.Message.send.worker.redis_open_db(db_key,key,worker);
       }
     },
     worker:{
@@ -161,6 +171,13 @@ exports.Message = {
         worker.postMessage({
             type: 'renderer-redis-open-db',
             db
+        });
+      },
+      redis_open_db:function(db_key,key,worker){
+        console.log('主进程发送 选择redis key 消息 到 工作线程', db_key,key, '////////////////');
+        worker.postMessage({
+            type: 'renderer-redis-select-key',
+            db_key,key
         });
       },
       quit:function(worker){

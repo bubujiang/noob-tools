@@ -163,6 +163,10 @@ export const Message = {
             redis_open_db:function(host,port,db){
                 console.log('渲染进程发送 打开redis数据库 消息', host,port,db, '///////////////');
                 ipcRenderer.send('renderer-redis-open-db',{host,port,db});
+            },
+            redis_select_key:function(host,port,db_k,key){
+                console.log('渲染进程发送 选择redis key 消息', host,port,db_k,key, '///////////////');
+                ipcRenderer.send('renderer-redis-select-key',{host,port,db_k,key});
             }
         }
     }
