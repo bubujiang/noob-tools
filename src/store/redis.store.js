@@ -30,19 +30,12 @@ export default {
     server_tabs: {
       "127.0.0.1:999": {
         name: "server1",
-        info: {
-          redis_version: "3.0.5",
-          redis_git_sha1: "000",
-          redis_build_id: "470780e9c85f8d8b",
-        },
+        info: {},
         db: {
           db0: {
-            key_num: 11,
+            keys_cursor: 0,//SCAN命令游标
             keys: ["aa", "bb", "ccc"]
-          },
-          db1: {
-            key_num: 12
-          },
+          }
         },
         state:2//-1连接出错，2已连接
       },
@@ -163,6 +156,28 @@ export default {
         //state.server_tabs[key] = {...val};
       }
       console.log('editServerTab',state.server_tabs);
+    },
+    //修改操作区db keys
+    editServerTabDB(state,dbd){
+      const key = dbd.k;
+      const db_key = dbd.dk;
+      const keys_cursor = dbd.cursor;
+      const keys = dbd.keys;
+
+      console.log('修改操作区db keys',dbd,'/////////////////');
+
+      if(!_.hasIn(state.server_tabs[key], 'db')){
+        state.server_tabs[key].db = {};
+      }
+      if(!_.hasIn(state.server_tabs[key].db, db_key)){
+        state.server_tabs[key].db[db_key] = {};
+        state.server_tabs[key].db[db_key].keys = [];
+      }
+
+      state.server_tabs[key].db[db_key].keys_cursor = keys_cursor
+      state.server_tabs[key].db[db_key].keys = _.union(state.server_tabs[key].db[db_key].keys,keys)
+
+      console.log('修改操作区db keys后',state.server_tabs[key],'/////////////////');
     },
     //设置错误
     setError(state, error) {

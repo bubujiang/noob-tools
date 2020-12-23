@@ -1,4 +1,5 @@
 const Redis = require("ioredis");
+const { Promise } = require("es6-promise");
 
 /**
  * 

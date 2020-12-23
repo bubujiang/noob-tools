@@ -3,6 +3,7 @@
     border-radius: 10px 0px 0px 0px;
     margin-top: 30px;
     background-color: #061539;
+    overflow: auto;
 }
 
 .hol{

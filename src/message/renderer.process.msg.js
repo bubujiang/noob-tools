@@ -26,8 +26,6 @@ export const Message = {
                     //this.setError({k:'conn',v:message.msg});
                     this.$store.commit('RStore/setError',{k:'conn',v:message.msg})
                     return;
-                }else{
-                    return;
                 }
             }else{
                 //修改server menu状态
@@ -110,6 +108,38 @@ export const Message = {
                 this.$store.commit('RStore/changeSelectedTab',{server:message.menu.host+':'+message.menu.port,db:null})
             }
         });
+        ipcRenderer.on('renderer-redis-open-db',(event,message)=>{
+            console.log('渲染进程接收 打开redis数据库 消息返回', message, '///////////////');
+
+            let key = null;
+            for(const k in this.$store.state.RStore.server_menus){
+                const menu = this.$store.state.RStore.server_menus[k];
+                if(menu.host === message.menu.host && menu.port === message.menu.port){
+                    key = k;
+                    break;
+                }
+            }
+
+            if(message.type === 'error'){
+                //修改server menu状态
+                this.$store.commit('RStore/updateServerState',{k:key,s:-1})
+                //弹出提示
+                const current_module = this.$store.state.AStore.current_navigation_item;
+                if(current_module === 'Redis'){
+                    this.$store.commit('RStore/setError',{k:'conn',v:message.msg})
+                    return;
+                }
+            }else{
+                const k = message.menu.host+':'+message.menu.port;
+                const dk = message.info.db;
+                const cursor = message.info.result[0];
+                const keys = message.info.result[1];
+                //修改servers_tab.db.db0.keys和servers_tab.db.db0.keys_cursor
+                this.$store.commit('RStore/editServerTabDB',{k,dk,cursor,keys})
+                //修改current_selected_tab
+                this.$store.commit('RStore/changeSelectedTab',{server:k,db:message.info.db})
+            }
+        });
     },
     get:{},
     send:{
@@ -129,6 +159,10 @@ export const Message = {
             },
             redis_select_server:function(conn){
                 ipcRenderer.send('renderer-redis-select-server',conn);
+            },
+            redis_open_db:function(host,port,db){
+                console.log('渲染进程发送 打开redis数据库 消息', host,port,db, '///////////////');
+                ipcRenderer.send('renderer-redis-open-db',{host,port,db});
             }
         }
     }

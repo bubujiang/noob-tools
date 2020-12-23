@@ -83,7 +83,10 @@ exports.Message = {
         this.Message.send.worker.redis_select_server(conn,worker);
       },
       redis_open_db:(params, win, important)=>{
-        const key = conn.host + ":" + conn.port;
+        console.log('主进程开始处理 打开redis数据库 消息', params, '//////////////////');
+        //向对应worker发消息
+        const workers = important.workers;
+        const key = params.host + ":" + params.port;
         const worker = workers[key];
         this.Message.send.worker.redis_open_db(params.db,worker);
       }
@@ -129,7 +132,7 @@ exports.Message = {
       redis_open_db:function(message,win,important,conn){
         if (message.rtn_type === 'error') {
             //返回错误
-            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','error',message.error.message,{menu:conn}))
+            win.webContents.send('renderer-redis-open-db', makeRendererResponseMsg('redis','error',message.error.message,{menu:conn}))
             //删除
             for (const k in sort_worers) {
                 if (sort_worers[k] === key) {
@@ -139,7 +142,7 @@ exports.Message = {
             delete workers[key];
         } else {
             //返回成功消息并添加到redis集合
-            win.webContents.send('renderer-redis-select-server', makeRendererResponseMsg('redis','sucess','',{info:message.info,menu:conn}))
+            win.webContents.send('renderer-redis-open-db', makeRendererResponseMsg('redis','sucess','',{info:message.info,menu:conn}))
             //redises[key] = message.redis
         }
       }
@@ -154,6 +157,7 @@ exports.Message = {
         });
       },
       redis_open_db:function(db,worker){
+        console.log('主进程发送 打开redis数据库 消息 到 工作线程', db, '////////////////');
         worker.postMessage({
             type: 'renderer-redis-open-db',
             db

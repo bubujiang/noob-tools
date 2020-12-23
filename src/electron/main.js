@@ -81,6 +81,7 @@ ipcMain.on('renderer-redis-select-server', (event, conn) => {
  * @param {Object} params {host:"",port:"",db:""} l
  */
 ipcMain.on('renderer-redis-open-db',(event,params)=>{
+    console.log('主进程接收到 打开redis数据库 消息', params, '///////////////');
     return Message.get.renderer.redis_open_db(params, mainWindow, important);
 });
 
