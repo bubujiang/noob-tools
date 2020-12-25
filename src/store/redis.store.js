@@ -245,7 +245,7 @@ export default {
       const db_key = params.db_key;
       const key = params.key;
       const as = params.as;
-      const v = _.clone(state.server_tabs[server_key].db[db_key].val[key]);
+      const v = state.server_tabs[server_key].db[db_key].val[key];
 
       if(as === 'json'){
         const format2json = require('format-to-json');
@@ -256,9 +256,9 @@ export default {
         v.show_val = 'aefwegw4g';
         v.format = 'json';
 
-        console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
+        //console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
 
-        console.log(fmtInfo.result);
+        //console.log(fmtInfo.result);
       }else if(as === 'raw'){
         //const format2json = require('format-to-json');
 
@@ -268,17 +268,17 @@ export default {
         v.show_val = 'aefwegw4gccc';
         v.format = 'raw';
 
-        console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
+        //console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
 
         //console.log(fmtInfo.result);
       }
       //v.show_val = 'aefwegw4gsssssss';
-      state.server_tabs[server_key].db[db_key].val[key] = v;
+      //state.server_tabs[server_key].db[db_key].val[key] = v;
       
       state.server_tabs[server_key].db[db_key].val = {
         ...state.server_tabs[server_key].db[db_key].val,
         //[key]: v,
-        sDvarv:Math.ceil(Math.random()*10)
+        //sDvarv:Math.ceil(Math.random()*10)
       };
 
       console.log('keyViewAs af', state.server_tabs[server_key].db[db_key].val);

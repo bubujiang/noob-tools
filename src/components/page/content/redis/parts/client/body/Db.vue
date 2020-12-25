@@ -29,23 +29,23 @@
             <div class="view">{{v.val}}</div>
         </div>-->
 
-        <div class="right" v-if="activeValn">
+        <div class="right" v-if="activeVal">
             <div class="top">
                 <div class="op">
-                    <div class="type"><span>{{activeValn.type}}</span></div>
-                    <div class="ttl"><span>ttl:{{activeValn.ttl}}</span></div>
+                    <div class="type"><span>{{activeVal.type}}</span></div>
+                    <div class="ttl"><span>ttl:{{activeVal.ttl}}</span></div>
                     <div class="vas"><select @change="vas($event)">
                             <option value="json">json</option>
                             <option value="raw">raw</option>
                             <option value="unserialize">unserialize</option>
                         </select></div>
-                    <div class="reload"><button v-on:click="reload">reload</button></div>
+                    <div class="reload"><button>reload</button></div>
                     <div class="copy"><button>copy</button></div>
                     <div class="del"><button>delete</button></div>
                     <div class="save"><button>save</button></div>
                 </div>
             </div>
-            <div class="view">{{activeValn.show_val}}</div>
+            <div class="view">{{activeVal.show_val}}</div>
         </div>
 
     </div>
@@ -82,13 +82,7 @@
         },
         data() {
             return {
-                select_key: '',
-                activeValn:{}
-            }
-        },
-        watch:{
-            vals:function(dd){
-                console.log('ssssssssssssssss');
+                select_key: ''
             }
         },
         computed: {
@@ -125,13 +119,6 @@
                     db_key:this.db_k,
                     key: this.select_key
                 });
-            },
-            reload(){
-                for (const k in this.vals) {
-                    if (k === this.select_key) {
-                        this.activeValn =  this.vals[k];
-                    }
-                }
             }
         },
     };
