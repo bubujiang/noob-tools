@@ -249,39 +249,17 @@ export default {
 
       if(as === 'json'){
         const format2json = require('format-to-json');
-
         let fmtInfo = await format2json(v.raw_val);
-        
         v.show_val = fmtInfo.result;
-        v.show_val = 'aefwegw4g';
         v.format = 'json';
-
-        //console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
-
-        //console.log(fmtInfo.result);
       }else if(as === 'raw'){
-        //const format2json = require('format-to-json');
-
-        //let fmtInfo = await format2json(v.raw_val);
-        
         v.show_val = v.raw_val;
-        v.show_val = 'aefwegw4gccc';
         v.format = 'raw';
-
-        //console.log('keyViewAs afdddd', state.server_tabs[server_key].db[db_key].val);
-
-        //console.log(fmtInfo.result);
       }
-      //v.show_val = 'aefwegw4gsssssss';
-      //state.server_tabs[server_key].db[db_key].val[key] = v;
       
       state.server_tabs[server_key].db[db_key].val = {
         ...state.server_tabs[server_key].db[db_key].val,
-        //[key]: v,
-        //sDvarv:Math.ceil(Math.random()*10)
       };
-
-      console.log('keyViewAs af', state.server_tabs[server_key].db[db_key].val);
     },
     //设置错误
     setError(state, error) {

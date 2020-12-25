@@ -29,7 +29,7 @@
             <div class="view">{{v.val}}</div>
         </div>-->
 
-        <div class="right" v-if="activeVal">
+        <!--<div class="right" v-if="activeVal">
             <div class="top">
                 <div class="op">
                     <div class="type"><span>{{activeVal.type}}</span></div>
@@ -46,13 +46,17 @@
                 </div>
             </div>
             <div class="view">{{activeVal.show_val}}</div>
-        </div>
+        </div>-->
+
+        <Right v-bind:type="activeValn.type" v-bind:ttl="activeValn.ttl" v-bind:val="activeValn.show_val" v-bind:format="activeValn.format" v-if="activeValn" v-on:vas="vas($event)" />
 
     </div>
 </template>
 
 <script>
     import _ from "lodash";
+
+    import Right from "./DbRight.vue";
 
     import {
         mapMutations
@@ -63,6 +67,9 @@
     } from "msg/renderer.process.msg.js";
 
     export default {
+        components:{
+            Right
+        },
         props: {
             server_k: {
                 type: String,
@@ -82,18 +89,17 @@
         },
         data() {
             return {
-                select_key: ''
+                select_key: '',
+                activeValn:null
             }
         },
-        computed: {
-            activeVal: function () {
-                console.log('sefawegaergaethshsrhj6e56je56k');
+        watch:{
+            vals: function () {
                 for (const k in this.vals) {
                     if (k === this.select_key) {
-                        return this.vals[k];
+                        this.activeValn =  this.vals[k];
                     }
                 }
-                return null;
             }
         },
         methods: {
@@ -112,7 +118,7 @@
                 this.select_key = key;
             },
             async vas(e) {
-                //console.log('rvfaergwet5',as,as.target.value);
+                //console.log('rvfaergwet5',e.target.value);
                 await this.keyViewAs({
                     as: e.target.value,
                     server_key:this.server_k,
