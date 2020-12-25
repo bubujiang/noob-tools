@@ -140,6 +140,40 @@ export const Message = {
                 this.$store.commit('RStore/changeSelectedTab',{server:k,db:message.info.db})
             }
         });
+        ipcRenderer.on('renderer-redis-select-key',(event,message)=>{
+            console.log('渲染进程接收 选择redis key 消息返回', message, '///////////////');
+
+            let key = null;
+            for(const k in this.$store.state.RStore.server_menus){
+                const menu = this.$store.state.RStore.server_menus[k];
+                if(menu.host === message.menu.host && menu.port === message.menu.port){
+                    key = k;
+                    break;
+                }
+            }
+
+            if(message.type === 'error'){
+                //修改server menu状态
+                this.$store.commit('RStore/updateServerState',{k:key,s:-1})
+                //弹出提示
+                const current_module = this.$store.state.AStore.current_navigation_item;
+                if(current_module === 'Redis'){
+                    this.$store.commit('RStore/setError',{k:'conn',v:message.msg})
+                    return;
+                }
+            }else{
+                const server_key = message.menu.host+':'+message.menu.port;
+                const db_key = message.db_key;
+                const key = message.key;
+                const key_type = message.info.type;
+                const key_ttl = message.info.ttl;
+                const key_val = message.info.val;
+                //修改servers_tab.db.db0.aa
+                this.$store.commit('RStore/editServerTabDbKey',{server_key,db_key,key,key_type,key_ttl,key_val})
+                //修改current_selected_tab
+                this.$store.commit('RStore/changeSelectedTab',{server:server_key,db:db_key})
+            }
+        });
     },
     get:{},
     send:{

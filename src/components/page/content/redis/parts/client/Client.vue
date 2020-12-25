@@ -7,7 +7,7 @@
                 <InfoBody v-bind:server="server" v-bind:server_k="key" v-if="isShow(key)"></InfoBody>
             </div>
             <div v-for="(db, dkey) in server.db" v-bind:key="dkey">
-                <DbBody v-bind:db="db" v-bind:db_k="dkey" v-bind:server_k="key" v-if="isShow(key+dkey)"></DbBody>
+                <DbBody v-bind:keys="db.keys" v-bind:vals="db.val" v-bind:db_k="dkey" v-bind:server_k="key" v-if="isShow(key+dkey)"></DbBody>
             </div>
         </div>
         
@@ -32,11 +32,26 @@
             InfoBody,
             DbBody
         },
+        //data(){
+        //    return {
+        //        ddd:{}
+        //    }
+        //},
         computed: {
             ...mapState('RStore', [
                 'server_tabs',
                 'current_selected_tab'
-            ])
+            ]),
+            //server_tabs:function(){
+            //    console.log('改变','///////////////////');
+            //    this.ddd =  this.$store.state.RStore.server_tabs;
+            //    return this.ddd;
+            //}
+        },
+        watch:{
+            //ddd:function(xx){
+            //    console.log('改变222','///////////////////');
+            //}
         },
         methods: {
             ...mapMutations('RStore', [

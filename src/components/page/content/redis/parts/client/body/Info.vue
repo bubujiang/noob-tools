@@ -58,6 +58,7 @@
                 }
                 //发送消息给主进程处理获得keys
                 Message.send.renderer.redis_open_db.call(this,..._.split(this.server_k,':'),db);
+                //this.$store.commit('RStore/editServerTabDbKey',{server_key:this.server_k,db_key:'db0',key:'JacV2Auth_05f04e3411fbc1ef247f1ff5b1bf57b9',key_type:'string',key_ttl:-1,key_val:'dddd'})
             }
         }
     }

@@ -9,6 +9,9 @@ const {
     Message
 } = require('./../message/main.process.msg');
 
+const path = require('path')
+const os = require('os')
+
 let mainWindow;
 
 const important = {
@@ -35,7 +38,26 @@ function createWindow() {
     mainWindow.webContents.openDevTools()
 }
 
-app.whenReady().then(createWindow)
+/*app.whenReady().then(async ()=>{
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow()
+    }
+
+    const { default: installExtension, } = require('electron-devtools-installer')
+      // 使用beta版 vue-devtools
+      // 参考链接 https://github.com/vuejs/vue-devtools/issues/1279
+      // https://v3.vuejs.org/guide/migration/introduction.html#devtools-extension
+      // https://chrome.google.com/webstore/detail/vuejs-devtools/ljjemllljcmogpfapbkkighbhhppjdbg
+      var vue_devtools_beta = { id: "ljjemllljcmogpfapbkkighbhhppjdbg", electron: ">=10.1.5" }
+      var result = await installExtension(vue_devtools_beta)
+
+
+
+    //BrowserWindow.addDevToolsExtension(
+        //path.join(os.homedir(), '/.config/google-chrome/Default/Extensions/ljjemllljcmogpfapbkkighbhhppjdbg/6.0.0.2_0')
+     //   path.join(os.homedir(), '/.config/google-chrome/Default/Extensions/nhdogjmejiglipccpnnnanhbledajbpd/5.3.3_0')
+     //)
+})*/
 
 app.on('window-all-closed', () => {
     //if (process.platform !== 'darwin') {
@@ -44,7 +66,7 @@ app.on('window-all-closed', () => {
     //}
 })
 
-app.on('activate', () => {
+app.on('ready', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow()
     }
