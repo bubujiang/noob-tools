@@ -99,6 +99,17 @@ exports.Message = {
         const key = params.key;
         const worker = workers[server_key];
         this.Message.send.worker.redis_select_key(db_key, key, worker);
+      },
+      redis_update_key: (params, win, important) => {
+        console.log('主进程开始处理 修改redis key 消息', params, '//////////////////');
+        //向对应worker发消息
+        const workers = important.workers;
+        const server_key = params.host + ":" + params.port;
+        const db_key = params.db_key;
+        const key = params.key;
+        const worker = workers[server_key];
+        console.log('主进程发送 修改redis key 消息', db_key, key, '//////////////////');
+        this.Message.send.worker.redis_update_key(db_key, key, worker);
       }
     },
     worker: {
@@ -221,6 +232,14 @@ exports.Message = {
         console.log('主进程发送 选择redis key 消息 到 工作线程', db_key, key, '////////////////');
         worker.postMessage({
           type: 'renderer-redis-select-key',
+          db_key,
+          key
+        });
+      },
+      redis_update_key: function (db_key, key, worker) {
+        console.log('主进程发送 修改redis key 消息', db_key, key, '//////////////////');
+        worker.postMessage({
+          type: 'renderer-redis-update-key',
           db_key,
           key
         });

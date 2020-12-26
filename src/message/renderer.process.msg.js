@@ -201,6 +201,10 @@ export const Message = {
             redis_select_key:function(host,port,db_k,key){
                 console.log('渲染进程发送 选择redis key 消息', host,port,db_k,key, '///////////////');
                 ipcRenderer.send('renderer-redis-select-key',{host,port,db_k,key});
+            },
+            redis_update_key:function(host,port,db_key,key){
+                console.log('渲染进程发送 修改redis key 消息', host,port,db_key,key, '///////////////');
+                ipcRenderer.send('renderer-redis-update-key',{host,port,db_key,key});
             }
         }
     }

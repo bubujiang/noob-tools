@@ -10,7 +10,14 @@ export default {
       name: 'asddvaerb',
       img: '',
       state: 0 //-1连接出错，0未连接，1,正在连接, 2已连接 
-    }], //连接列表
+    },{
+      host: '182.61.12.213',
+      port: 6379,
+      auth: 'wGkfv`~@r&bv*7^%',
+      name: 'asddvaerb22',
+      img: '',
+      state: 0 //-1连接出错，0未连接，1,正在连接, 2已连接 
+    },], //连接列表
     add_server_popup_show: false, //显示\隐藏连接添加框
     add_server_params: {
       //正添加连接的参数
@@ -247,19 +254,28 @@ export default {
       const as = params.as;
       const v = state.server_tabs[server_key].db[db_key].val[key];
 
+      //let show_val = '';
       if(as === 'json'){
         const format2json = require('format-to-json');
         let fmtInfo = await format2json(v.raw_val);
-        v.show_val = fmtInfo.result;
-        v.format = 'json';
+        
+        if(fmtInfo.status.fmtSign === 'err'){
+          v.show_val = fmtInfo.status.message;
+        }else{
+          v.show_val = fmtInfo.result;
+        }
       }else if(as === 'raw'){
         v.show_val = v.raw_val;
-        v.format = 'raw';
+      }else{
+        v.show_val = v.raw_val;
       }
+      v.format = as;
       
       state.server_tabs[server_key].db[db_key].val = {
         ...state.server_tabs[server_key].db[db_key].val,
       };
+
+      //console.log('after',state.server_tabs[server_key].db[db_key].val);
     },
     //设置错误
     setError(state, error) {
