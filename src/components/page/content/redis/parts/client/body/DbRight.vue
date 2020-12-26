@@ -19,18 +19,32 @@
       </div>
     </div>
     <div class="view">
-      <div contenteditable="true" class="textarea"  v-html="content" @blur="content=$event.target.innerText"></div>
+      <div
+        contenteditable="true"
+        class="textarea"
+        v-html="content"
+        @blur="content=$event.target.innerText"
+      ></div>
     </div>
   </div>
 </template>
 
 <script>
-import {
-        Message
-    } from "msg/renderer.process.msg.js";
-    
+import { Message } from "msg/renderer.process.msg.js";
+
 export default {
   props: {
+    server_key: {
+      type: String,
+      required: true,
+    },
+    db_key: {
+      type: String,
+      required: true,
+    },redis_key: {
+      type: String,
+      required: true,
+    },
     val: {
       type: String,
       required: true,
@@ -51,11 +65,11 @@ export default {
   data() {
     return {
       selected: "",
-      content:""
+      content: "",
     };
   },
   created() {
-  //  console.log("format", this.format);
+    //  console.log("format", this.format);
     this.selected = this.format;
     this.content = this.val;
   },
@@ -63,18 +77,25 @@ export default {
     format: function () {
       this.selected = this.format;
     },
-    val: function(){
-        this.content = this.val;
-    }
+    val: function () {
+      this.content = this.val;
+    },
   },
   methods: {
     save() {
-
+      Message.send.renderer.redis_update_key.call(
+        this,
+        ..._.split(this.server_key, ":"),
+        this.db_key,
+        this.type,
+        this.redis_key,
+        this.content
+      );
     },
-    handleInput(e){
-        console.log(e.target.innerHTML, e.target.innerText);
-        this.content = e.target.innerHTML;
-    }
+    handleInput(e) {
+      console.log(e.target.innerHTML, e.target.innerText);
+      this.content = e.target.innerHTML;
+    },
   },
 };
 </script>

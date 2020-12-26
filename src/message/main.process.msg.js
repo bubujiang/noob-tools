@@ -106,10 +106,12 @@ exports.Message = {
         const workers = important.workers;
         const server_key = params.host + ":" + params.port;
         const db_key = params.db_key;
+        const key_type = params.key_type;
         const key = params.key;
+        const content = params.content;
         const worker = workers[server_key];
-        console.log('主进程发送 修改redis key 消息', db_key, key, '//////////////////');
-        this.Message.send.worker.redis_update_key(db_key, key, worker);
+        console.log('主进程发送 修改redis key 消息', db_key, key_type, key, content, '//////////////////');
+        this.Message.send.worker.redis_update_key(db_key, key_type, key, content, worker);
       }
     },
     worker: {
@@ -125,7 +127,10 @@ exports.Message = {
             case 'renderer-redis-select-key':
               this.Message.get.worker.redis_select_key(message, win, important, conn);
               break;
-          }
+          case 'renderer-redis-update-key':
+            this.Message.get.worker.redis_update_key(message, win, important, conn);
+          break;
+            }
         })
       },
       redis_select_server: function (message, win, important, conn) {
@@ -210,7 +215,35 @@ exports.Message = {
           }))
           //redises[key] = message.redis
         }
-      }
+      },
+      redis_update_key:function (message, win, important, conn) {
+        console.log('主进程开始处理 修改redis key 返回消息', message, conn, '//////////////////');
+        const key = conn.host + ":" + conn.port;
+        const workers = important.workers;
+        const sort_worers = important.sort;
+        if (message.rtn_type === 'error') {
+          //返回错误
+          win.webContents.send('renderer-redis-update-key', makeRendererResponseMsg('redis', 'error', message.error.message, {
+            menu: conn
+          }))
+          //删除
+          for (const k in sort_worers) {
+            if (sort_worers[k] === key) {
+              sort_worers.splice(k, 1);
+            }
+          }
+          delete workers[key];
+        } else {
+          //返回成功消息并添加到redis集合
+          win.webContents.send('renderer-redis-update-key', makeRendererResponseMsg('redis', 'sucess', '', {
+            info: message.info.result,
+            db_key: message.info.db_key,
+            key: message.info.key,
+            menu: conn
+          }))
+          //redises[key] = message.redis
+        }
+      },
     }
   },
   send: {
@@ -236,12 +269,12 @@ exports.Message = {
           key
         });
       },
-      redis_update_key: function (db_key, key, worker) {
-        console.log('主进程发送 修改redis key 消息', db_key, key, '//////////////////');
+      redis_update_key: function (db_key, key_type, key, content, worker) {
+        console.log('主进程发送 修改redis key 消息', db_key, key_type, key, content, '//////////////////');
         worker.postMessage({
           type: 'renderer-redis-update-key',
           db_key,
-          key
+          key, key_type,content
         });
       },
       quit: function (worker) {
