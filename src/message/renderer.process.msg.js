@@ -176,7 +176,7 @@ export const Message = {
         });
         ipcRenderer.on('renderer-redis-update-key',(event,message)=>{
             console.log('渲染进程开始处理 修改redis key 消息返回', message, '///////////////');
-return;
+//return;
             let key = null;
             for(const k in this.$store.state.RStore.server_menus){
                 const menu = this.$store.state.RStore.server_menus[k];
@@ -199,11 +199,11 @@ return;
                 const server_key = message.menu.host+':'+message.menu.port;
                 const db_key = message.db_key;
                 const key = message.key;
-                const key_type = message.info.type;
-                const key_ttl = message.info.ttl;
-                const key_val = message.info.val;
+                const val = message.info;
+                //const key_ttl = message.info.ttl;
+                //const key_val = message.info.val;
                 //修改servers_tab.db.db0.aa
-                this.$store.commit('RStore/editServerTabDbKey',{server_key,db_key,key,key_type,key_ttl,key_val})
+                this.$store.commit('RStore/editServerTabDbKeyVal',{server_key,db_key,key,val})
                 //修改current_selected_tab
                 //this.$store.commit('RStore/changeSelectedTab',{server:server_key,db:db_key})
             }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "集成数据管理工具",
   "private": true,
-  "main": "src/electron/main.js",
+  "main": "src_v2/electron.main.js",
   "scripts": {
     "build": "webpack",
     "server": "node server.js",
@@ -34,6 +34,7 @@
     "webpack-dev-middleware": "^4.0.2"
   },
   "dependencies": {
+    "@swordev/php-unserialize": "^1.0.1",
     "es6-promise": "^4.2.8",
     "format-to-json": "^1.0.4",
     "ioredis": "^4.19.2",

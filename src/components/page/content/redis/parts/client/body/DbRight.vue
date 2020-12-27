@@ -78,6 +78,7 @@ export default {
       this.selected = this.format;
     },
     val: function () {
+      console.log('val变化');
       this.content = this.val;
     },
   },

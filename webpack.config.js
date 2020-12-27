@@ -6,7 +6,8 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 module.exports = {
   mode: "development",
   entry: {
-    app: "./src/vue.main.js",
+    //app: "./src/vue.main.js",
+    app: "./src_v2/vue.main.js",
     //print: "./src/print.js",
   },
   devtool: "inline-source-map",
@@ -65,7 +66,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "Output Management",
       filename: "index.html", //生成后的文件名
-      template: "src/iframe.tpl",
+      template: "src_v2/page.tpl",
       publicPath: "./",
     }),
     new VueLoaderPlugin(),
@@ -81,6 +82,9 @@ module.exports = {
       assets: path.resolve(__dirname, "src/assets"),
       pbm: path.resolve(__dirname, "src/method"),
       msg: path.resolve(__dirname, "src/message"),
+      //
+      components: path.resolve(__dirname, "src_v2/components"),
+      store: path.resolve(__dirname, "src_v2/store"),
     },
   },
 };

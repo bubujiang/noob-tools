@@ -38,13 +38,21 @@ function createRedisClient(conn, success, fail) {
 }
 
 function redisStringDataSet(redis, key, content, sucess, fail) {
-  redis.set(key, content, (error, get_result) => {
+  redis.set(key, content, (error, result) => {
     if (error) {
       fail(error);
     } else {
-      //console.log('RVQERVQERG',type_result, result);
-      sucess(get_result);
-      //resolve(result,type_result);
+      sucess(result);
+    }
+  });
+}
+
+function redisStringDataGet(redis, key, sucess, fail) {
+  redis.get(key, (error, result) => {
+    if (error) {
+      fail(error);
+    } else {
+      sucess(result);
     }
   });
 }
@@ -61,3 +69,4 @@ function makeRendererResponseMsg(module, type, msg, ext = {}) {
 exports.createRedisClient = createRedisClient;
 exports.makeRendererResponseMsg = makeRendererResponseMsg;
 exports.redisStringDataSet = redisStringDataSet;
+exports.redisStringDataGet = redisStringDataGet;

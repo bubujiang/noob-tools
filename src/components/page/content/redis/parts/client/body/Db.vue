@@ -71,6 +71,7 @@ export default {
   },
   watch: {
     vals: function () {
+      console.log('vals变化');
       for (const k in this.vals) {
         if (k === this.select_key) {
           this.activeValn = this.vals[k];

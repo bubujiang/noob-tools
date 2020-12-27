@@ -1,6 +1,6 @@
 const {
   createRedisClient,
-  redisStringDataSet,
+  redisStringDataSet,redisStringDataGet
 } = require("./../method/redis.main.js");
 
 const { exit } = require("process");
@@ -380,9 +380,19 @@ exports.Message = {
                 redisStringDataSet(redis, key, content, resolve, reject);
               });
             }
+          }).then((set_result)=>{
+            console.log("set", set_result);
+
+            if (key_type === "string") {
+              return new Promise((resolve, reject) => {
+                redisStringDataGet(redis, key, resolve, reject);
+              });
+            }
+
+
           })
           .then((result) => {
-            console.log("set", result);
+            console.log("get", result);
             this.Message.send.main_th.redis_update_key(
               "success",
               {
