@@ -1,5 +1,8 @@
 <template>
-    
+    <div class="body">
+        <AppNavigation />
+        <AppClient />
+    </div>
 </template>
 
 <script>

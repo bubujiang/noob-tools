@@ -5,11 +5,6 @@ export default {
     navigation_items: [
       {
         //id: id++,
-        name: "welcome",
-        page: "Home",
-      },
-      {
-        //id: id++,
         name: "redis",
         page: "Redis",
       },
@@ -19,7 +14,7 @@ export default {
         page: "Mysql",
       },
     ],
-    current_page: "Home",
+    current_page: "Redis",
     prompt: [/*{
         type:'',//error,notice,success
         level:'',//0右下角提示,1附加弹窗
@@ -28,7 +23,7 @@ export default {
   },
   mutations: {
     changePage(state, page) {
-      state.current_page = item;
+      state.current_page = page;
     },
   },
 };

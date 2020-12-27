@@ -6,8 +6,8 @@
 </head>
 
 <body style="margin: 0; overflow: hidden;heigth:100vh;background-color:#162955">
-    <div id="bkground">
-        <div id="main"></div>
+    <div>
+        <div id="app"></div>
     </div>
 </body>
 
