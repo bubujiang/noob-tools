@@ -1,0 +1,42 @@
+.navigation{
+    width: 150px;
+    background-color: #102345;
+    position: absolute;
+    height: 100vh;
+}
+
+.item{
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.active{
+    background-color: #304473;
+}
+
+.item span{
+    color: #9ca4b6;
+    font-size: 20px;
+    cursor: default;
+}
+
+.toggle{
+    position: fixed;
+    left: 150px;
+    top: 50%;
+    height: 25px;
+    width: 20px;
+    display: flex;
+    background-color: #102345;
+    align-items: center;
+    border-radius: 0 5px 5px 0px;
+}
+
+.toggle span{
+    color: #9ca4b6;
+    font-size: 15px;
+    cursor: default;
+}

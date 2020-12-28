@@ -1,0 +1,48 @@
+.connections{
+    width: 150px;
+    background-color: #102345;
+    margin: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+}
+.content{
+    width: 100%;
+}
+.list{
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-top: 10px;
+    padding-left: 5px;
+}
+
+.list::-webkit-scrollbar{
+    width: 5px;
+    background-color: #102345;
+}/*整个滚动条*/
+.list::-webkit-scrollbar-thumb{
+    background-color: #031234;
+    border-radius: 20px;
+}/*滚动条上的滚动滑块.*/
+.list::-webkit-scrollbar-button{}/*滚动条上的按钮 (上下箭头).*/
+.list::-webkit-scrollbar-track{}/*滚动条轨道.*/
+.list::-webkit-scrollbar-track-piece{}/*滚动条没有滑块的轨道部分.*/
+.list::-webkit-scrollbar-corner{}/*当同时有垂直滚动条和水平滚动条时交汇的部分.*/
+.list::-webkit-resizer{}/*某些元素的corner部分的部分样式(例:textarea的可拖动按钮).*/
+
+.item{
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    height: 30px;
+    align-items: center;
+}
+
+.item span{
+    font-size: 16px;
+    color: #9ca4b6;
+    word-break: break-all;
+    cursor: default;
+}

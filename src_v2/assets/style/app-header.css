@@ -1,0 +1,35 @@
+.header{
+    width: 100%;
+    height: 30px;
+    background-color: #031234;
+    box-shadow: 0 0 10px black;
+    position: relative;
+    -webkit-app-region: drag;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+}
+
+.min,.toggle,.close{
+    -webkit-app-region: no-drag;
+    border-radius: 10px;
+    display: block;
+    height: 15px;
+    width: 15px;
+}
+
+.min{
+    background-color: yellow;
+    margin-right: 10px;
+}
+
+.toggle{
+    background-color: green;
+    margin-right: 10px;
+}
+
+.close{
+    background-color: red;
+    margin-right: 5px;
+}

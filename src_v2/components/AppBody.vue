@@ -17,6 +17,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style src="style/app-body.css" scoped>
 
 </style>

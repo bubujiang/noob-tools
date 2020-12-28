@@ -16,6 +16,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style src="style/app-header.css" scoped>
 
 </style>

@@ -1,13 +1,21 @@
 <template>
-    <div class="redis"></div>
+    <div class="body">
+        <Connections />
+        <Client />
+    </div>
 </template>
 
 <script>
+import Connections from 'components/redis/RedisConnections.vue';
+import Client from 'components/redis/RedisClient.vue';
+
 export default {
-    
+    components:{
+        Connections,Client
+    }
 }
 </script>
 
-<style scoped>
+<style src="style/redis/redis-body.css" scoped>
 
 </style>
