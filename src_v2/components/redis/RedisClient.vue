@@ -4,7 +4,7 @@
             <div class="item">
                 <span>server 1</span>
             </div>
-            <div class="item">
+            <div class="item active">
                 <span>server 2</span>
             </div>
             <div class="item">
@@ -25,4 +25,4 @@
     }
 </script>
 
-<style src="style/redis-client.css" scoped></style>
+<style src="style/redis/redis-client.css" scoped></style>

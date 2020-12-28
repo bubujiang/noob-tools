@@ -3,3 +3,34 @@
     margin-top: 40px;
     width: 100%;
 }
+
+.header{
+    display: flex;
+    height: 40px;
+    background-color: #031234;
+    border-radius: 10px 0 0 0;
+}
+
+.item{
+    display: flex;
+    align-items: flex-end;
+    padding: 5px 10px;
+}
+
+.item :first{
+    border-radius: 10px 0 0 0;
+}
+
+.active{
+    background-color: #102354;
+}
+
+.item span{
+    font-size: 16px;
+    color: #9ca4b6;
+    cursor: default;
+}
+
+.active span{
+    font-weight: 900;
+}

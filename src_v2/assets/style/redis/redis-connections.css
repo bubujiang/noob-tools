@@ -1,6 +1,6 @@
 .connections{
     width: 150px;
-    background-color: #102345;
+    background-color: #102354;
     margin: 40px;
     border-radius: 10px;
     padding: 10px;
@@ -20,7 +20,7 @@
 
 .list::-webkit-scrollbar{
     width: 5px;
-    background-color: #102345;
+    background-color: #102354;
 }/*整个滚动条*/
 .list::-webkit-scrollbar-thumb{
     background-color: #031234;
