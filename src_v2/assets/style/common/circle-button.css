@@ -1,0 +1,4 @@
+.circle{
+    -webkit-app-region: no-drag;
+    display: block;
+}

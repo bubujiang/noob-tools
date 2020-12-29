@@ -11,7 +11,7 @@
     z-index: 1;
 }
 
-.min,.toggle,.close{
+/*.min,.toggle,.close{
     -webkit-app-region: no-drag;
     border-radius: 10px;
     display: block;
@@ -32,4 +32,4 @@
 .close{
     background-color: red;
     margin-right: 5px;
-}
+}*/
