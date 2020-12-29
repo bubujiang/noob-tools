@@ -1,5 +1,5 @@
 <template>
-    <div class="add" v-if="add_connection_popup_show">
+    <div class="add" v-if="add_connection_popup_show" @keyup.esc="toggleAddConnectionPopupShow">
         <!--<div class="title">
             <CircleButton color="red" size="15px" right="5px" radius="10px" v-on:cb-click="close()" />
         </div>-->
@@ -9,7 +9,7 @@
                     <span>{{$t('name')}}</span>
                 </div>
                 <div class="input">
-                    <IInput />
+                    <IInput v-model="add_connection_params.name" />
                 </div>
             </div>
 
@@ -18,7 +18,7 @@
                     <span>{{$t('host')}}</span>
                 </div>
                 <div class="input">
-                    <IInput />
+                    <IInput v-model="add_connection_params.host" />
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                     <span>{{$t('port')}}</span>
                 </div>
                 <div class="input">
-                    <IInput />
+                    <IInput v-model="add_connection_params.port" />
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                     <span>{{$t('auth')}}</span>
                 </div>
                 <div class="input">
-                    <IInput />
+                    <IInput v-model="add_connection_params.auth" />
                 </div>
             </div>
 
@@ -44,10 +44,10 @@
 
         <div class="footer">
             <div class="reset">
-                <IButton val="reset" v-on:b-click="close" />
+                <IButton val="reset" v-on:b-click="toggleAddConnectionPopupShow" />
             </div>
             <div class="submit">
-                <IButton val="submit" v-on:b-click="close" />
+                <IButton val="submit" v-on:b-click="addNewConnectionPack" />
             </div>
         </div>
     </div>
@@ -59,19 +59,28 @@
     import IInput from 'components/common/IInput.vue';
 
     import {
-        mapState
+        mapState,mapMutations,mapActions
     } from 'vuex';
 
     export default {
         components: {
             //CircleButton,
-            IButton,IInput
+            IButton,
+            IInput
         },
         computed: {
-            ...mapState('RStore', ['add_connection_popup_show'])
+            ...mapState('RStore', ['add_connection_popup_show', 'add_connection_params'])
         },
         methods: {
-            close() {}
+            ...mapMutations('RStore',['toggleAddConnectionPopupShow','addConnection']),
+            ...mapActions('RStore',['addNewConnection']),
+            async addNewConnectionPack(){
+                await this.addNewConnection().then((suc_msg)=>{
+                    console.log(suc_msg);
+                }).catch((err_msg)=>{
+                    console.log(err_msg);
+                });
+            }
         }
     }
 </script>

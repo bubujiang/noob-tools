@@ -1,11 +1,16 @@
 <template>
-    <input class="iinput" />
+    <input class="iinput" @input="$emit('input',$event.target.value)" />
 </template>
 
 <script>
-export default {
-    
-}
+    export default {
+        props: {
+            value: {
+                type: String,
+                default: ''
+            }
+        },
+    }
 </script>
 
 <style src="style/common/i-input.css" scoped></style>

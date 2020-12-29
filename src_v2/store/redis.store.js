@@ -1,10 +1,14 @@
+import {
+  Promise
+} from "es6-promise";
+
 const state = {
   connections_menu: [{
       host: "39.108.245.131",
       port: 6379,
       auth: null,
       name: "asddvaerb",
-      img: "",
+      //img: "",
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
     },
     {
@@ -12,7 +16,7 @@ const state = {
       port: 6379,
       auth: "wGkfv`~@r&bv*7^%",
       name: "asddvaerb22",
-      img: "",
+      //img: "",
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
     },
   ], //连接列表
@@ -55,13 +59,67 @@ const state = {
 }
 
 const mutations = {
-  toggleAddConnectionPopupShow(state){
+  toggleAddConnectionPopupShow(state) {
     state.add_connection_popup_show = !state.add_connection_popup_show
-  }
+  },
+  addConnection(state, {
+    name,
+    host,
+    port,
+    auth
+  }) {
+    console.log('addConnection before', name, host, port, auth, '/////////////////');
+    state.connections_menu = [...state.connections_menu, {
+      name,
+      host,
+      port,
+      auth
+    }];
+    console.log('addConnection after', state.connections_menu, '/////////////////');
+  },
 }
+
+const actions = {
+  addNewConnection(context) {
+    const _ = require("lodash");
+    let params = context.state.add_connection_params;
+    params = {name:_.trim(params.name),host:_.trim(params.host),port:_.toNumber(_.trim(params.port)),auth:_.trim(params.auth)};
+    const menus = context.state.connections_menu;
+    console.log('addNewConnection before', params, '/////////////////');
+    return new Promise((resolve, reject) => {
+      //判断必填
+      //判断类型
+      if (!params.host) {
+        reject('$$host must');
+        return;
+      }
+      if(!params.port){
+        reject('$$port err');
+        return;
+      }
+      if (!params.name) {
+        reject('$$name must');
+        return;
+      }
+      //判断重复
+      for(const i in menus){
+        const menu = menus[i];
+
+        if(menu.host === params.host && menu.port === params.port){
+          reject('$$exist');
+          return;
+        }
+      }
+      //
+      context.commit('addConnection',params)
+      resolve('success');
+    });
+  }
+};
 
 export default {
   namespaced: true,
   state,
   mutations,
+  actions,
 };
