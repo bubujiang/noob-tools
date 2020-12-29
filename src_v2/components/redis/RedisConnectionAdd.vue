@@ -72,7 +72,7 @@
             ...mapState('RStore', ['add_connection_popup_show', 'add_connection_params'])
         },
         methods: {
-            ...mapMutations('RStore',['toggleAddConnectionPopupShow','addConnection']),
+            ...mapMutations('RStore',['toggleAddConnectionPopupShow']),
             ...mapActions('RStore',['addNewConnection']),
             async addNewConnectionPack(){
                 await this.addNewConnection().then((suc_msg)=>{
