@@ -2,3 +2,13 @@
     width: 100%;
     display: flex;
 }
+
+.message-enter-active,
+.message-leave-active {
+    transition: right .5s;
+}
+
+.message-enter,
+.message-leave-to {
+    right: -285px;
+}

@@ -74,10 +74,21 @@
         methods: {
             ...mapMutations('RStore',['toggleAddConnectionPopupShow']),
             ...mapActions('RStore',['addNewConnection']),
+            ...mapActions('AStore',['showNewPromp']),
             async addNewConnectionPack(){
                 await this.addNewConnection().then((suc_msg)=>{
+                    this.showNewPromp({
+                        type:'success',
+                        level:0,
+                        info:suc_msg
+                    });
                     console.log(suc_msg);
                 }).catch((err_msg)=>{
+                    this.showNewPromp({
+                        type:'notice',
+                        level:0,
+                        info:err_msg
+                    });
                     console.log(err_msg);
                 });
             }

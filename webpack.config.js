@@ -87,6 +87,7 @@ module.exports = {
       store: path.resolve(__dirname, "src_v2/store"),
       style: path.resolve(__dirname, "src_v2/assets/style"),
       locales: path.resolve(__dirname, "src_v2/locales"),
+      image: path.resolve(__dirname, "src_v2/assets/image"),
     },
   },
 };

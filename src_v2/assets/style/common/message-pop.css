@@ -1,0 +1,53 @@
+.pop{
+    position: fixed;
+    bottom: 60px;
+    right: 0;
+    background-color: #5d6e93;
+    box-shadow: 0 0 10px black;
+    border-radius: 10px 0 0 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.title{
+    background-color: #304473;
+    width: 80px;
+    height: 90px;
+    border-radius: 10px 0 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title img{
+    width: 60px;
+    height: 60px;
+}
+
+.body{
+    width: 200px;
+    word-break: break-all;
+    height: 90px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-left: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.body::-webkit-scrollbar{
+    width: 5px;
+    background-color: #5d6e93;
+}/*整个滚动条*/
+.body::-webkit-scrollbar-thumb{
+    background-color: #031234;
+    border-radius: 20px;
+}/*滚动条上的滚动滑块.*/
+
+.body span{
+    font-size: 16px;
+    color: #9ca4b6;
+}
