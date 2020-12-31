@@ -46,6 +46,9 @@
             <div class="reset">
                 <IButton val="reset" v-on:b-click="toggleAddConnectionPopupShow" />
             </div>
+            <div class="test">
+                <IButton val="test" v-on:b-click="testConnection" />
+            </div>
             <div class="submit">
                 <IButton val="submit" v-on:b-click="addNewConnectionPack" />
             </div>
@@ -55,45 +58,78 @@
 
 <script>
     //import CircleButton from 'components/common/CircleButton.vue';
-    import IButton from 'components/common/IButton.vue';
-    import IInput from 'components/common/IInput.vue';
+    import IButton from "components/common/IButton.vue";
+    import IInput from "components/common/IInput.vue";
 
     import {
-        mapState,mapMutations,mapActions
-    } from 'vuex';
+        mapState,
+        mapMutations,
+        mapActions
+    } from "vuex";
 
     export default {
         components: {
             //CircleButton,
             IButton,
-            IInput
+            IInput,
         },
         computed: {
-            ...mapState('RStore', ['add_connection_popup_show', 'add_connection_params'])
+            ...mapState("RStore", [
+                "add_connection_popup_show",
+                "add_connection_params",
+            ]),
         },
         methods: {
-            ...mapMutations('RStore',['toggleAddConnectionPopupShow']),
-            ...mapActions('RStore',['addNewConnection']),
-            ...mapActions('AStore',['showNewPromp']),
-            async addNewConnectionPack(){
-                await this.addNewConnection().then((suc_msg)=>{
-                    this.showNewPromp({
-                        type:'success',
-                        level:0,
-                        info:suc_msg
+            ...mapMutations("RStore", ["toggleAddConnectionPopupShow"]),
+            ...mapActions("RStore", ["addNewConnection"]),
+            ...mapActions("AStore", ["addNewPromp"]),
+            async addNewConnectionPack() {
+                await this.addNewConnection()
+                    .then((suc_msg) => {
+                        this.addNewPromp({
+                            type: "success",
+                            level: 0,
+                            info: suc_msg,
+                        });
+                        //console.log(suc_msg);
+                    })
+                    .catch((err_msg) => {
+                        this.addNewPromp({
+                            type: "notice",
+                            level: 0,
+                            info: err_msg,
+                        });
+                        //console.log(err_msg);
                     });
-                    console.log(suc_msg);
-                }).catch((err_msg)=>{
-                    this.showNewPromp({
-                        type:'notice',
-                        level:0,
-                        info:err_msg
+            },
+            testConnection() {
+                const RendererMessage = require("ipcmsg/renderer.process.im.js");
+                RendererMessage.send.main.redisTestConn(this.add_connection_params)
+                    .then((result) => {
+                        if (result.type === "success") {
+                            this.addNewPromp({
+                                type: "success",
+                                level: 0,
+                                info: result.msg,
+                            });
+                        } else {
+                            this.addNewPromp({
+                                type: "error",
+                                level: 0,
+                                info: result.msg,
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        this.addNewPromp({
+                            type: "error",
+                            level: 0,
+                            info: error,
+                        });
                     });
-                    console.log(err_msg);
-                });
-            }
-        }
-    }
+            },
+        },
+    };
 </script>
 
 <style src="style/redis/redis-connection-add.css" scoped></style>

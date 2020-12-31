@@ -1,9 +1,9 @@
 .pop{
-    position: fixed;
+    /*position: fixed;
     bottom: 60px;
     right: 0;
     background-color: #5d6e93;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px black;*/
     border-radius: 10px 0 0 10px;
     justify-content: center;
     align-items: center;
@@ -32,6 +32,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     padding-left: 5px;
+    padding-right: 5px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;

@@ -88,6 +88,8 @@ module.exports = {
       style: path.resolve(__dirname, "src_v2/assets/style"),
       locales: path.resolve(__dirname, "src_v2/locales"),
       image: path.resolve(__dirname, "src_v2/assets/image"),
+      ipcmsg: path.resolve(__dirname, "src_v2/ipcmsg"),
+      method: path.resolve(__dirname, "src_v2/method"),
     },
   },
 };

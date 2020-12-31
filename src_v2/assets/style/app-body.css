@@ -3,6 +3,24 @@
     display: flex;
 }
 
+.abx{
+    position: fixed;
+    bottom: 40px;
+    right: 0;
+}
+
+.popack{
+    position: relative;
+    right: 0;
+    margin-top: 20px;
+    background-color: #5d6e93;
+    box-shadow: 0 0 10px black;
+    border-radius: 10px 0 0 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 .message-enter-active,
 .message-leave-active {
     transition: right .5s;
