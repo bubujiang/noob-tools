@@ -16,6 +16,14 @@ module.exports = {
                         port,
                         auth
                     });
+            },
+            selectRedisConn({host,port,auth}){
+                console.log('渲染进程的发送 选择redis连接 消息',host,port,auth,'////////////////');
+                ipcRenderer.send('renderer-redis-select-conn', {
+                    host,
+                    port,
+                    auth
+                });
             }
         }
     },

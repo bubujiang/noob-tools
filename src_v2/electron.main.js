@@ -64,3 +64,8 @@ ipcMain.handle('renderer-redis-test-conn', async (event, {host,port,auth}) => {
     console.log('主进程接收到渲染进程的 测试redis连接 消息',host,port,auth,'////////////////');
     return await MainMessage.get.renderer.redisTestConn({host,port,auth});
 })
+
+ipcMain.on('renderer-redis-select-conn', (event, {host,port,auth}) => {
+    console.log('主进程接收到渲染进程的 选择redis连接 消息',host,port,auth,'////////////////');
+    return await MainMessage.get.renderer.selectRedisConn(mainWindow,params,{host,port,auth});
+})
