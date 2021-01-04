@@ -45,6 +45,20 @@ const state = {
           child: [
             {
               type: "mysql",
+              name: "mine1",
+              host: "182.61.12.213",
+              port: 6379,
+              user: "wGkfv`~@r&bv*7^%",
+              pwd: "sdddd",
+              state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
+            },
+          ],
+        },{
+          type: "folder",
+          name: "fbb",
+          child: [
+            {
+              type: "mysql",
               name: "mine2",
               host: "182.61.12.213",
               port: 6379,

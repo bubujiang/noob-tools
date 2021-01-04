@@ -1,0 +1,54 @@
+.connections{
+    width: 150px;
+    background-color: #102354;
+    margin: 40px;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+}
+
+.button{
+    width: 130px;
+    margin: auto;
+}
+.content{
+    width: 100%;
+}
+.list{
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 400px;
+    margin-top: 10px;
+    padding-right: 5px;
+    user-select: none;
+    direction: rtl;
+}
+
+.handle{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(80%, -50%);
+    display: flex;
+    cursor: col-resize;
+    background-color: #102354;
+    border-radius: 0 5px 5px 0;
+    height: 25px;
+}
+
+.handle img{
+    height: 15px;
+    margin: auto;
+    -webkit-user-drag: none;
+}
+
+.list::-webkit-scrollbar{
+    width: 5px;
+    background-color: #102354;
+    cursor: w-resize;
+}/*整个滚动条*/
+.list::-webkit-scrollbar-thumb{
+    background-color: #031234;
+    border-radius: 20px;
+}/*滚动条上的滚动滑块.*/
