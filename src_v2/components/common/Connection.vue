@@ -3,22 +3,24 @@
         <div class="content">
             <div class="info">
                 <span class="icon"><img :src="show_icon" v-if="show_icon" v-on:click="toggle" /></span>
-            <span class="icon"><img :src="type_icon" /></span>
-            <span class="name">{{item.name}}</span>
+                <span class="icon"><img :src="type_icon" /></span>
+                <span class="name">{{item.name}}</span>
             </div>
             <div class="op">
                 <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new.png')" /></span>
-            <span class="icon"><img :src="require('image/edit.png')" /></span>
-            <span class="icon"><img :src="require('image/del.png')" /></span>
+                <span class="icon"><img :src="require('image/edit.png')" /></span>
+                <span class="icon"><img :src="require('image/del.png')" v-on:click="delConnection(index)" /></span>
             </div>
         </div>
         <div class="child" v-if="item.type==='folder' && item.child.length && this.show_child">
-            <Connection v-for="(child,i) in item.child" v-bind:key="i" v-bind:item="child" />
+            <Connection v-for="(child,i) in item.child" v-bind:key="i" v-bind:index="index+'|'+i" v-bind:item="child" />
         </div>
     </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex';
+
     export default {
         name: 'Connection',
         props: {
@@ -29,16 +31,20 @@
             top: { //顶层
                 type: String,
                 required: false
+            },
+            index: { //路径
+                type: String,
+                required: true
             }
         },
         data() {
             return {
                 type_icon: '',
-                //show_icon: '',
                 show_child: false
             }
         },
         created() {
+            console.log('index', this.index);
             if (this.item.type === 'mysql') {
                 this.type_icon = require('image/mysql.png');
             } else if (this.item.type === 'redis') {
@@ -51,14 +57,15 @@
             show_icon() {
                 if (this.item.type === 'folder' && this.show_child === true) {
                     return require('image/hide.png');
-                }else if(this.item.type === 'folder'){
+                } else if (this.item.type === 'folder') {
                     return require('image/show.png');
                 }
                 return '';
             }
         },
-        methods:{
-            toggle(){
+        methods: {
+            ...mapMutations('AStore',['delConnection']),
+            toggle() {
                 this.show_child = !this.show_child;
             }
         },

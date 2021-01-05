@@ -5,7 +5,7 @@
         <IButton val="add_connection" v-on:b-click="()=>{}" />
       </div>
       <div class="list" v-if="Object.keys(connections).length">
-        <Connection v-for="(connection,i) in connections" v-bind:key="i" v-bind:item="connection" top='1' />
+        <Connection v-for="(connection,i) in connections" v-bind:key="i" v-bind:index="i+''" v-bind:item="connection" top='1' />
       </div>
     </div>
     <span class="handle" @mousedown="mouseDown"><img :src="require('image/drag.png')" /></span>

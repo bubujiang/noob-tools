@@ -1,4 +1,5 @@
 import Vue from "vue";
+import _ from "lodash";
 const state = {
   navigation: [{
       name: "redis",
@@ -90,9 +91,6 @@ const mutations = {
       time: new Date().getTime(),
     });
   },
-  //showPrompt(state) {
-  //  state.show_prompt = true
-  //},
   showedPrompt(state, i) {
     //console.log('start',i);
     Vue.set(state.prompts, i, {
@@ -101,6 +99,25 @@ const mutations = {
     });
     //console.log('end',state.prompts);
   },
+  delConnection(state,index){
+    let paths = _.split(index, '|', 99);
+
+    if(paths.length == 1){
+      state.connections.splice(paths[0],1);
+    }
+    else{
+      const start = paths.shift();
+      const last = paths.pop();
+      let str = 'state.connections['+start+']';
+      for(const i in paths){
+        const path = paths[i];
+        str += '.child['+path+']';
+      }
+      str += '.child.splice('+last+',1)';
+      eval(str);
+    }
+    
+  }
 };
 
 const actions = {
