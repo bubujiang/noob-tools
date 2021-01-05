@@ -1,5 +1,5 @@
 <template>
-    <button v-on:click="$emit('b-click');">{{$t(val)}}</button>
+    <button v-on:click="$emit('b-click');" :style="'border-color:'+color+';background-color:'+color+';'">{{$t(val)}}</button>
 </template>
 
 <script>
@@ -9,6 +9,10 @@ export default {
       type: String,
       required: true,
     },
+    color:{
+      type: String,
+      required: true
+    }
   },
 };
 </script>

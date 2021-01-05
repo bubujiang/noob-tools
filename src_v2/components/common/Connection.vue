@@ -9,20 +9,25 @@
             <div class="op">
                 <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new.png')" /></span>
                 <span class="icon"><img :src="require('image/edit.png')" /></span>
-                <span class="icon"><img :src="require('image/del.png')" v-on:click="delConnection(index)" /></span>
+                <span class="icon"><img :src="require('image/del.png')" v-on:click="delConnectionPack" /></span>
             </div>
         </div>
         <div class="child" v-if="item.type==='folder' && item.child.length && this.show_child">
             <Connection v-for="(child,i) in item.child" v-bind:key="i" v-bind:index="index+'|'+i" v-bind:item="child" />
         </div>
+        <ConfirmWindow v-if="show_confirm" title="$$删除连接" :content="'$$确认删除\''+item.name+'\'吗?'" v-on:confirm-cancel="confirmCancel" v-on:confirm-sure="confirmSure"/>
     </div>
 </template>
 
 <script>
 import {mapMutations} from 'vuex';
+import ConfirmWindow from 'components/common/ConfirmWindow.vue';
 
     export default {
         name: 'Connection',
+        components:{
+            ConfirmWindow
+        },
         props: {
             item: {
                 type: Object,
@@ -40,11 +45,12 @@ import {mapMutations} from 'vuex';
         data() {
             return {
                 type_icon: '',
-                show_child: false
+                show_child: false,
+                show_confirm: false
             }
         },
         created() {
-            console.log('index', this.index);
+            //console.log('index', this.index);
             if (this.item.type === 'mysql') {
                 this.type_icon = require('image/mysql.png');
             } else if (this.item.type === 'redis') {
@@ -65,6 +71,17 @@ import {mapMutations} from 'vuex';
         },
         methods: {
             ...mapMutations('AStore',['delConnection']),
+            delConnectionPack(){
+                this.show_confirm = true;
+                //this.delConnection(this.index);
+            },
+            confirmCancel(){
+                this.show_confirm = false;
+            },
+            confirmSure(){
+                this.delConnection(this.index);
+                this.show_confirm = false;
+            },
             toggle() {
                 this.show_child = !this.show_child;
             }

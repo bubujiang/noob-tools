@@ -7,7 +7,7 @@
                 </div>
                 <div class="list">
                     <div class="row">
-                        <span>DB</span><span>Keys</span><span>Expires</span><span>Avg TTL</span><div class="ibutton"><span><IButton val="open" /></span></div>
+                        <span>DB</span><span>Keys</span><span>Expires</span><span>Avg TTL</span><div class="ibutton"><span><IButton val="open" color="#031234" /></span></div>
                     </div>
                 </div>
             </div>

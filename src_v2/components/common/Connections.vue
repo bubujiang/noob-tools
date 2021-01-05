@@ -2,7 +2,7 @@
   <div class="connections" :style="'width:'+width+'px'">
     <div class="content">
       <div class="button">
-        <IButton val="add_connection" v-on:b-click="()=>{}" />
+        <IButton val="add_connection" v-on:b-click="()=>{}" color="#031234" />
       </div>
       <div class="list" v-if="Object.keys(connections).length">
         <Connection v-for="(connection,i) in connections" v-bind:key="i" v-bind:index="i+''" v-bind:item="connection" top='1' />
