@@ -5,17 +5,26 @@
     margin-top: 10px;
 }
 
-.item:hover{
-    background-color: red;
-}
-
 .list>.item:first-child{
     margin-top: 0px;
 }
 
 .content{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info{
+    display: flex;
     justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.op{
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -23,7 +32,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 25px;
+    min-width: 20px;
 }
 
 .icon img{
