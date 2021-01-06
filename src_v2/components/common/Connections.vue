@@ -2,7 +2,7 @@
   <div class="connections" :style="'width:'+width+'px'">
     <div class="content">
       <div class="button">
-        <IButton val="add_connection" v-on:b-click="()=>{}" color="#031234" />
+        <IButton val="add_connection" v-on:b-click="addConnection" color="#031234" />
       </div>
       <div class="list" v-if="Object.keys(connections).length">
         <Connection v-for="(connection,i) in connections" v-bind:key="i" v-bind:index="i+''" v-bind:item="connection" top='1' />
@@ -15,6 +15,8 @@
 <script>
   import IButton from "components/common/IButton.vue";
   import Connection from "components/common/Connection.vue";
+  import {mapMutations} from "vuex";
+
   import {
     mapState
   } from "vuex";
@@ -23,6 +25,12 @@
     components: {
       IButton,
       Connection
+    },
+    props:{
+      module:{
+        type:String,
+        required:true
+      }
     },
     data() {
       return {
@@ -41,6 +49,12 @@
       document.removeEventListener("mouseup", this.mouseUp);
     },
     methods: {
+      ...mapMutations("RStore", ["toggleAddConnectionPopupShow"]),
+      addConnection(){
+        if(this.module === 'redis'){
+          this.toggleAddConnectionPopupShow();
+        }
+      },
       mouseDown(event) {
         document.addEventListener("mousemove", this.mouseMove);
         this.pre_x = event.x;

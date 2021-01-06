@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <Connections v-on:width-change="widthChange($event)" />
+        <Connections v-on:width-change="widthChange($event)" module="redis" />
         <Client v-bind:width="width" />
         <transition name="fade">
             <ConnectionAdd />

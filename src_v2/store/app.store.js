@@ -33,7 +33,22 @@ const state = {
       host: "182.61.12.213",
       port: 6379,
       auth: "wGkfv`~@r&bv*7^%",
+      cluster:false,
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
+      tsl:{
+        private_key:'',
+        public_key:'',
+        authority:''
+      },
+      ssh:{
+        host:'',
+        port:'',
+        user:'',
+        pwd:'',
+        private_key:'',
+        passphrase:'',
+        timeout:''
+      }
     },
     {
       type: "folder",
@@ -49,6 +64,8 @@ const state = {
           user: "wGkfv`~@r&bv*7^%",
           pwd: "sdddd",
           state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
+          tsl:{},
+          ssh:{}
         }, ],
         //show: true
       }, {

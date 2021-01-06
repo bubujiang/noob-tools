@@ -27,6 +27,9 @@ const state = {
     port: null,
     auth: null,
     name: null,
+    cluster:false,
+    tsl:{},
+    ssh:{}
   },
   edit_connection_popup_show: false, //显示\隐藏连接编辑框
   edit_connection_key: "127.0.0.1:99",

@@ -40,17 +40,120 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('cluster')}}</span>
+                </div>
+                <div class="input">
+                    <ICheckbox />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="gap">
+            <span>SSL</span>
+        </div>
+
+        <div class="body-tsl">
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('PrivateKey')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.tsl.private_key" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('PublicKey')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.tsl.public_key" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('Authority')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.tsl.authority" />
+                </div>
+            </div>
+        </div>
+
+        <div class="gap">
+            <span>SSH Tunnel</span>
+        </div>
+
+        <div class="body-ssh">
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('host')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.host" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('port')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.port" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('username')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.user" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('PrivateKey')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.private_key" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('passphrase')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.passphrase" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span>{{$t('timeout')}}</span>
+                </div>
+                <div class="input">
+                    <IInput v-model="add_connection_params.ssh.timeout" />
+                </div>
+            </div>
+
         </div>
 
         <div class="footer">
             <div class="reset">
-                <IButton val="reset" v-on:b-click="toggleAddConnectionPopupShow" />
+                <IButton val="reset" v-on:b-click="toggleAddConnectionPopupShow" color="#5d6e93" />
             </div>
             <div class="test">
-                <IButton val="test" v-on:b-click="testConnection" />
+                <IButton val="test" v-on:b-click="testConnection" color="#031234" />
             </div>
             <div class="submit">
-                <IButton val="submit" v-on:b-click="addNewConnectionPack" />
+                <IButton val="submit" v-on:b-click="addNewConnectionPack" color="#031234" />
             </div>
         </div>
     </div>
@@ -60,6 +163,7 @@
     //import CircleButton from 'components/common/CircleButton.vue';
     import IButton from "components/common/IButton.vue";
     import IInput from "components/common/IInput.vue";
+    import ICheckbox from "components/common/ICheckbox.vue";
 
     import {
         mapState,
@@ -72,6 +176,7 @@
             //CircleButton,
             IButton,
             IInput,
+            ICheckbox
         },
         computed: {
             ...mapState("RStore", [
