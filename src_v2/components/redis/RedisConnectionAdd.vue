@@ -51,6 +51,19 @@
 
         </div>
 
+        <div class="ext">
+            <div class="ext-body">
+                <div class="ext-tsl">
+                    <span class="tsl-name">SSL</span>
+                    <span class="tsl-check"><ICheckbox /></span>
+                </div>
+                <div class="ext-ssl">
+                    <span class="ssh-name">SSH Tunnel</span>
+                    <span class="tsl-check"><ICheckbox /></span>
+                </div>
+            </div>
+        </div>
+
         <div class="gap">
             <span>SSL</span>
         </div>
@@ -177,6 +190,11 @@
             IButton,
             IInput,
             ICheckbox
+        },
+        data(){
+            return {
+                ext_sort:[]
+            }
         },
         computed: {
             ...mapState("RStore", [

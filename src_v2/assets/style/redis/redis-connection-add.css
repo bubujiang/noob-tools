@@ -78,6 +78,10 @@
     border-bottom: 1px solid #031234;
 }
 
+.ext+.gap{
+    margin-top: 0px;
+}
+
 .gap span{
     FONT-WEIGHT: 600;
     color: #9ca4b6;
@@ -87,4 +91,39 @@
 .body-tsl,.body-ssh{
     margin-right: 10px;
     margin-left: 10px;
+}
+
+.ext{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ext-body{
+    display: flex;
+    margin-top: 30px;
+    background-color: #102354;
+    border-radius: 10px;
+    /* height: 40px; */
+    justify-content: center;
+    align-items: center;
+    padding: 10px 30px;
+}
+
+.ext-tsl{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ext-ssl{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.tsl-name,.ssh-name{
+    color: #9ca4b6;
+    font-size: 16px;
 }
