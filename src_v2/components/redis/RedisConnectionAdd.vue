@@ -79,7 +79,8 @@
                         </div>
                         <div class="input">
                             <!--<IInput v-model="add_connection_params.tsl.private_key" />-->
-                            <input type="file" />
+                            <IInputFile />
+                            <input type="file" ref="tsl_pvkey" v-show="0" />
                         </div>
                     </div>
 
@@ -88,7 +89,9 @@
                             <span>{{$t('PublicKey')}}</span>
                         </div>
                         <div class="input">
-                            <IInput v-model="add_connection_params.tsl.public_key" />
+                            <!--<IInput v-model="add_connection_params.tsl.public_key" />-->
+                            <IInputFile />
+                            <input type="file" ref="tsl_pbkey" v-show="0" />
                         </div>
                     </div>
 
@@ -97,7 +100,9 @@
                             <span>{{$t('Authority')}}</span>
                         </div>
                         <div class="input">
-                            <IInput v-model="add_connection_params.tsl.authority" />
+                            <!--<IInput v-model="add_connection_params.tsl.authority" />-->
+                            <IInputFile />
+                            <input type="file" ref="tsl_auth" v-show="0" />
                         </div>
                     </div>
                 </div>
@@ -140,7 +145,9 @@
                             <span>{{$t('PrivateKey')}}</span>
                         </div>
                         <div class="input">
-                            <IInput v-model="add_connection_params.ssh.private_key" />
+                            <!--<IInput v-model="add_connection_params.ssh.private_key" />-->
+                            <IInputFile v-on:select="open('ssh_pvkey')" v-model="add_connection_params.ssh.private_key" />
+                            <input type="file" ref="ssh_pvkey" v-show="0" v-on:change="select('ssh_pvkey')" />
                         </div>
                     </div>
 
@@ -185,6 +192,7 @@
     import IButton from "components/common/IButton.vue";
     import IInput from "components/common/IInput.vue";
     import ICheckbox from "components/common/ICheckbox.vue";
+    import IInputFile from "components/common/IInputFile.vue";
 
     import {
         mapState,
@@ -197,7 +205,7 @@
             //CircleButton,
             IButton,
             IInput,
-            ICheckbox
+            ICheckbox,IInputFile
         },
         data() {
             return {
@@ -274,6 +282,13 @@
                 }
                 this.ext_sort.splice(2, 1);
                 this.ext_sort = [...this.ext_sort];
+            },
+            open(e){
+                this.$refs[e][0].click()
+            },
+            select(e){
+                this.$refs[e][0].value;
+                //console.log(event,this.$refs[el][0],this.$refs[el][0].value);
             }
         },
     };

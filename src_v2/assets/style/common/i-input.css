@@ -3,8 +3,8 @@
     background-color: #5d6e93;
     border: none;
     border-radius: 5px;
-    height: 20px;
+    height: 23px;
     color: white;
-    border-color: #061539;
+    box-sizing: border-box;
     width: 100%;
 }
