@@ -1,0 +1,50 @@
+.widow{
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color: #304473;
+    width: 300px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+}
+
+.name{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 15%;
+}
+
+.name span{
+    font-size: 15px;
+    color: #9ca4b6;
+}
+
+.op{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancel,.submit{
+    width: 70px;
+}
+
+.cancel{
+    margin-right: 10px;
+}
