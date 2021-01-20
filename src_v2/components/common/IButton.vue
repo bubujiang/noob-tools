@@ -1,5 +1,5 @@
 <template>
-    <button v-on:click="$emit('b-click');" :style="'border-color:'+color+';background-color:'+color+';'">{{$t(val)}}</button>
+    <button v-on:click="$emit('b-click');" v-on:mouseenter="$emit('b-on');" :style="'border-color:'+color+';background-color:'+color+';'">{{$t(val)}}</button>
 </template>
 
 <script>
