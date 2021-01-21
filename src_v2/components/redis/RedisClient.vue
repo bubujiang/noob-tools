@@ -34,21 +34,9 @@
                 left : 230
             }
         },
-        created(){
-            //console.log('s c w',this.left);
-            //const patter = /[0-9]+\|/;
-            //this.left += Number(_.replace(this.width, /[0-9]+\|/, ''));
-            //console.log('c w',this.width,this.left);
-        },
         watch:{
             width(){
-                //console.log('w w',this.width,this.left);
-                console.log('s w w',this.left);
-                //const patter = /[0-9]+\|/;
-                //_.replace(width, patter, '');
-
                 this.left += Number(_.replace(this.width, /[-0-9]+\|/, ''));
-                console.log('w w',this.width,this.left);
             }
         }
     }

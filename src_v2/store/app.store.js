@@ -109,12 +109,10 @@ const mutations = {
     });
   },
   showedPrompt(state, i) {
-    //console.log('start',i);
     Vue.set(state.prompts, i, {
       ...state.prompts[i],
       showed: true,
     });
-    //console.log('end',state.prompts);
   },
   delConnection(state,index){
     let paths = _.split(index, '|', 99);
@@ -133,24 +131,34 @@ const mutations = {
       str += '.child.splice('+last+',1)';
       eval(str);
     }
-    
+  },
+  addConnection(state,{index,data}){
+    console.log('add s',index,data);
+    if(index === ''){
+      //顶层
+      state.connections.splice(0,0,data);
+    }else{
+      let paths = _.split(index, '|', 99);
+
+      if(paths.length == 1){
+        state.connections[paths[0]].child.splice(0,0,data);
+      }else{
+        const start = paths.shift();
+        const last = paths.pop();
+        let str = 'state.connections['+start+']';
+        for(const i in paths){
+          const path = paths[i];
+          str += '.child['+path+']';
+        }
+        str += '.child['+last+'].child.splice(0,0, JSON.parse(\''+JSON.stringify(data)+'\'))';
+        console.log('add e',index,data,str);
+        eval(str);
+      }
+    }
   }
 };
 
-const actions = {
-  addNewPromp(context, {
-    type,
-    level,
-    info
-  }) {
-    context.commit("addPromp", {
-      type,
-      level,
-      info,
-    });
-    //context.commit('showPrompt')
-  },
-};
+const actions = {};
 
 export default {
   namespaced: true,

@@ -2,30 +2,34 @@
     <div class="item" :style="top !== '1' ? 'padding-left: 20px;' :'' ">
         <div class="content">
             <div class="info">
-                <span class="icon"><img :src="show_icon" v-if="show_icon" v-on:click="toggle" /></span>
+                <span class="icon"><img :src="show_icon" v-if="show_icon" v-on:click="toggleShowChild" /></span>
                 <span class="icon"><img :src="type_icon" /></span>
                 <span class="name">{{item.name}}</span>
             </div>
             <div class="op">
-                <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new.png')" /></span>
+                <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new_folder.png')" v-on:click="$emit('c-folder',index)" /></span>
+                <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new.png')" v-on:click="$emit('c-connect',index)"/></span>
                 <span class="icon"><img :src="require('image/edit.png')" /></span>
                 <span class="icon"><img :src="require('image/del.png')" v-on:click="delConnectionPack" /></span>
             </div>
         </div>
         <div class="child" v-if="item.type==='folder' && item.child.length && this.show_child">
-            <Connection v-for="(child,i) in item.child" v-bind:key="i" v-bind:index="index+'|'+i" v-bind:item="child" />
+            <Connection v-for="(child,i) in item.child" v-bind:key="i" v-bind:index="index+'|'+i" v-bind:item="child" v-on:c-folder="$emit('c-folder',$event)" v-on:c-connect="$emit('c-connect',$event)" />
         </div>
-        <ConfirmWindow v-if="show_confirm" title="$$删除连接" :content="'$$确认删除\''+item.name+'\'吗?'" v-on:confirm-cancel="confirmCancel" v-on:confirm-sure="confirmSure"/>
+        <ConfirmWindow v-if="show_confirm" title="$$删除连接" :content="'$$确认删除\''+item.name+'\'吗?'"
+            v-on:confirm-cancel="confirmDelCancel" v-on:confirm-sure="confirmDelSure" />
     </div>
 </template>
 
 <script>
-import {mapMutations} from 'vuex';
-import ConfirmWindow from 'components/common/ConfirmWindow.vue';
+    import {
+        mapMutations
+    } from 'vuex';
+    import ConfirmWindow from 'components/common/ConfirmWindow.vue';
 
     export default {
         name: 'Connection',
-        components:{
+        components: {
             ConfirmWindow
         },
         props: {
@@ -70,19 +74,19 @@ import ConfirmWindow from 'components/common/ConfirmWindow.vue';
             }
         },
         methods: {
-            ...mapMutations('AStore',['delConnection']),
-            delConnectionPack(){
+            ...mapMutations('AStore', ['delConnection']),
+            delConnectionPack() {
                 this.show_confirm = true;
                 //this.delConnection(this.index);
             },
-            confirmCancel(){
+            confirmDelCancel() {
                 this.show_confirm = false;
             },
-            confirmSure(){
+            confirmDelSure() {
                 this.delConnection(this.index);
                 this.show_confirm = false;
             },
-            toggle() {
+            toggleShowChild() {
                 this.show_child = !this.show_child;
             }
         },

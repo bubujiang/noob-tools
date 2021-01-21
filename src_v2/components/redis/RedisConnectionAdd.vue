@@ -1,5 +1,5 @@
 <template>
-    <div class="add" v-show="add_connection_popup_show" @keyup.esc="toggleAddConnectionPopupShow">
+    <div class="add" v-show="add_connection_popup_show">
         <!--<div class="title">
             <CircleButton color="red" size="15px" right="5px" radius="10px" v-on:cb-click="close()" />
         </div>-->
@@ -146,8 +146,8 @@
                         </div>
                         <div class="input">
                             <!--<IInput v-model="add_connection_params.ssh.private_key" />-->
-                            <IInputFile v-on:select="open('ssh_pvkey')" v-model="add_connection_params.ssh.private_key" />
-                            <input type="file" ref="ssh_pvkey" v-show="0" v-on:change="select('ssh_pvkey')" />
+                            <IInputFile v-on:select="openSelectWindow('ssh_pvkey')" v-model="add_connection_params.ssh.private_key" />
+                            <input type="file" ref="ssh_pvkey" v-show="0" v-on:change="selectFile('ssh_pvkey')" />
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@
 
         <div class="footer">
             <div class="reset">
-                <IButton val="reset" v-on:b-click="toggleAddConnectionPopupShow" color="#5d6e93" />
+                <IButton val="reset" v-on:b-click="()=>{}" color="#5d6e93" />
             </div>
             <div class="test">
                 <IButton val="test" v-on:b-click="testConnection" color="#031234" />
@@ -219,13 +219,13 @@
             ]),
         },
         methods: {
-            ...mapMutations("RStore", ["toggleAddConnectionPopupShow"]),
+            //...mapMutations("RStore", ["toggleAddConnectionPopupShow"]),
             ...mapActions("RStore", ["addNewConnection"]),
-            ...mapActions("AStore", ["addNewPromp"]),
+            ...mapMutations("AStore", ["addPromp"]),
             async addNewConnectionPack() {
                 await this.addNewConnection()
                     .then((suc_msg) => {
-                        this.addNewPromp({
+                        this.addPromp({
                             type: "success",
                             level: 0,
                             info: suc_msg,
@@ -233,7 +233,7 @@
                         //console.log(suc_msg);
                     })
                     .catch((err_msg) => {
-                        this.addNewPromp({
+                        this.addPromp({
                             type: "notice",
                             level: 0,
                             info: err_msg,
@@ -246,13 +246,13 @@
                 RendererMessage.send.main.redisTestConn(this.add_connection_params)
                     .then((result) => {
                         if (result.type === "success") {
-                            this.addNewPromp({
+                            this.addPromp({
                                 type: "success",
                                 level: 0,
                                 info: result.msg,
                             });
                         } else {
-                            this.addNewPromp({
+                            this.addPromp({
                                 type: "error",
                                 level: 0,
                                 info: result.msg,
@@ -260,7 +260,7 @@
                         }
                     })
                     .catch((error) => {
-                        this.addNewPromp({
+                        this.addPromp({
                             type: "error",
                             level: 0,
                             info: error,
@@ -283,12 +283,11 @@
                 this.ext_sort.splice(2, 1);
                 this.ext_sort = [...this.ext_sort];
             },
-            open(e){
+            openSelectWindow(e){
                 this.$refs[e][0].click()
             },
-            select(e){
+            selectFile(e){
                 this.$refs[e][0].value;
-                //console.log(event,this.$refs[el][0],this.$refs[el][0].value);
             }
         },
     };
