@@ -1,5 +1,8 @@
 import Vue from "vue";
 import _ from "lodash";
+import {
+  Promise
+} from "es6-promise";
 const state = {
   navigation: [{
       name: "redis",
@@ -33,21 +36,21 @@ const state = {
       host: "182.61.12.213",
       port: 6379,
       auth: "wGkfv`~@r&bv*7^%",
-      cluster:false,
+      cluster: false,
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
-      tsl:{
-        private_key:'',
-        public_key:'',
-        authority:''
+      tsl: {
+        private_key: '',
+        public_key: '',
+        authority: ''
       },
-      ssh:{
-        host:'',
-        port:'',
-        user:'',
-        pwd:'',
-        private_key:'',
-        passphrase:'',
-        timeout:''
+      ssh: {
+        host: '',
+        port: '',
+        user: '',
+        pwd: '',
+        private_key: '',
+        passphrase: '',
+        timeout: ''
       }
     },
     {
@@ -64,8 +67,8 @@ const state = {
           user: "wGkfv`~@r&bv*7^%",
           pwd: "sdddd",
           state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
-          tsl:{},
-          ssh:{}
+          tsl: {},
+          ssh: {}
         }, ],
         //show: true
       }, {
@@ -114,51 +117,90 @@ const mutations = {
       showed: true,
     });
   },
-  delConnection(state,index){
+  delConnection(state, index) {
     let paths = _.split(index, '|', 99);
 
-    if(paths.length == 1){
-      state.connections.splice(paths[0],1);
-    }
-    else{
+    if (paths.length == 1) {
+      state.connections.splice(paths[0], 1);
+    } else {
       const start = paths.shift();
       const last = paths.pop();
-      let str = 'state.connections['+start+']';
-      for(const i in paths){
+      let str = 'state.connections[' + start + ']';
+      for (const i in paths) {
         const path = paths[i];
-        str += '.child['+path+']';
+        str += '.child[' + path + ']';
       }
-      str += '.child.splice('+last+',1)';
+      str += '.child.splice(' + last + ',1)';
       eval(str);
     }
   },
-  addConnection(state,{index,data}){
-    console.log('add s',index,data);
-    if(index === ''){
+  addConnection(state, {
+    index,
+    data
+  }) {
+    if (index === '') {
       //顶层
-      state.connections.splice(0,0,data);
-    }else{
+      state.connections.splice(0, 0, data);
+    } else {
       let paths = _.split(index, '|', 99);
 
-      if(paths.length == 1){
-        state.connections[paths[0]].child.splice(0,0,data);
-      }else{
+      if (paths.length == 1) {
+        state.connections[paths[0]].child.splice(0, 0, data);
+      } else {
         const start = paths.shift();
         const last = paths.pop();
-        let str = 'state.connections['+start+']';
-        for(const i in paths){
+        let str = 'state.connections[' + start + ']';
+        for (const i in paths) {
           const path = paths[i];
-          str += '.child['+path+']';
+          str += '.child[' + path + ']';
         }
-        str += '.child['+last+'].child.splice(0,0, JSON.parse(\''+JSON.stringify(data)+'\'))';
-        console.log('add e',index,data,str);
+        str += '.child[' + last + '].child.splice(0,0, JSON.parse(\'' + JSON.stringify(data) + '\'))';
         eval(str);
       }
     }
   }
 };
 
-const actions = {};
+const actions = {
+  addConnection(context, {
+    index,
+    data
+  }) {
+    return new Promise((resolve, reject) => {
+      let childs = _.cloneDeep(state.connections);
+      const paths = _.split(index, '|', 99);
+
+      if (paths[0] && paths.length == 1) {
+        childs = _.cloneDeep(childs[paths[0]].child);
+      } else if (paths[0] && paths.length > 1) {
+        const start = paths.shift();
+        const last = paths.pop();
+        let str = 'childs[' + start + ']';
+        for (const i in paths) {
+          const path = paths[i];
+          str += '.child[' + path + ']';
+        }
+        str += '.child[' + last + '].child';
+        childs = eval(str);
+      }
+
+      for (const i in childs) {
+        const child = childs[i];
+        if (child.name === data.name && child.type === data.type) {
+          reject('exist');
+          return;
+        }
+      }
+
+      context.commit('addConnection', {
+        index,
+        data
+      })
+      resolve('success');
+
+    });
+  }
+};
 
 export default {
   namespaced: true,

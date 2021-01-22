@@ -7,7 +7,7 @@
                 <span class="name">{{item.name}}</span>
             </div>
             <div class="op">
-                <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new_folder.png')" v-on:click="$emit('c-folder',index)" /></span>
+                <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new_folder.png')" v-on:click="cFolder" /></span>
                 <span v-if="item.type==='folder'" class="icon"><img :src="require('image/new.png')" v-on:click="$emit('c-connect',index)"/></span>
                 <span class="icon"><img :src="require('image/edit.png')" /></span>
                 <span class="icon"><img :src="require('image/del.png')" v-on:click="delConnectionPack" /></span>
@@ -88,7 +88,11 @@
             },
             toggleShowChild() {
                 this.show_child = !this.show_child;
-            }
+            },
+            cFolder(){
+                this.$emit('c-folder',this.index);
+                //this.show_child = true;
+            },
         },
         watch: {
             /*item() {
