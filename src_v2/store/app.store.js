@@ -121,33 +121,25 @@ const mutations = {
       showed: true,
     });
   },
-  toggleChild(state, index){
-    //console.log('index',index);
-    //console.log('start',state.connections);
-    if (index === '') {
-      //顶层
-      //state.connections[0].show_child = !state.connections[0].show_child;//.splice(0, 0, data);
-      //console.log('end1',state.connections);
-    } else {
-      let paths = _.split(index, '|', 99);
+  toggleChild(state, index) {
 
-      if (paths.length == 1) {
-        state.connections[paths[0]].show_child = !state.connections[paths[0]].show_child;
-        //console.log('end2',state.connections);
-      } else {
-        const start = paths.shift();
-        const last = paths.pop();
-        let str = 'state.connections[' + start + ']';
-        for (const i in paths) {
-          const path = paths[i];
-          str += '.child[' + path + ']';
-        }
-        str += '.child[' + last + '].show_child';
-        str = str + '=!' + str;
-        //console.log('str',str);
-        eval(str);
-        //console.log('end3',state.connections);
+    let paths = _.split(index, '|', 99);
+
+    if (index !== '' && paths.length == 1) {
+      state.connections[paths[0]].show_child = !state.connections[paths[0]].show_child;
+      //state.connections.splice(paths[0], 1);
+    } else if(index !== '') {
+      const start = paths.shift();
+      const last = paths.pop();
+      let str = 'state.connections[' + start + ']';
+      for (const i in paths) {
+        const path = paths[i];
+        str += '.child[' + path + ']';
       }
+      str += '.child[' + last + '].show_child';
+      str = str + '=!' + str;
+      //console.log('str',str);
+      eval(str);
     }
   },
   delConnection(state, index) {
@@ -230,7 +222,7 @@ const actions = {
         data
       })
 
-      if(data.type === 'folder'){
+      if (data.type === 'folder') {
         context.commit('toggleChild', index)
       }
 

@@ -72,9 +72,7 @@ import Connection from "components/common/Connection.vue";
 import AddConnectionFolder from "components/common/AddConnectionFolder.vue";
 import RedisConnectionAdd from 'components/redis/RedisConnectionAdd.vue';
 
-import { mapMutations } from "vuex";
-
-import { mapState } from "vuex";
+import { mapMutations,mapState } from "vuex";
 
 export default {
   components: {
