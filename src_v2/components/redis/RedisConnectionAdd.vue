@@ -1,5 +1,5 @@
 <template>
-    <div class="add" v-show="add_connection_popup_show">
+    <div class="add" v-show="show">
         <!--<div class="title">
             <CircleButton color="red" size="15px" right="5px" radius="10px" v-on:cb-click="close()" />
         </div>-->
@@ -207,6 +207,12 @@
             IInput,
             ICheckbox,IInputFile
         },
+        props:{
+            show:{
+                type:Boolean,
+                required:true
+            }
+        },
         data() {
             return {
                 ext_sort: []
@@ -214,7 +220,6 @@
         },
         computed: {
             ...mapState("RStore", [
-                "add_connection_popup_show",
                 "add_connection_params",
             ]),
         },

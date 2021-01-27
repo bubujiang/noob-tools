@@ -20,7 +20,6 @@ const state = {
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
     },
   ], //连接列表
-  add_connection_popup_show: false, //显示\隐藏连接添加框
   add_connection_params: {
     //正添加连接的参数
     host: null,
@@ -62,9 +61,6 @@ const state = {
 }
 
 const mutations = {
-  toggleAddConnectionPopupShow(state) {
-    state.add_connection_popup_show = !state.add_connection_popup_show
-  },
   addConnection(state, {
     name,
     host,

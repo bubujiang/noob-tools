@@ -27,6 +27,7 @@ const state = {
   connections: [{
       type: "folder",
       name: "fa",
+      show_child: false,
       child: [],
       //show: true
     },
@@ -56,9 +57,11 @@ const state = {
     {
       type: "folder",
       name: "fb",
+      show_child: true,
       child: [{
         type: "folder",
         name: "fba",
+        show_child: false,
         child: [{
           type: "mysql",
           name: "mine1",
@@ -74,6 +77,7 @@ const state = {
       }, {
         type: "folder",
         name: "fbb",
+        show_child: false,
         child: [{
           type: "mysql",
           name: "mine2",
@@ -83,7 +87,7 @@ const state = {
           pwd: "sdddd",
           state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
         }, ],
-        show: false
+        //show: false
       }, ],
       //show: true
     },
@@ -116,6 +120,35 @@ const mutations = {
       ...state.prompts[i],
       showed: true,
     });
+  },
+  toggleChild(state, index){
+    //console.log('index',index);
+    //console.log('start',state.connections);
+    if (index === '') {
+      //顶层
+      //state.connections[0].show_child = !state.connections[0].show_child;//.splice(0, 0, data);
+      //console.log('end1',state.connections);
+    } else {
+      let paths = _.split(index, '|', 99);
+
+      if (paths.length == 1) {
+        state.connections[paths[0]].show_child = !state.connections[paths[0]].show_child;
+        //console.log('end2',state.connections);
+      } else {
+        const start = paths.shift();
+        const last = paths.pop();
+        let str = 'state.connections[' + start + ']';
+        for (const i in paths) {
+          const path = paths[i];
+          str += '.child[' + path + ']';
+        }
+        str += '.child[' + last + '].show_child';
+        str = str + '=!' + str;
+        //console.log('str',str);
+        eval(str);
+        //console.log('end3',state.connections);
+      }
+    }
   },
   delConnection(state, index) {
     let paths = _.split(index, '|', 99);
@@ -196,6 +229,11 @@ const actions = {
         index,
         data
       })
+
+      if(data.type === 'folder'){
+        context.commit('toggleChild', index)
+      }
+
       resolve('success');
 
     });
