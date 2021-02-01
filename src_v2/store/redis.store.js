@@ -1,6 +1,4 @@
-import {
-  Promise
-} from "es6-promise";
+import _ from "lodash";
 
 const state = {
   connections_menu: [{
@@ -27,8 +25,19 @@ const state = {
     auth: null,
     name: null,
     cluster:false,
-    tsl:{},
-    ssh:{}
+    tsl:{
+      private_key:'',
+      public_key:'',
+      authority:''
+    },
+    ssh:{
+      host:'',
+      port:'',
+      username:'',
+      private_key:'',
+      passphrase:'',
+      timeout:''
+    }
   },
   edit_connection_popup_show: false, //显示\隐藏连接编辑框
   edit_connection_key: "127.0.0.1:99",
@@ -67,20 +76,25 @@ const mutations = {
     port,
     auth
   }) {
-    console.log('addConnection before', name, host, port, auth, '/////////////////');
+    //console.log('addConnection before', name, host, port, auth, '/////////////////');
     state.connections_menu = [...state.connections_menu, {
       name,
       host,
       port,
       auth
     }];
-    console.log('addConnection after', state.connections_menu, '/////////////////');
+    //console.log('addConnection after', state.connections_menu, '/////////////////');
   },
+  changeAddConnectionParams(state,{key,val}){
+    console.log('EVWRVRB',state.add_connection_params);
+    const str = `state.add_connection_params.${key}=val;`
+    console.log('EVWRVRBw',state.add_connection_params);
+    eval(str);
+  }
 }
 
 const actions = {
   addNewConnection(context) {
-    const _ = require("lodash");
     let params = context.state.add_connection_params;
     params = {name:_.trim(params.name),host:_.trim(params.host),port:_.toNumber(_.trim(params.port)),auth:_.trim(params.auth)};
     const menus = context.state.connections_menu;

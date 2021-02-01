@@ -78,9 +78,8 @@
                             <span>{{$t('PrivateKey')}}</span>
                         </div>
                         <div class="input">
-                            <!--<IInput v-model="add_connection_params.tsl.private_key" />-->
-                            <IInputFile />
-                            <input type="file" ref="tsl_pvkey" v-show="0" />
+                            <IInputFile v-on:select="openSelectWindow('tsl_pvkey')" v-model="add_connection_params.tsl.private_key" />
+                            <input type="file" ref="tsl_pvkey" v-show="0" v-on:change="selectFile('tsl.private_key','tsl_pvkey')" />
                         </div>
                     </div>
 
@@ -89,9 +88,8 @@
                             <span>{{$t('PublicKey')}}</span>
                         </div>
                         <div class="input">
-                            <!--<IInput v-model="add_connection_params.tsl.public_key" />-->
-                            <IInputFile />
-                            <input type="file" ref="tsl_pbkey" v-show="0" />
+                            <IInputFile v-on:select="openSelectWindow('tsl_pbkey')" v-model="add_connection_params.tsl.public_key" />
+                            <input type="file" ref="tsl_pbkey" v-show="0" v-on:change="selectFile('tsl.public_key','tsl_pbkey')" />
                         </div>
                     </div>
 
@@ -100,9 +98,8 @@
                             <span>{{$t('Authority')}}</span>
                         </div>
                         <div class="input">
-                            <!--<IInput v-model="add_connection_params.tsl.authority" />-->
-                            <IInputFile />
-                            <input type="file" ref="tsl_auth" v-show="0" />
+                            <IInputFile v-on:select="openSelectWindow('tsl_auth')" v-model="add_connection_params.tsl.authority" />
+                            <input type="file" ref="tsl_auth" v-show="0" v-on:change="selectFile('tsl.authority','tsl_auth')" />
                         </div>
                     </div>
                 </div>
@@ -145,9 +142,8 @@
                             <span>{{$t('PrivateKey')}}</span>
                         </div>
                         <div class="input">
-                            <!--<IInput v-model="add_connection_params.ssh.private_key" />-->
                             <IInputFile v-on:select="openSelectWindow('ssh_pvkey')" v-model="add_connection_params.ssh.private_key" />
-                            <input type="file" ref="ssh_pvkey" v-show="0" v-on:change="selectFile('ssh_pvkey')" />
+                            <input type="file" ref="ssh_pvkey" v-show="0" v-on:change="selectFile('ssh.private_key','ssh_pvkey')" />
                         </div>
                     </div>
 
@@ -224,7 +220,7 @@
             ]),
         },
         methods: {
-            //...mapMutations("RStore", ["toggleAddConnectionPopupShow"]),
+            ...mapMutations("RStore", ["changeAddConnectionParams"]),
             ...mapActions("RStore", ["addNewConnection"]),
             ...mapMutations("AStore", ["addPromp"]),
             async addNewConnectionPack() {
@@ -291,8 +287,10 @@
             openSelectWindow(e){
                 this.$refs[e][0].click()
             },
-            selectFile(e){
-                this.$refs[e][0].value;
+            selectFile(key,el){
+                if(this.$refs[el][0].value){
+                    this.changeAddConnectionParams({key,val:this.$refs[el][0].value});
+                }
             }
         },
     };
