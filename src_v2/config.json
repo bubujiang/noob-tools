@@ -1,0 +1,14 @@
+{
+    "MSGS": {
+        "CREATE": {
+            "name": "create",
+            "desc": "创建redis连接",
+            "is_sync": false
+        },
+        "TEST": {
+            "name": "test",
+            "desc": "测试redis连接",
+            "is_sync": true
+        }
+    }
+}
