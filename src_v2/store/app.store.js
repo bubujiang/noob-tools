@@ -1,8 +1,5 @@
 import Vue from "vue";
 import _ from "lodash";
-import {
-  Promise
-} from "es6-promise";
 const state = {
   navigation: [{
       name: "redis",
@@ -39,10 +36,15 @@ const state = {
       auth: "wGkfv`~@r&bv*7^%",
       cluster: false,
       state: 0, //-1连接出错，0未连接，1,正在连接, 2已连接
-      tsl: {
-        private_key: '',
-        public_key: '',
-        authority: ''
+      /**
+       * 详情
+       * https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options
+       * https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
+       */
+      tls: {
+        key: '',//私钥 key.pem
+        cert: '',//公钥 cert.pem
+        ca: ''//ca证书(用于覆盖)
       },
       ssh: {
         host: '',
@@ -51,7 +53,7 @@ const state = {
         pwd: '',
         private_key: '',
         passphrase: '',
-        timeout: ''
+        timeout: 0
       }
     },
     {
